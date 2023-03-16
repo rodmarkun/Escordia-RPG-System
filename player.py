@@ -45,16 +45,20 @@ class Player(Battler):
         """
 
         self.xp += exp
+        leveled_up = False
+
         # Leveling up
         while self.xp >= self.xp_to_next_lvl:
             self.xp -= self.xp_to_next_lvl
             self.lvl += 1
+            leveled_up = True
             # You can change this formula for different exp progression
             self.xp_to_next_lvl = formulas.xp_next_lvl_formula(self.xp_to_next_lvl, self.lvl)
             for stat in self.stats:
                 self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
             if constants.FULLY_RECOVER_WHEN_LEVELING_UP:
                 self.recover()
+        return leveled_up
 
     def add_money(self, money: int) -> None:
         """
@@ -95,6 +99,7 @@ class Player(Battler):
         """
 
         self.in_dungeon = False
+        self.alive = True
         self.money = formulas.money_lost_when_dying(self.money)
         self.recover()
 
