@@ -1,4 +1,5 @@
 import formulas
+import messager
 from battler import Battler
 import constants
 
@@ -17,17 +18,17 @@ class Player(Battler):
     def __init__(self, name: str):
         super().__init__(name, constants.INITIAL_STATS)
 
-        self.lvl: int = 1
-        self.xp: int = 0
-        self.xp_to_next_lvl: int = 15
-        self.money: int = 50
+        self._lvl: int = 1
+        self._xp: int = 0
+        self._xp_to_next_lvl: int = 15
+        self._money: int = 50
         # Inventory
-        self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
+        self._equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
         # Skills
-        self.current_area: int = 1
-        self.in_fight: bool = False
-        self.in_dungeon: bool = False
-        self.defeated_bosses: list = []
+        self._current_area: int = 1
+        self._in_fight: bool = False
+        self._in_dungeon: bool = False
+        self._defeated_bosses: list = []
 
     """
     ///////////////
@@ -53,7 +54,7 @@ class Player(Battler):
             self.lvl += 1
             leveled_up = True
             # You can change this formula for different exp progression
-            self.xp_to_next_lvl = formulas.xp_next_lvl_formula(self.xp_to_next_lvl, self.lvl)
+            self.xp_to_next_lvl = formulas.xp_next_lvl_formula(self.xp_to_next_lvl, self._lvl)
             for stat in self.stats:
                 self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
             if constants.FULLY_RECOVER_WHEN_LEVELING_UP:
@@ -89,7 +90,7 @@ class Player(Battler):
                f'**TODO**: TODO\n' \
                f'**----------------**\n' \
                f'**Money**: {self.money}\n' \
-               f'**Bosses Defeated**: {self.defeated_bosses}\n'
+               f'**Bosses Defeated**: {self._defeated_bosses}\n'
 
     def die(self) -> None:
         """
@@ -98,10 +99,20 @@ class Player(Battler):
         :return: None.
         """
 
-        self.in_dungeon = False
-        self.alive = True
+        messager.add_message(f"You have died. You are brought back to safety, but half your gold is long gone...")
+        self._in_dungeon = False
         self.money = formulas.money_lost_when_dying(self.money)
-        self.recover()
+
+    def respawn(self) -> None:
+        """
+        Respawns a dead player.
+
+        :return: None.
+        """
+
+        if not self.alive:
+            self.alive = True
+            self.recover()
 
     def recover(self) -> None:
         """
@@ -120,80 +131,80 @@ class Player(Battler):
 
     @property
     def lvl(self) -> int:
-        return self.lvl
+        return self._lvl
 
     @lvl.setter
     def lvl(self, value: int) -> None:
         if value < 0:
             raise ValueError("Player's level cannot be set to a value below 0.")
-        self.lvl = value
+        self._lvl = value
 
     @property
     def xp(self) -> int:
-        return self.xp
+        return self._xp
 
     @xp.setter
     def xp(self, value: int) -> None:
         if value < 0:
             raise ValueError("Player's XP cannot be set to a value below 0.")
-        self.xp = value
+        self._xp = value
 
     @property
     def xp_to_next_lvl(self) -> int:
-        return self.xp_to_next_lvl
+        return self._xp_to_next_lvl
 
     @xp_to_next_lvl.setter
     def xp_to_next_lvl(self, value: int) -> None:
         if value < 0:
             raise ValueError("Player's XP to next level cannot be set to a value below 0.")
-        self.xp_to_next_lvl = value
+        self._xp_to_next_lvl = value
 
     @property
     def money(self) -> int:
-        return self.money
+        return self._money
 
     @money.setter
     def money(self, value: int) -> None:
         if value < 0:
             raise ValueError("Player's money cannot be set to a value below 0.")
-        self.money = value
+        self._money = value
 
     @property
     def equipment(self) -> dict:
-        return self.equipment
+        return self._equipment
 
     @equipment.setter
     def equipment(self, value: dict) -> None:
-        self.equipment = value
+        self._equipment = value
 
     @property
     def current_area(self) -> int:
-        return self.current_area
+        return self._current_area
 
     @current_area.setter
     def current_area(self, value: int) -> None:
-        self.current_area = value
+        self._current_area = value
 
     @property
     def in_fight(self) -> bool:
-        return self.in_fight
+        return self._in_fight
 
     @in_fight.setter
     def in_fight(self, value: bool) -> None:
-        self.in_fight = value
+        self._in_fight = value
 
     @property
     def in_dungeon(self) -> bool:
-        return self.in_dungeon
+        return self._in_dungeon
 
     @in_dungeon.setter
     def in_dungeon(self, value: bool) -> None:
-        self.in_dungeon = value
+        self._in_dungeon = value
 
     @property
     def defeated_bosses(self) -> list:
-        return self.defeated_bosses
+        return self._defeated_bosses
 
     @defeated_bosses.setter
     def defeated_bosses(self, value: list) -> None:
-        self.defeated_bosses = value
+        self._defeated_bosses = value

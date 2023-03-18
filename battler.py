@@ -15,9 +15,9 @@ class Battler:
     """
 
     def __init__(self, name: str, stats: dict):
-        self.name = name
-        self.stats = stats
-        self.alive = True
+        self._name = name
+        self._stats = stats
+        self._alive = True
 
     """
     ///////////////
@@ -55,7 +55,10 @@ class Battler:
 
         messager.add_message(f"{self.name} heals for {amount} HP!")
         new_hp = self.stats['HP'] + amount
-        self.fully_heal() if new_hp > self.stats['MAXHP'] else self.stats['HP'] = new_hp
+        if new_hp > self.stats['MAXHP']:
+            self.fully_heal()
+        else:
+            self.stats['HP'] = new_hp
 
     def recover_mp(self, amount: int) -> None:
         """
@@ -67,7 +70,10 @@ class Battler:
 
         messager.add_message(f"{self.name} recovers {amount} MP!")
         new_mp = self.stats['MP'] + amount
-        self.fully_recover_mp() if new_mp > self.stats['MAXMP'] else self.stats['MP'] = new_mp
+        if new_mp > self.stats['MAXMP']:
+            self.fully_recover_mp()
+        else:
+            self.stats['MP'] = new_mp
 
     def normal_attack(self, target: 'Battler') -> None:
         """
@@ -96,6 +102,7 @@ class Battler:
         # Battler dies
         if self.stats['HP'] <= 0:
             self.alive = False
+            self.die()
 
     def die(self) -> None:
         """
@@ -105,7 +112,6 @@ class Battler:
         """
 
         print(f"{self.name} has died.")
-        messager.add_message(f"{self.name} has died.")
 
     """
     //////////////////
@@ -115,32 +121,30 @@ class Battler:
     
     @property
     def name(self) -> str:
-        return self.name
+        return self._name
     
     @name.setter
     def name(self, value: str) -> None:
         if value:
-            self.name = value
+            self._name = value
         else:
             raise ValueError("Battler name cannot be empty.")
     
     @property
     def stats(self) -> dict:
-        return self.stats
+        return self._stats
     
     @stats.setter
     def stats(self, value: dict) -> None:
         for stat in value:
             if stat not in constants.STAT_NAMES:
                 raise ValueError(f"You specified a stat not found in your defined stat names: {stat}")
-        self.stats = value
+        self._stats = value
 
     @property
     def alive(self) -> bool:
-        return self.alive
+        return self._alive
 
     @alive.setter
     def alive(self, value: bool) -> None:
-        self.alive = value
-        if not value:
-            self.die()
+        self._alive = value
