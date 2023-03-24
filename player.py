@@ -1,4 +1,5 @@
 import formulas
+import job
 import messager
 from battler import Battler
 import constants
@@ -29,6 +30,7 @@ class Player(Battler):
         self._in_fight: bool = False
         self._in_dungeon: bool = False
         self._defeated_bosses: list = []
+        self._job = None
 
     """
     ///////////////
@@ -208,3 +210,13 @@ class Player(Battler):
     @defeated_bosses.setter
     def defeated_bosses(self, value: list) -> None:
         self._defeated_bosses = value
+
+    @property
+    def job(self) -> job.Job:
+        return self._job
+
+    @job.setter
+    def job(self, value: 'job.Job') -> None:
+        if value is None:
+            raise ValueError(f"A player must always have a valid Job.")
+        self._job = value

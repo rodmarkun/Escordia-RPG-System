@@ -1,0 +1,83 @@
+class Job:
+    """
+    Class that represents a Job in the game. Players can switch jobs in order to obtain new abilities.
+    """
+
+    """
+    ///////////////////
+    /// CONSTRUCTOR ///
+    ///////////////////
+    """
+
+    def __init__(self, name: str, description: str, skill_dict: dict, lvl: int = 1, xp: int = 0,
+                 xp_to_next_lvl: int = 50):
+        self._name = name
+        self._description = description
+        self._skill_dict = skill_dict
+        self._lvl = lvl
+        self._xp = xp
+        self._xp_to_next_lvl = xp_to_next_lvl
+
+    """
+    //////////////////
+    /// PROPERTIES ///
+    //////////////////
+    """
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        if not value:
+            raise ValueError(f"Jobs cannot have empty names.")
+        self._name = value
+
+    @property
+    def description(self) -> str:
+        return self._description
+
+    @description.setter
+    def description(self, value: str) -> None:
+        if not value:
+            raise ValueError(f"Jobs cannot have empty descriptions.")
+        self._description = value
+
+    @property
+    def skill_dict(self) -> dict:
+        return self._skill_dict
+
+    @skill_dict.setter
+    def skill_dict(self, value: dict) -> None:
+        self._skill_dict = value
+
+    @property
+    def lvl(self) -> int:
+        return self._lvl
+
+    @lvl.setter
+    def lvl(self, value: int) -> None:
+        if value <= 0:
+            raise ValueError(f"Jobs cannot have a level below or equal 0.")
+        self._lvl = value
+
+    @property
+    def xp(self) -> int:
+        return self._xp
+
+    @xp.setter
+    def xp(self, value: int) -> None:
+        if value < 0:
+            raise ValueError(f"XP cannot be negative.")
+        self._xp = value
+
+    @property
+    def xp_to_next_lvl(self) -> int:
+        return self._xp_to_next_lvl
+
+    @xp_to_next_lvl.setter
+    def xp_to_next_lvl(self, value: int) -> None:
+        if value < 0:
+            raise ValueError(f"XP to next level cannot be negative.")
+        self._xp_to_next_lvl = value

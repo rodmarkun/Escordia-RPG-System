@@ -1,3 +1,4 @@
+import data_management
 import messager
 from player import Player
 from enemy import Enemy
@@ -37,7 +38,19 @@ class Battle:
             self.player.normal_attack(self._enemy)
             if self.enemy.alive:
                 self.enemy.normal_attack(self._player)
+            else:
+                self.win_battle()
         return messager.empty_queue()
+
+    def win_battle(self) -> None:
+        data_management.delete_cache_battle_by_player(self.player.name)
+        messager.add_message(f"{self.player.name} won the battle!")
+
+    """
+    //////////////////
+    /// PROPERTIES ///
+    //////////////////
+    """
 
     @property
     def player(self) -> Player:
