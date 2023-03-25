@@ -15,11 +15,11 @@ class Area:
     """
 
     def __init__(self, name, number, enemy_list, boss, dungeons):
-        self._name = name
-        self._number = number
-        self._enemy_list = enemy_list
-        self._boss = boss
-        self._dungeons = dungeons
+        self.name = name
+        self.number = number
+        self.enemy_list = enemy_list
+        self.boss = boss
+        self.dungeons = dungeons
 
     """
     ///////////////
@@ -30,15 +30,15 @@ class Area:
     def spawn_enemy(self) -> enemy.Enemy:
         enemy_inst = random.choice(self.enemy_list)
         stats = {'MAXHP': 25,
-         'HP': 25,
-         'MAXMP': 10,
-         'MP': 10,
-         'ATK': 10,
-         'DEF': 10,
-         'MATK': 10,
-         'MDEF': 10,
-         'SPEED': 10
-         }
+                 'HP': 25,
+                 'MAXMP': 10,
+                 'MP': 10,
+                 'ATK': 10,
+                 'DEF': 10,
+                 'MATK': 10,
+                 'MDEF': 10,
+                 'SPEED': 10
+                 }
         return enemy.Enemy(enemy_inst.name, stats, enemy_inst.xp_reward,
                            enemy_inst.gold_reward, enemy_inst.dmg_weakness)
 

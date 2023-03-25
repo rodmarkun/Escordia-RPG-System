@@ -17,8 +17,8 @@ class Battle:
 
     def __init__(self, player: Player, enemy: Enemy):
         print(f"Initializing battle with Player: {player.name} and Enemy: {enemy.name}")
-        self._player = player
-        self._enemy = enemy
+        self.player = player
+        self.enemy = enemy
 
     """
     ///////////////
@@ -44,7 +44,17 @@ class Battle:
 
     def win_battle(self) -> None:
         data_management.delete_cache_battle_by_player(self.player.name)
-        messager.add_message(f"{self.player.name} won the battle!")
+
+        messager.add_message(f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
+                             f"{self.enemy.gold_reward} G")
+
+        self.player.add_exp(self.enemy.xp_reward)
+        self.player.add_money(self.enemy.gold_reward)
+
+        loot = self.enemy.loot()
+        if loot:
+            messager.add_message(f"You looted a {loot}")
+
 
     """
     //////////////////

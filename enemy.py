@@ -1,4 +1,5 @@
 import messager
+import random
 from battler import Battler
 
 
@@ -17,13 +18,13 @@ class Enemy(Battler):
                  image_url='', is_boss=False):
         super().__init__(name, stats)
 
-        self._xp_reward = xp_reward
-        self._gold_reward = gold_reward
-        self._dmg_weakness = dmg_weakness
-        self._possible_loot = possible_loot
-        self._loot_chance = loot_chance
-        self._image_url = image_url
-        self._is_boss = is_boss
+        self.xp_reward = xp_reward
+        self.gold_reward = gold_reward
+        self.dmg_weakness = dmg_weakness
+        self.possible_loot = possible_loot
+        self.loot_chance = loot_chance
+        self.image_url = image_url
+        self.is_boss = is_boss
 
     """
     ///////////////
@@ -34,6 +35,12 @@ class Enemy(Battler):
     def die(self) -> None:
         messager.add_message(f"{self.name} has been slain.")
         self.alive = False
+
+    def loot(self) -> str:
+        if random.randint(0, 100) <= self.loot_chance:
+            return self.possible_loot.name
+        return ''
+
 
     """
     //////////////////

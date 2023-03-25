@@ -15,9 +15,9 @@ class Battler:
     """
 
     def __init__(self, name: str, stats: dict):
-        self._name = name
-        self._stats = stats
-        self._alive = True
+        self.name = name
+        self.stats = stats
+        self.alive = True
 
     """
     ///////////////

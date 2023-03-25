@@ -18,7 +18,7 @@ def main():
                      'MDEF': 10,
                      'SPEED': 10
                      }
-    e = Enemy('Bat', stats, xp_reward=4, gold_reward=2, dmg_weakness=None)
+    e = Enemy('Bat', stats, xp_reward=90, gold_reward=7, dmg_weakness=None)
     a = area.Area("Area 1", 1, [e], None, None)
     data_management.AREAS_CACHE.update({1: a})
 
@@ -30,8 +30,7 @@ def main():
     print(interface.normal_attack(player_name))
     print(interface.normal_attack(player_name))
     print(interface.normal_attack(player_name))
-    print(interface.begin_battle(player_name))
-    print(interface.normal_attack(player_name))
+    print(interface.show_player_profile(player_name))
 
 
 if __name__ == '__main__':

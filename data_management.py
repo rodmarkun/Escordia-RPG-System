@@ -43,10 +43,11 @@ def search_cache_battle_by_player(player_name: str) -> 'Battle':
             return b
     return None
 
+
 """
-//////////////////
+///////////////
 /// DELETES ///
-//////////////////
+///////////////
 """
 
 
@@ -60,3 +61,73 @@ def delete_cache_battle_by_player(player_name: str) -> None:
     b = search_cache_battle_by_player(player_name)
     if b is not None:
         BATTLE_CACHE.remove(b)
+
+
+"""
+/////////////
+/// LOADS ///
+/////////////
+"""
+
+
+def load_items_from_csv():
+    """
+    Loads items from CSV file.
+
+    :return: None.
+    """
+    pass
+
+
+def load_equipment_from_csv():
+    """
+    Loads equipment from CSV file.
+
+    :return: None.
+    """
+    pass
+
+
+def load_areas_from_csv():
+    """
+    Loads areas from CSV file.
+
+    :return: None.
+    """
+
+
+def load_dungeons_from_csv():
+    """
+    Loads dungeons from CSV file.
+
+    :return: None.
+    """
+    pass
+
+
+def load_jobs_from_csv():
+    """
+    Loads jobs from CSV file.
+
+    :return: None.
+    """
+    pass
+
+
+def load_players_from_db():
+    """
+    Loads players from database.
+
+    :return: None
+    """
+    pass
+
+
+def load_everything():
+    print("Loading data...")
+    load_items_from_csv()
+    load_equipment_from_csv()
+    load_areas_from_csv()
+    load_dungeons_from_csv()
+    load_jobs_from_csv()
+    load_players_from_db()

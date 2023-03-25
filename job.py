@@ -11,12 +11,12 @@ class Job:
 
     def __init__(self, name: str, description: str, skill_dict: dict, lvl: int = 1, xp: int = 0,
                  xp_to_next_lvl: int = 50):
-        self._name = name
-        self._description = description
-        self._skill_dict = skill_dict
-        self._lvl = lvl
-        self._xp = xp
-        self._xp_to_next_lvl = xp_to_next_lvl
+        self.name = name
+        self.description = description
+        self.skill_dict = skill_dict
+        self.lvl = lvl
+        self.xp = xp
+        self.xp_to_next_lvl = xp_to_next_lvl
 
     """
     //////////////////

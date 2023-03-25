@@ -63,6 +63,20 @@ def normal_attack(name: str) -> (bool, list):
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
 
 
+def show_player_profile(name: str) -> (bool, list):
+    """
+    Shows a player's profile.
+
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. String contains info message.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+    return True, [player_inst.show_player_info()]
+
+
 def player_rest(name: str) -> (bool, list):
     """
     Player rests and fully recovers HP/MP

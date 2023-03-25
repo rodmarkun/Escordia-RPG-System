@@ -19,18 +19,18 @@ class Player(Battler):
     def __init__(self, name: str):
         super().__init__(name, constants.INITIAL_STATS)
 
-        self._lvl: int = 1
-        self._xp: int = 0
-        self._xp_to_next_lvl: int = 15
-        self._money: int = 50
+        self.lvl: int = 1
+        self.xp: int = 0
+        self.xp_to_next_lvl: int = 15
+        self.money: int = 50
         # Inventory
-        self._equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
+        self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
         # Skills
-        self._current_area: int = 1
-        self._in_fight: bool = False
-        self._in_dungeon: bool = False
-        self._defeated_bosses: list = []
-        self._job = None
+        self.current_area: int = 1
+        self.in_fight: bool = False
+        self.in_dungeon: bool = False
+        self.defeated_bosses: list = []
+        self.job = None
 
     """
     ///////////////
@@ -60,7 +60,10 @@ class Player(Battler):
             for stat in self.stats:
                 self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
             if constants.FULLY_RECOVER_WHEN_LEVELING_UP:
-                self.recover()
+                self.stats['HP'] = self.stats['MAXHP']
+                self.stats['MP'] = self.stats['MAXMP']
+
+            messager.add_message(f"You leveled up! You are now level {self.lvl}")
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -217,6 +220,6 @@ class Player(Battler):
 
     @job.setter
     def job(self, value: 'job.Job') -> None:
-        if value is None:
-            raise ValueError(f"A player must always have a valid Job.")
+        # if value is None:
+        #    raise ValueError(f"A player must always have a valid Job.")
         self._job = value
