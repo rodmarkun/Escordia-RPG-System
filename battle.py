@@ -54,6 +54,7 @@ class Battle:
         loot = self.enemy.loot()
         if loot:
             messager.add_message(f"You looted a {loot}")
+            self.player.inventory.add_item(loot, 1)
 
 
     """

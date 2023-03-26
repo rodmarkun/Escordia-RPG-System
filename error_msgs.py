@@ -1,5 +1,7 @@
 ERROR_CHARACTER_ALREADY_CREATED = "You already have a character."
 ERROR_CHARACTER_DOES_NOT_EXIST = "Character does not exist."
+ERROR_CHARACTER_DOES_NOT_HAVE_THAT_ITEM = "You do not have that item."
 ERROR_CHARACTER_ALREADY_IN_FIGHT = "Character is already in a fight."
 ERROR_CHARACTER_NOT_IN_FIGHT = "Character is not currently in a fight."
 ERROR_CANNOT_DO_WHILE_IN_FIGHT = "You cannot do that while you are in a fight."
+ERROR_CANNOT_EQUIP_THAT_ITEM = "You cannot equip that item."

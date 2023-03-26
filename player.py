@@ -1,4 +1,6 @@
+import error_msgs
 import formulas
+import inventory
 import job
 import messager
 from battler import Battler
@@ -23,7 +25,7 @@ class Player(Battler):
         self.xp: int = 0
         self.xp_to_next_lvl: int = 15
         self.money: int = 50
-        # Inventory
+        self.inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
         # Skills
         self.current_area: int = 1
@@ -96,6 +98,46 @@ class Player(Battler):
                f'**----------------**\n' \
                f'**Money**: {self.money}\n' \
                f'**Bosses Defeated**: {self._defeated_bosses}\n'
+
+    def equip_item(self, equipment) -> (bool, list):
+        """
+        Equips an item from the player's inventory.
+
+        :param equipment: Item to equip.
+        :return: Boolean and list. True if player was able to equip the item. False if it was not. List
+        contains messages.
+        """
+
+        e = self.inventory.item_exists(equipment)
+        if e is not None:
+            if e.object_type != "EQUIPMENT":
+                return False, [error_msgs.ERROR_CANNOT_EQUIP_THAT_ITEM]
+            self.inventory.remove_item(equipment, 1)
+            if e.equipment_type in constants.WEAPON_NAMES:
+                if self.equipment["WEAPON"] is not None:
+                    self.unequip_item(self.equipment["WEAPON"])
+                self.equipment.update({"WEAPON": e.name})
+            else:
+                if self.equipment[e.equipment_type] is not None:
+                    self.unequip_item(self.equipment[e.equipment_type])
+                self.equipment.update({e.equipment_type: e.name})
+
+            # Adds stats to player
+            for stat in e.stat_change_list:
+                self.stats[stat] += e.stat_change_list[stat]
+            return True, [f'You have successfully equipped your {equipment}.']
+        return False, [error_msgs.ERROR_CHARACTER_DOES_NOT_HAVE_THAT_ITEM]
+
+    def unequip_item(self, equipment) -> None:
+        """
+        Unequips an item.
+
+        :param equipment: Equipment to unequip.
+        :return: None.
+        """
+        self.inventory.add_item(equipment, 1)
+        for stat in equipment.stat_change_list:
+            self.stats[stat] -= equipment.stat_change_list[stat]
 
     def die(self) -> None:
         """

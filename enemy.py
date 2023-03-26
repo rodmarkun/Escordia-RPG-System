@@ -14,13 +14,12 @@ class Enemy(Battler):
     ///////////////////
     """
 
-    def __init__(self, name, stats, xp_reward, gold_reward, dmg_weakness, possible_loot=None, loot_chance=0,
+    def __init__(self, name, stats, xp_reward, gold_reward, possible_loot=None, loot_chance=0,
                  image_url='', is_boss=False):
         super().__init__(name, stats)
 
         self.xp_reward = xp_reward
         self.gold_reward = gold_reward
-        self.dmg_weakness = dmg_weakness
         self.possible_loot = possible_loot
         self.loot_chance = loot_chance
         self.image_url = image_url
@@ -38,7 +37,7 @@ class Enemy(Battler):
 
     def loot(self) -> str:
         if random.randint(0, 100) <= self.loot_chance:
-            return self.possible_loot.name
+            return self.possible_loot
         return ''
 
 
@@ -67,11 +66,3 @@ class Enemy(Battler):
         if value < 0:
             raise ValueError(f"Gold Reward of enemy cannot be negative.")
         self._gold_reward = value
-
-    @property
-    def dmg_weakness(self) -> list:
-        return self._dmg_weakness
-
-    @dmg_weakness.setter
-    def dmg_weakness(self, value: list) -> None:
-        self._dmg_weakness = value

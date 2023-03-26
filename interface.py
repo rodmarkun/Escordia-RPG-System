@@ -94,3 +94,18 @@ def player_rest(name: str) -> (bool, list):
         return True, messager.empty_queue()
 
     return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+
+def show_player_inventory(name: str) -> (bool, list):
+    """
+    Shows player's inventory.
+
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    return True, [player_inst.inventory.show_inventory()]

@@ -1,3 +1,4 @@
+import data_management
 import enemy
 import random
 import dungeon
@@ -28,7 +29,8 @@ class Area:
     """
 
     def spawn_enemy(self) -> enemy.Enemy:
-        enemy_inst = random.choice(self.enemy_list)
+        enemy_name = random.choice(self.enemy_list)
+        enemy_inst = data_management.search_cache_enemy_by_name(enemy_name)
         stats = {'MAXHP': 25,
                  'HP': 25,
                  'MAXMP': 10,
@@ -39,8 +41,9 @@ class Area:
                  'MDEF': 10,
                  'SPEED': 10
                  }
-        return enemy.Enemy(enemy_inst.name, stats, enemy_inst.xp_reward,
-                           enemy_inst.gold_reward, enemy_inst.dmg_weakness)
+        return enemy.Enemy(enemy_inst.name, stats, enemy_inst.xp_reward, enemy_inst.gold_reward,
+                           enemy_inst.possible_loot, enemy_inst.loot_chance, enemy_inst.image_url,
+                           enemy_inst.is_boss)
 
     """
     //////////////////
@@ -69,6 +72,7 @@ class Area:
             self._number = value
         else:
             raise ValueError("Area's number cannot be negative.")
+
     @property
     def enemy_list(self) -> list:
         return self._enemy_list
