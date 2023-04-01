@@ -1,4 +1,5 @@
 import data_management
+import formulas
 import messager
 from player import Player
 from enemy import Enemy
@@ -35,17 +36,18 @@ class Battle:
         """
 
         if player_action == "NORMAL_ATTACK":
-            self.player.normal_attack(self._enemy)
+            normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
             if self.enemy.alive:
-                self.enemy.normal_attack(self._player)
+                normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
             else:
+                messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
                 self.win_battle()
-        return messager.empty_queue()
+        return messager.empty_queue(self.player.name)
 
     def win_battle(self) -> None:
         data_management.delete_cache_battle_by_player(self.player.name)
 
-        messager.add_message(f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
+        messager.add_message(self.player.name, f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
                              f"{self.enemy.gold_reward} G")
 
         self.player.add_exp(self.enemy.xp_reward)
@@ -53,7 +55,7 @@ class Battle:
 
         loot = self.enemy.loot()
         if loot:
-            messager.add_message(f"You looted a {loot}")
+            messager.add_message(self.player.name, f"You looted a {loot}")
             self.player.inventory.add_item(loot, 1)
 
 
@@ -89,7 +91,27 @@ def start_battle(player: Player, enemy: Enemy):
     :return: Battle instance.
     """
 
-    messager.add_message(f'You are fighting a **{enemy.name}**')
+    messager.add_message(player.name, f'You are fighting a **{enemy.name}**')
     return Battle(player, enemy)
+
+
+def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> None:
+    """
+    Battler executes a normal attack.
+
+    :param target: Battler to attack.
+    :return: None.
+    """
+    if not formulas.check_miss(attacker.stats['SPEED'], target.stats['SPEED']):
+        dmg = formulas.normal_attack_dmg(attacker.stats['ATK'], target.stats['DEF'])
+        dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)
+        if is_crit:
+            messager.add_message(player_name, f"Critical hit! {attacker.name} attacks {target.name} and deals {dmg} "
+                                              f"damage!")
+        else:
+            messager.add_message(player_name, f"{attacker.name} attacks {target.name} and deals {dmg} damage!")
+        target.take_dmg(dmg)
+    else:
+        messager.add_message(player_name, f"{attacker.name}'s attack missed!")
 
 

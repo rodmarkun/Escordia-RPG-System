@@ -19,9 +19,9 @@ def create_player(name: str) -> (bool, list):
     :return: Bool and List. True if character was created, False if it was not. String contains info messages.
     """
     if data_management.search_cache_player(name) is None:
-        data_management.PLAYER_CACHE.append(player.Player(name))
+        data_management.create_new_player(name)
         print(f"Created character with name: {name}")
-        return True, ['']
+        return True, [f"Created character with name: {name}"]
     return False, [ERROR_CHARACTER_ALREADY_CREATED]
 
 
@@ -91,7 +91,7 @@ def player_rest(name: str) -> (bool, list):
 
     if data_management.search_cache_battle_by_player(name) is None:
         player_inst.recover()
-        return True, messager.empty_queue()
+        return True, messager.empty_queue(name)
 
     return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 

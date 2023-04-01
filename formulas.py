@@ -1,3 +1,6 @@
+import math
+import random
+
 def xp_next_lvl_formula(xp_to_next_lvl: int, lvl: int) -> int:
     """
     Formula for calculating how much XP is needed for next level.
@@ -19,6 +22,33 @@ def money_lost_when_dying(money: int) -> int:
     """
 
     return money // 2
+
+
+def check_miss(atk_speed: int, def_speed: int) -> bool:
+    """
+    Formula for rolling if an attack misses or not. Depends on attacker's and defender's speed.
+
+    :param atk_speed: Attacker's speed.
+    :param def_speed: Defender's speed.
+    :return: True if attack misses. False if not.
+    """
+
+    chance = math.floor(math.sqrt(max(0, (5 * def_speed - atk_speed * 2))))
+    return chance > random.randint(0, 100)
+
+
+def check_for_critical_damage(attacker: 'Battler', dmg: int) -> (int, bool):
+    """
+    Formula for rolling if an attack turns to be critical or not. Depends on attacker's critch.
+
+    :param attacker: Attacking battler.
+    :param dmg: Damage the attacking is currently doing.
+    :return: New damage after checking for critical hit. Also boolean with result of roll.
+    """
+    if 'CRITCH' in attacker.stats:
+        if random.randint(0, 100) <= attacker.stats['CRITCH']:
+            return int(dmg + dmg * attacker.stats['CRITDMG']/100), True  # Apply crit dmg %
+    return dmg, False
 
 
 def normal_attack_dmg(atk_value: int, def_value: int) -> int:

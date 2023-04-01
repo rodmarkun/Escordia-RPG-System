@@ -6,9 +6,11 @@ INITIAL_STATS = {'MAXHP': 25,
                  'DEF': 10,
                  'MATK': 10,
                  'MDEF': 10,
-                 'SPEED': 10
+                 'SPEED': 10,
+                 'CRITCH': 10,
+                 'CRITDMG': 10
                  }
-STAT_NAMES = ['MAXHP', 'HP', 'MAXMP', 'MP', 'ATK', 'DEF', 'MATK', 'MDEF', 'SPEED']
+STAT_NAMES = ['MAXHP', 'HP', 'MAXMP', 'MP', 'ATK', 'DEF', 'MATK', 'MDEF', 'SPEED', 'CRITCH', 'CRITDMG']
 EQUIPMENT_NAMES = ['HELMET', 'ARMOR', 'WEAPON', 'ACCESSORY']
 WEAPON_NAMES = ["SWORD", "AXE", "SPEAR", "DAGGER", "STAFF", "BOW"]
 FULLY_RECOVER_WHEN_LEVELING_UP = True

@@ -32,7 +32,6 @@ class Enemy(Battler):
     """
 
     def die(self) -> None:
-        messager.add_message(f"{self.name} has been slain.")
         self.alive = False
 
     def loot(self) -> str:

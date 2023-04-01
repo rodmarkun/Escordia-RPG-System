@@ -40,7 +40,7 @@ class Inventory:
                 return True
         return False
 
-    def item_exists(self, item) -> 'Item':
+    def item_exists(self, item: str) -> 'Item':
         """
         Checks if an item exists in this inventory and returns its instance.
 

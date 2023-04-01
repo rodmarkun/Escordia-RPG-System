@@ -65,7 +65,7 @@ class Player(Battler):
                 self.stats['HP'] = self.stats['MAXHP']
                 self.stats['MP'] = self.stats['MAXMP']
 
-            messager.add_message(f"You leveled up! You are now level {self.lvl}")
+            messager.add_message(self.name, f"You leveled up! You are now level {self.lvl}")
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -86,6 +86,8 @@ class Player(Battler):
         """
 
         stat_string = ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STAT_NAMES])
+        equipment_string = ''.join([f"**{e}**: {self.equipment[e]}\n" if self.equipment[e] is not None else
+                                    f"**{e}**: None\n" for e in self.equipment])
 
         return f'**Player Name**: {self.name}\n' \
                f'**Level**: {self.lvl}\n' \
@@ -94,12 +96,12 @@ class Player(Battler):
                f'**---STATS---**\n' \
                f'{stat_string}' \
                f'**---EQUIPMENT---**\n' \
-               f'**TODO**: TODO\n' \
+               f'{equipment_string}' \
                f'**----------------**\n' \
                f'**Money**: {self.money}\n' \
                f'**Bosses Defeated**: {self._defeated_bosses}\n'
 
-    def equip_item(self, equipment) -> (bool, list):
+    def equip_item(self, equipment: str) -> (bool, list):
         """
         Equips an item from the player's inventory.
 
@@ -146,7 +148,8 @@ class Player(Battler):
         :return: None.
         """
 
-        messager.add_message(f"You have died. You are brought back to safety, but half your gold is long gone...")
+        messager.add_message(self.name, f"You have died. You are brought back to safety, but half your gold is"
+                                        f" long gone...")
         self._in_dungeon = False
         self.money = formulas.money_lost_when_dying(self.money)
 

@@ -31,17 +31,7 @@ class Area:
     def spawn_enemy(self) -> enemy.Enemy:
         enemy_name = random.choice(self.enemy_list)
         enemy_inst = data_management.search_cache_enemy_by_name(enemy_name)
-        stats = {'MAXHP': 25,
-                 'HP': 25,
-                 'MAXMP': 10,
-                 'MP': 10,
-                 'ATK': 10,
-                 'DEF': 10,
-                 'MATK': 10,
-                 'MDEF': 10,
-                 'SPEED': 10
-                 }
-        return enemy.Enemy(enemy_inst.name, stats, enemy_inst.xp_reward, enemy_inst.gold_reward,
+        return enemy.Enemy(enemy_inst.name, enemy_inst.stats, enemy_inst.xp_reward, enemy_inst.gold_reward,
                            enemy_inst.possible_loot, enemy_inst.loot_chance, enemy_inst.image_url,
                            enemy_inst.is_boss)
 

@@ -32,7 +32,7 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(f"{self.name} fully heals!")
+        messager.add_message(self.name, f"{self.name} fully heals!")
         self.stats['HP'] = self.stats['MAXHP']
 
     def fully_recover_mp(self) -> None:
@@ -42,7 +42,7 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(f"{self.name} fully recovers its MP!")
+        messager.add_message(self.name, f"{self.name} fully recovers its MP!")
         self.stats['MP'] = self.stats['MAXMP']
 
     def heal(self, amount: int) -> None:
@@ -53,7 +53,7 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(f"{self.name} heals for {amount} HP!")
+        messager.add_message(self.name, f"{self.name} heals for {amount} HP!")
         new_hp = self.stats['HP'] + amount
         if new_hp > self.stats['MAXHP']:
             self.fully_heal()
@@ -68,24 +68,12 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(f"{self.name} recovers {amount} MP!")
+        messager.add_message(self.name, f"{self.name} recovers {amount} MP!")
         new_mp = self.stats['MP'] + amount
         if new_mp > self.stats['MAXMP']:
             self.fully_recover_mp()
         else:
             self.stats['MP'] = new_mp
-
-    def normal_attack(self, target: 'Battler') -> None:
-        """
-        Battler executes a normal attack.
-
-        :param target: Battler to attack.
-        :return: None.
-        """
-
-        dmg = formulas.normal_attack_dmg(self.stats['ATK'], self.stats['DEF'])
-        messager.add_message(f"{self.name} attacks {target.name} and deals {dmg} damage!")
-        target.take_dmg(dmg)
 
     def take_dmg(self, dmg: int) -> None:
         """

@@ -5,6 +5,9 @@ import enemy
 import equipment
 import item
 import job
+import messager
+import player
+import shop
 
 """
 //////////////////
@@ -19,6 +22,26 @@ JOB_CACHE = []
 PLAYER_CACHE = []
 ENEMIES_CACHE = []
 BATTLE_CACHE = []
+SHOP_CACHE = []
+
+
+"""
+///////////////
+/// CREATES ///
+///////////////
+"""
+
+
+def create_new_player(player_name: str) -> None:
+    """
+    Records and creates a new player in the system.
+
+    :param player_name: Player's name.
+    :return: None.
+    """
+    PLAYER_CACHE.append(player.Player(player_name))
+    messager.messager_add_player(player_name)
+
 
 """
 ///////////////
@@ -108,7 +131,7 @@ def delete_cache_battle_by_player(player_name: str) -> None:
 """
 
 
-def load_items_from_csv():
+def load_items_from_csv() -> None:
     """
     Loads items from CSV file.
 
@@ -122,7 +145,7 @@ def load_items_from_csv():
             ITEM_CACHE.append(item.Item(row[0], row[1], int(row[2]), row[3]))
 
 
-def load_equipment_from_csv():
+def load_equipment_from_csv() -> None:
     """
     Loads equipment from CSV file.
 
@@ -136,7 +159,7 @@ def load_equipment_from_csv():
             EQUIPMENT_CACHE.append(equipment.Equipment(row[0], row[1], int(row[2]), row[3], row[4], eval(row[5])))
 
 
-def load_enemies_from_csv():
+def load_enemies_from_csv() -> None:
     """
     Loads enemies from CSV file.
 
@@ -152,7 +175,7 @@ def load_enemies_from_csv():
                                              row[6], bool(row[7])))
 
 
-def load_areas_from_csv():
+def load_areas_from_csv() -> None:
     """
     Loads areas from CSV file.
 
@@ -166,7 +189,7 @@ def load_areas_from_csv():
             AREAS_CACHE.update({int(row[1]): area.Area(row[0], int(row[1]), eval(row[2]), row[3], eval(row[4]))})
 
 
-def load_dungeons_from_csv():
+def load_dungeons_from_csv() -> None:
     """
     Loads dungeons from CSV file.
 
@@ -175,7 +198,7 @@ def load_dungeons_from_csv():
     pass
 
 
-def load_jobs_from_csv():
+def load_jobs_from_csv() -> None:
     """
     Loads jobs from CSV file.
 
@@ -189,11 +212,25 @@ def load_jobs_from_csv():
             JOB_CACHE.append(job.Job(row[0], row[1], eval(row[2]), int(row[3])))
 
 
-def load_players_from_db():
+def load_shops_from_csv() -> None:
+    """
+    Loads shops from CSV file.
+
+    :return: None.
+    """
+    with open("data/shops.csv", 'r', encoding='utf-8') as f:
+        csv_reader = csv.reader(f, delimiter=';')
+        next(csv_reader)  # Skip header row
+
+        for row in csv_reader:
+            SHOP_CACHE.append(shop.Shop(int(row[0]), eval(row[1])))
+
+
+def load_players_from_db() -> None:
     """
     Loads players from database.
 
-    :return: None
+    :return: None.
     """
     pass
 
@@ -206,4 +243,5 @@ def load_everything():
     load_areas_from_csv()
     load_dungeons_from_csv()
     load_jobs_from_csv()
+    load_shops_from_csv()
     load_players_from_db()
