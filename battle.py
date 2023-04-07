@@ -57,6 +57,8 @@ class Battle:
         if loot:
             messager.add_message(self.player.name, f"You looted a {loot}")
             self.player.inventory.add_item(loot, 1)
+        else:
+            messager.add_message(self.player.name, f"You find nothing to loot")
 
 
     """

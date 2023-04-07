@@ -243,5 +243,5 @@ def load_everything():
     load_areas_from_csv()
     load_dungeons_from_csv()
     load_jobs_from_csv()
-    load_shops_from_csv()
+    #load_shops_from_csv()
     load_players_from_db()

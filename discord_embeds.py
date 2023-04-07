@@ -31,15 +31,16 @@ def embed_fight_msg(ctx, player_obj, enemy):
     return embed
 
 
-def embed_victory_msg(ctx):
+def embed_victory_msg(ctx, msg: str):
     '''
     Sends an embed when victorious in combat
 
     :param ctx: Discord CTX
+    :param msg: Victory message
     '''
     embed = discord.Embed(
         title=f'{emojis.SPARKLER_EMOJI} Victory! {emojis.SPARKLER_EMOJI}',
-        description='',
+        description=msg,
         color=discord.Colour.red()
     )
     embed.set_image(url=ctx.author.avatar.url)

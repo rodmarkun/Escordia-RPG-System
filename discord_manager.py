@@ -3,6 +3,8 @@ import os
 import discord
 import discord_embeds
 from discord.ext import commands
+
+import discord_ui
 import interface
 
 # Discord token from VENV
@@ -38,7 +40,7 @@ async def fight(ctx):
     no_error, msgs = interface.begin_battle(ctx.author.name)
     if no_error:
         battle = data_management.search_cache_battle_by_player(ctx.author.name)
-        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy))
+        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 
@@ -55,9 +57,13 @@ async def attack(ctx):
         msg_str = msgs_to_msg_str(msgs)
         # Player won the fight
         if battle is None:
-            await ctx.send(msg_str, embed=discord_embeds.embed_victory_msg(ctx))
+            # This is just for it to be prettier
+            loot_msg = msgs.pop()
+            win_msg = msgs.pop()
+            msg_str = msgs_to_msg_str(msgs)
+            await ctx.send(msg_str, embed=discord_embeds.embed_victory_msg(ctx, f"{win_msg}\n{loot_msg}"))
         else:
-            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy))
+            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 

@@ -58,6 +58,8 @@ class Inventory:
         :return: Str containing all item's info
         """
         inventory_str = ""
+        if len(self.items) == 0:
+            return "You have no items in your inventory."
         for item in self.items:
             i = data_management.search_cache_item_by_name(item)
             inventory_str += f"[x{self.items[item]}] **{i.name}** ({i.object_type})\n"
