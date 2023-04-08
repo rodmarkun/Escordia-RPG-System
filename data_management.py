@@ -105,6 +105,18 @@ def search_cache_item_by_name(item_name: str) -> 'Item':
     return None
 
 
+def search_cache_shop_by_area(area_index: int) -> 'Shop':
+    """
+    Searchs for a shop in the shop cache.
+
+    :param area_index: Area's index.
+    :return: Shop instance. None if not found.
+    """
+    for s in SHOP_CACHE:
+        if s.area_number == area_index:
+            return s
+    return None
+
 """
 ///////////////
 /// DELETES ///
@@ -243,5 +255,5 @@ def load_everything():
     load_areas_from_csv()
     load_dungeons_from_csv()
     load_jobs_from_csv()
-    #load_shops_from_csv()
+    load_shops_from_csv()
     load_players_from_db()

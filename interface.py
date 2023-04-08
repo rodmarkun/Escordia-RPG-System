@@ -2,6 +2,7 @@ import messager
 import player
 import data_management
 import battle
+import shop
 from error_msgs import *
 
 """
@@ -109,3 +110,37 @@ def show_player_inventory(name: str) -> (bool, list):
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
     return True, [player_inst.inventory.show_inventory()]
+
+def show_shop_inventory(name: str) -> (bool, list):
+    """
+    Shows shop's inventory.
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    return True, [data_management.search_cache_shop_by_area(player_inst.current_area).show_items()]
+
+def buy_item(name: str, item_name: str) -> (bool, list):
+    """
+    Player buys an item from the shop.
+
+    :param name: Player's name.
+    :param item_name: Item's name.
+    :return: Bool and list. True if item was bought. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    # TODO - Check if item exists in shop of current area
+
+    shop.buy_item(player_inst, item_name)
+    return True, messager.empty_queue(name)

@@ -108,6 +108,20 @@ async def profile(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 
 
+@bot.command()
+async def shop(ctx):
+    """
+    !shop command
+    Shows the shop of the current area
+    """
+    no_error, msgs = interface.show_shop_inventory(ctx.author.name)
+    if no_error:
+        item_list = data_management.search_cache_shop_by_area(data_management.search_cache_player(ctx.author.name).current_area).item_list
+        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.ItemSelectView(ctx, item_list))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+
+
 def msgs_to_msg_str(msgs: list) -> str:
     """
     Converts a list of messages to a string

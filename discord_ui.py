@@ -42,6 +42,26 @@ class ActionMenu(discord.ui.View):
         if await check_button_pressed(self.ctx, interaction):
             print("Item!")
 
+class ItemSelect(discord.ui.Select):
+    def __init__(self, ctx, item_list):
+        options = [discord.SelectOption(label=i) for i in item_list]
+        super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            item = data_management.search_cache_item_by_name(self.values[0])
+            no_error, msgs = interface.buy_item(self.ctx.author.name, item.name)
+            if no_error:
+                await interaction.response.send_message(msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+class ItemSelectView(discord.ui.View):
+    def __init__(self, ctx, item_list):
+        super().__init__()
+        self.add_item(ItemSelect(ctx, item_list))
+
 def msgs_to_msg_str(msgs: list) -> str:
     """
     Converts a list of messages to a string
