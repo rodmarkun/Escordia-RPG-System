@@ -105,7 +105,7 @@ class Player(Battler):
         """
         Equips an item from the player's inventory.
 
-        :param equipment: Item to equip.
+        :param equipment: Equipment name.
         :return: Boolean and list. True if player was able to equip the item. False if it was not. List
         contains messages.
         """
@@ -127,6 +127,7 @@ class Player(Battler):
             # Adds stats to player
             for stat in e.stat_change_list:
                 self.stats[stat] += e.stat_change_list[stat]
+            messager.add_message(self.name, f'You have equipped your {equipment}.')
             return True, [f'You have successfully equipped your {equipment}.']
         return False, [error_msgs.ERROR_CHARACTER_DOES_NOT_HAVE_THAT_ITEM]
 

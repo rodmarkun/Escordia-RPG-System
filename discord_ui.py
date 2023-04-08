@@ -1,4 +1,6 @@
 import discord
+
+import emojis
 import interface
 import data_management
 import discord_embeds
@@ -42,9 +44,14 @@ class ActionMenu(discord.ui.View):
         if await check_button_pressed(self.ctx, interaction):
             print("Item!")
 
-class ItemSelect(discord.ui.Select):
+class ItemBuySelect(discord.ui.Select):
     def __init__(self, ctx, item_list):
-        options = [discord.SelectOption(label=i) for i in item_list]
+        items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
+        options = [discord.SelectOption(label=i.name,
+                                        description=f"{i.description}"
+                                                    f"{' ' + str(i.stat_change_list) if i.object_type == 'EQUIPMENT' else ''}"
+                                                    f" - {i.individual_value}G",
+                                        emoji=emojis.obj_emoji(i)) for i in items_in_options]
         super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
@@ -57,10 +64,47 @@ class ItemSelect(discord.ui.Select):
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
-class ItemSelectView(discord.ui.View):
+class ItemBuySelectView(discord.ui.View):
     def __init__(self, ctx, item_list):
         super().__init__()
-        self.add_item(ItemSelect(ctx, item_list))
+        self.add_item(ItemBuySelect(ctx, item_list))
+
+class EquipmentSelect(discord.ui.Select):
+    def __init__(self, ctx, item_list, player_equipment):
+        default_option = None
+        if player_equipment is not None:
+            player_equipment = data_management.search_cache_item_by_name(player_equipment)
+            default_option = discord.SelectOption(label=player_equipment.name,
+                                                    description=f"{player_equipment.description}"
+                                                        f"{' ' + str(player_equipment.stat_change_list)}",
+                                                    emoji=emojis.obj_emoji(player_equipment),
+                                                    default=True)
+
+        items_in_options = [data_management.search_cache_item_by_name(i.name) for i in item_list]
+        options = [discord.SelectOption(label=i.name,
+                                        description=f"{i.description}"
+                                                    f"{' ' + str(i.stat_change_list)}",
+                                        emoji=emojis.obj_emoji(i)) for i in items_in_options]
+
+        if default_option is not None:
+            options.append(default_option)
+
+        super().__init__(placeholder="Select an item to equip", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            item = data_management.search_cache_item_by_name(self.values[0])
+            no_error, msgs = interface.equip_item(self.ctx.author.name, item.name)
+            if no_error:
+                await interaction.response.send_message(msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+class EquipmentSelectView(discord.ui.View):
+    def __init__(self, ctx, item_list, player_equipment):
+        super().__init__()
+        self.add_item(EquipmentSelect(ctx, item_list, player_equipment))
 
 def msgs_to_msg_str(msgs: list) -> str:
     """

@@ -144,3 +144,22 @@ def buy_item(name: str, item_name: str) -> (bool, list):
 
     shop.buy_item(player_inst, item_name)
     return True, messager.empty_queue(name)
+
+def equip_item(name: str, item_name: str) -> (bool, list):
+    """
+    Player equips an item from their inventory.
+
+    :param name: Player's name.
+    :param item_name: Item's name.
+    :return: Bool and list. True if item was equipped. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    player_inst.equip_item(item_name)
+    return True, messager.empty_queue(name)

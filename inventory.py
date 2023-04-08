@@ -1,3 +1,4 @@
+import constants
 import data_management
 
 
@@ -64,3 +65,17 @@ class Inventory:
             i = data_management.search_cache_item_by_name(item)
             inventory_str += f"[x{self.items[item]}] **{i.name}** ({i.object_type})\n"
         return inventory_str
+
+    def get_items_from_type(self, item_type: str) -> list:
+        """
+        Returns a list of items from a certain type.
+
+        :param item_type: Item type.
+        :return: List of items.
+        """
+        items = []
+        for item in self.items:
+            i = data_management.search_cache_item_by_name(item)
+            if i.object_type == "EQUIPMENT" and (i.equipment_type == item_type or (item_type == "WEAPON" and i.equipment_type in constants.WEAPON_NAMES)):
+                items.append(i)
+        return items
