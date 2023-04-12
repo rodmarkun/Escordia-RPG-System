@@ -120,7 +120,7 @@ def search_cache_shop_by_area(area_index: int) -> 'Shop':
     return None
 
 
-def search_skill_by_name(skill_name: str) -> 'Skill':
+def search_cache_skill_by_name(skill_name: str) -> 'Skill':
     """
     Searchs for a skill in the skill cache.
 
@@ -131,6 +131,7 @@ def search_skill_by_name(skill_name: str) -> 'Skill':
         if s.name.lower() == skill_name.lower():
             return s
     return None
+
 
 """
 ///////////////

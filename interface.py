@@ -60,7 +60,26 @@ def normal_attack(name: str) -> (bool, list):
 
     battle_inst = data_management.search_cache_battle_by_player(name)
     if battle_inst is not None:
-        return True, battle_inst.turn("NORMAL_ATTACK")
+        return True, battle_inst.turn({"ACTION": "NORMAL_ATTACK"})
+    return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
+
+
+def skill_attack(name: str, skill_name: str) -> (bool, list):
+    """
+    Player performs a skill attack against the enemy.
+
+    :param name: Player's name.
+    :param skill_name: Skill's name.
+    :return: Bool and List. True if attack was performed. False if there were errors. String contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    battle_inst = data_management.search_cache_battle_by_player(name)
+    if battle_inst is not None:
+        return True, battle_inst.turn({"ACTION": "SKILL", "SKILL": skill_name})
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
 
 

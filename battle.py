@@ -35,13 +35,15 @@ class Battle:
         :return: List of information strings about turn's events.
         """
 
-        if player_action == "NORMAL_ATTACK":
+        if player_action["ACTION"] == "NORMAL_ATTACK":
             normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
-            if self.enemy.alive:
-                normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
-            else:
-                messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
-                self.win_battle()
+        elif player_action["ACTION"] == "SKILL":
+            perform_skill(self.player, self.enemy, player_action["SKILL"], self.player.name)
+        if self.enemy.alive:
+            normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
+        else:
+            messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
+            self.win_battle()
         return messager.empty_queue(self.player.name)
 
     def win_battle(self) -> None:
@@ -121,8 +123,14 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: str, player_nam
     """
     Battler executes a skill.
 
+    :param attacker: Battler executing the skill.
     :param target: Battler to attack.
     :param skill: Skill to be executed.
+    :param player_name: Name of the player.
     :return: None.
     """
-
+    skill = data_management.search_cache_skill_by_name(skill)
+    if attacker.pay_mana_cost(skill.mp_cost):
+        skill.effect(attacker, target)
+    else:
+        messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")

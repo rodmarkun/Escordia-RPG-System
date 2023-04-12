@@ -68,6 +68,9 @@ class HealingMagicalSkill(Skill):
         :param target: Battler that is the target of the skill.
         :return: None.
         """
+        # TODO: Change this to a select target
+        target = caster
+
         messager.add_message(caster.name, f"{caster.name} casts {self.name}!")
         if self.is_percent:
             amount = int(target.stats['MAXHP'] * (self.heal_power / 100))

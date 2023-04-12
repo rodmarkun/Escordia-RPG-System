@@ -101,6 +101,19 @@ class Battler:
 
         print(f"{self.name} has died.")
 
+    def pay_mana_cost(self, cost: int) -> bool:
+        """
+        Pays the mana cost for a certain action.
+
+        :param cost: Mana cost.
+        :return: True if player has enough mana. False if not.
+        """
+
+        if self.stats['MP'] >= cost:
+            self.stats['MP'] -= cost
+            return True
+        return False
+
     """
     //////////////////
     /// PROPERTIES ///

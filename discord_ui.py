@@ -5,6 +5,7 @@ import interface
 import data_management
 import discord_embeds
 
+
 class ActionMenu(discord.ui.View):
     """
     Class that handles the menu while in combat.
@@ -37,12 +38,14 @@ class ActionMenu(discord.ui.View):
     @discord.ui.button(label="Skill", style=discord.ButtonStyle.primary)
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
-            print("Skill!")
+            battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
+            await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}", view=SkillSelectView(self.ctx, battle.player.skills))
 
     @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             print("Item!")
+
 
 class ItemBuySelect(discord.ui.Select):
     def __init__(self, ctx, item_list):
@@ -64,10 +67,12 @@ class ItemBuySelect(discord.ui.Select):
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
+
 class ItemBuySelectView(discord.ui.View):
     def __init__(self, ctx, item_list):
         super().__init__()
         self.add_item(ItemBuySelect(ctx, item_list))
+
 
 class EquipmentSelect(discord.ui.Select):
     def __init__(self, ctx, item_list, player_equipment):
@@ -101,10 +106,51 @@ class EquipmentSelect(discord.ui.Select):
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
+
 class EquipmentSelectView(discord.ui.View):
     def __init__(self, ctx, item_list, player_equipment):
         super().__init__()
         self.add_item(EquipmentSelect(ctx, item_list, player_equipment))
+
+
+class SkillSelect(discord.ui.Select):
+    def __init__(self, ctx, skill_list):
+        skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
+        options = [discord.SelectOption(label=s.name,
+                                        description=f"{s.description}",
+                                        emoji=emojis.skill_emoji(s)) for s in skills_in_options]
+        super().__init__(placeholder="Select a skill to perform", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            skill = data_management.search_cache_skill_by_name(self.values[0])
+            no_error, msgs = interface.skill_attack(self.ctx.author.name, skill.name)
+            if no_error:
+                battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
+                msg_str = msgs_to_msg_str(msgs)
+                # Player won the fight
+                if battle is None:
+                    # This is not the best way to do this
+                    loot_msg = msgs.pop()
+                    win_msg = msgs.pop()
+                    msg_str = msgs_to_msg_str(msgs)
+                    await self.ctx.send(msg_str,
+                                        embed=discord_embeds.embed_victory_msg(self.ctx, f"{win_msg}\n{loot_msg}"))
+                else:
+                    await self.ctx.send(msg_str,
+                                        embed=discord_embeds.embed_fight_msg(self.ctx, battle.player, battle.enemy),
+                                        view=ActionMenu(self.ctx))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+            await interaction.response.defer()
+
+
+class SkillSelectView(discord.ui.View):
+    def __init__(self, ctx, skill_list):
+        super().__init__()
+        self.add_item(SkillSelect(ctx, skill_list))
+
 
 def msgs_to_msg_str(msgs: list) -> str:
     """
@@ -117,6 +163,7 @@ def msgs_to_msg_str(msgs: list) -> str:
     for msg in msgs:
         msg_str += msg + '\n'
     return msg_str
+
 
 async def check_button_pressed(ctx, interaction) -> bool:
     """
