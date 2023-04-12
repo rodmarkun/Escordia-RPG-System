@@ -8,6 +8,7 @@ import job
 import messager
 import player
 import shop
+import skill
 
 """
 //////////////////
@@ -23,6 +24,7 @@ PLAYER_CACHE = []
 ENEMIES_CACHE = []
 BATTLE_CACHE = []
 SHOP_CACHE = []
+SKILLS_CACHE = []
 
 
 """
@@ -114,6 +116,19 @@ def search_cache_shop_by_area(area_index: int) -> 'Shop':
     """
     for s in SHOP_CACHE:
         if s.area_number == area_index:
+            return s
+    return None
+
+
+def search_skill_by_name(skill_name: str) -> 'Skill':
+    """
+    Searchs for a skill in the skill cache.
+
+    :param skill_name: Skill's name.
+    :return: Skill instance. None if not found.
+    """
+    for s in SKILLS_CACHE:
+        if s.name.lower() == skill_name.lower():
             return s
     return None
 
@@ -238,6 +253,23 @@ def load_shops_from_csv() -> None:
             SHOP_CACHE.append(shop.Shop(int(row[0]), eval(row[1])))
 
 
+def load_skills_from_csv() -> None:
+    """
+    Loads skills from CSV file.
+
+    :return: None.
+    """
+    with open("data/skills.csv", 'r', encoding='utf-8') as f:
+        csv_reader = csv.reader(f, delimiter=';')
+        next(csv_reader)  # Skip header row
+
+        for row in csv_reader:
+            if row[3] == "HEALING_MAGIC":
+                SKILLS_CACHE.append(skill.HealingMagicalSkill(row[0], row[1], int(row[2]), int(row[4]), eval(row[5])))
+            elif row[3] == "DAMAGING_MAGIC":
+                SKILLS_CACHE.append(skill.DamagingMagicalSkill(row[0], row[1], int(row[2]), int(row[4]), int(row[5])))
+
+
 def load_players_from_db() -> None:
     """
     Loads players from database.
@@ -256,4 +288,5 @@ def load_everything():
     load_dungeons_from_csv()
     load_jobs_from_csv()
     load_shops_from_csv()
+    load_skills_from_csv()
     load_players_from_db()

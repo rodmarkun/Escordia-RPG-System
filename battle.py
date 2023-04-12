@@ -117,3 +117,12 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
         messager.add_message(player_name, f"{attacker.name}'s attack missed!")
 
 
+def perform_skill(attacker: 'Battler', target: 'Battler', skill: str, player_name: str) -> None:
+    """
+    Battler executes a skill.
+
+    :param target: Battler to attack.
+    :param skill: Skill to be executed.
+    :return: None.
+    """
+

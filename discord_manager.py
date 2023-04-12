@@ -142,9 +142,9 @@ async def equipment(ctx):
     for e_type in constants.EQUIPMENT_NAMES:
         item_list = player_inst.inventory.get_items_from_type(e_type)
         if len(item_list) == 0 and player_inst.equipment[e_type] is None:
-            await ctx.send(f"You don't have any {e_type}")
+            await ctx.send(f"**{e_type}**\nYou don't have any.")
         else:
-            await ctx.send(e_type, view = discord_ui.EquipmentSelectView(ctx, item_list, player_inst.equipment[e_type]))
+            await ctx.send(f"**{e_type}**", view=discord_ui.EquipmentSelectView(ctx, item_list, player_inst.equipment[e_type]))
 
 
 def msgs_to_msg_str(msgs: list) -> str:

@@ -61,3 +61,28 @@ def normal_attack_dmg(atk_value: int, def_value: int) -> int:
     """
 
     return round(atk_value * (100 / (100 + def_value * 2.5)))
+
+
+def healing_spell_power(spell_power: int, matk_value: int) -> int:
+    """
+    Formula for calculating the healing power of a spell.
+
+    :param spell_power: Spell's power.
+    :param matk_value: Magic ATK of casting Battler.
+    :return:
+    """
+
+    return int(spell_power * (100 / (100 + matk_value * 2.5)))
+
+
+def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> int:
+    """
+    Formula for calculating the damage power of a spell.
+
+    :param spell_power: Spell's power.
+    :param matk_value: Magic ATK of casting Battler.
+    :param mdef_value: Magic DEF of defending Battler.
+    :return:
+    """
+
+    return int(spell_power * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 2.5)))
