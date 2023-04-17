@@ -1,4 +1,5 @@
 SPARKLER_EMOJI = '\U0001F387'
+SKULL_EMOJI = '\U0001F480'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////

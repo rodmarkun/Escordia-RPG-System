@@ -64,6 +64,27 @@ def normal_attack(name: str) -> (bool, list):
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
 
 
+def check_battle_is_over(name: str) -> (bool, list):
+    """
+    Checks if a battle is over.
+
+    :param name: Player's name.
+    :return: Bool and List. True if battle is over. False if there were errors. String contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    battle_inst = data_management.search_cache_battle_by_player(name)
+    if battle_inst is not None:
+        if battle_inst.is_over:
+            battle_inst.win_battle()
+            return True, messager.empty_queue(name)
+        return False, ["Battle is not over yet."]
+    return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
+
+
 def skill_attack(name: str, skill_name: str) -> (bool, list):
     """
     Player performs a skill attack against the enemy.

@@ -7,6 +7,7 @@ from discord.ext import commands
 
 import discord_ui
 import interface
+import messager
 
 from error_msgs import *
 
@@ -59,12 +60,16 @@ async def attack(ctx):
         battle = data_management.search_cache_battle_by_player(ctx.author.name)
         msg_str = msgs_to_msg_str(msgs)
         # Player won the fight
-        if battle is None:
-            # This is just for it to be prettier
-            loot_msg = msgs.pop()
-            win_msg = msgs.pop()
+        if battle.is_over:
             msg_str = msgs_to_msg_str(msgs)
-            await ctx.send(msg_str, embed=discord_embeds.embed_victory_msg(ctx, f"{win_msg}\n{loot_msg}"))
+            await ctx.send(msg_str)
+            if battle.player.alive:
+                battle.win_battle()
+                await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(messager.empty_queue(ctx.author.name))))
+            else:
+                battle.lose_battle()
+                await ctx.send('', embed=discord_embeds.embed_death_msg(ctx, msgs_to_msg_str(
+                    messager.empty_queue(ctx.author.name))))
         else:
             await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:

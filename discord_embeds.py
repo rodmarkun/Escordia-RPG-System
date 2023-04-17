@@ -2,6 +2,7 @@ import discord
 from StringProgressBar import progressBar
 
 import emojis
+import formulas
 import messager
 
 
@@ -27,7 +28,9 @@ def embed_fight_msg(ctx, player_obj, enemy):
     embed.set_image(url=ctx.author.avatar.url)
     embed.set_footer(
         text=f'{player_obj.name}\nHP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
-             f'{player_obj.stats["MP"]}/{player_obj.stats["MAXMP"]} | {player_mp_bar[0]}')
+             f'{player_obj.stats["MP"]}/{player_obj.stats["MAXMP"]} | {player_mp_bar[0]}\nHit chance: '
+             f'{100 - formulas.miss_formula(player_obj.stats["SPEED"], enemy.stats["SPEED"])}% | Critical chance: '
+             f'{player_obj.stats["CRITCH"]}%')
     return embed
 
 
@@ -41,6 +44,22 @@ def embed_victory_msg(ctx, msg: str):
     embed = discord.Embed(
         title=f'{emojis.SPARKLER_EMOJI} Victory! {emojis.SPARKLER_EMOJI}',
         description=msg,
+        color=discord.Colour.red()
+    )
+    embed.set_image(url=ctx.author.avatar.url)
+    return embed
+
+
+def embed_death_msg(ctx, msg: str):
+    '''
+    Sends an embed when victorious in combat
+
+    :param ctx: Discord CTX
+    :param msg: Victory message
+    '''
+    embed = discord.Embed(
+        title=f'{emojis.SKULL_EMOJI} Death {emojis.SKULL_EMOJI}',
+        description='You have died.',
         color=discord.Colour.red()
     )
     embed.set_image(url=ctx.author.avatar.url)

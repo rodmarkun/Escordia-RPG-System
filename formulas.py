@@ -24,17 +24,16 @@ def money_lost_when_dying(money: int) -> int:
     return money // 2
 
 
-def check_miss(atk_speed: int, def_speed: int) -> bool:
+def miss_formula(atk_speed: int, def_speed: int) -> int:
     """
-    Formula for rolling if an attack misses or not. Depends on attacker's and defender's speed.
+    Formula for calculating the chance of missing an attack.
 
     :param atk_speed: Attacker's speed.
     :param def_speed: Defender's speed.
-    :return: True if attack misses. False if not.
+    :return: Chance of missing an attack.
     """
 
-    chance = math.floor(math.sqrt(max(0, (5 * def_speed - atk_speed * 2))))
-    return chance > random.randint(0, 100)
+    return math.floor(math.sqrt(max(0, (5 * def_speed - atk_speed * 2))))
 
 
 def check_for_critical_damage(attacker: 'Battler', dmg: int) -> (int, bool):

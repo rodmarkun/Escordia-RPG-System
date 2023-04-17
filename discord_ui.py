@@ -4,6 +4,7 @@ import emojis
 import interface
 import data_management
 import discord_embeds
+import messager
 
 
 class ActionMenu(discord.ui.View):
@@ -23,14 +24,20 @@ class ActionMenu(discord.ui.View):
                 battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
                 msg_str = msgs_to_msg_str(msgs)
                 # Player won the fight
-                if battle is None:
-                    # This is not the best way to do this
-                    loot_msg = msgs.pop()
-                    win_msg = msgs.pop()
+                if battle.is_over:
                     msg_str = msgs_to_msg_str(msgs)
-                    await self.ctx.send(msg_str, embed=discord_embeds.embed_victory_msg(self.ctx, f"{win_msg}\n{loot_msg}"))
+                    await self.ctx.send(msg_str)
+                    if battle.player.alive:
+                        battle.win_battle()
+                        await self.ctx.send('', embed=discord_embeds.embed_victory_msg(self.ctx, msgs_to_msg_str(
+                            messager.empty_queue(self.ctx.author.name))))
+                    else:
+                        battle.lose_battle()
+                        await self.ctx.send('', embed=discord_embeds.embed_death_msg(self.ctx, msgs_to_msg_str(
+                            messager.empty_queue(self.ctx.author.name))))
                 else:
-                    await self.ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(self.ctx, battle.player, battle.enemy), view=ActionMenu(self.ctx))
+                    await self.ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(self.ctx, battle.player, battle.enemy),
+                                   view=ActionMenu(self.ctx))
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
             await interaction.response.defer()

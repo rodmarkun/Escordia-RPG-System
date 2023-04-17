@@ -1,4 +1,7 @@
+import random
+
 import data_management
+import emojis
 import formulas
 import messager
 from player import Player
@@ -20,6 +23,7 @@ class Battle:
         print(f"Initializing battle with Player: {player.name} and Enemy: {enemy.name}")
         self.player = player
         self.enemy = enemy
+        self.is_over = False
 
     """
     ///////////////
@@ -41,12 +45,19 @@ class Battle:
             perform_skill(self.player, self.enemy, player_action["SKILL"], self.player.name)
         if self.enemy.alive:
             normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
+            if not self.player.alive:
+                self.is_over = True
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
-            self.win_battle()
+            self.is_over = True
         return messager.empty_queue(self.player.name)
 
     def win_battle(self) -> None:
+        """
+        Player wins the battle.
+
+        :return: None
+        """
         data_management.delete_cache_battle_by_player(self.player.name)
 
         messager.add_message(self.player.name, f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
@@ -61,6 +72,20 @@ class Battle:
             self.player.inventory.add_item(loot, 1)
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
+
+    def lose_battle(self) -> None:
+        """
+        Player loses the battle.
+
+        :return: None
+        """
+        data_management.delete_cache_battle_by_player(self.player.name)
+
+        messager.add_message(self.player.name, f"{self.player.name} lost the battle! You are brought back to safety, "
+                                               f"but half your gold is long gone...")
+
+        self.player.money //= 2
+        self.player.respawn()
 
 
     """
@@ -85,6 +110,14 @@ class Battle:
     def enemy(self, value: Enemy) -> None:
         self._enemy = value
 
+    @property
+    def is_over(self) -> bool:
+        return self._is_over
+
+    @is_over.setter
+    def is_over(self, value: bool) -> None:
+        self._is_over = value
+
 
 def start_battle(player: Player, enemy: Enemy):
     """
@@ -106,7 +139,7 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
     :param target: Battler to attack.
     :return: None.
     """
-    if not formulas.check_miss(attacker.stats['SPEED'], target.stats['SPEED']):
+    if not check_miss(attacker.stats['SPEED'], target.stats['SPEED']):
         dmg = formulas.normal_attack_dmg(attacker.stats['ATK'], target.stats['DEF'])
         dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)
         if is_crit:
@@ -134,3 +167,16 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: str, player_nam
         skill.effect(attacker, target)
     else:
         messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")
+
+
+def check_miss(atk_speed: int, def_speed: int) -> bool:
+    """
+    Formula for rolling if an attack misses or not. Depends on attacker's and defender's speed.
+
+    :param atk_speed: Attacker's speed.
+    :param def_speed: Defender's speed.
+    :return: True if attack misses. False if not.
+    """
+
+    chance = formulas.miss_formula(atk_speed, def_speed)
+    return chance > random.randint(0, 100)
