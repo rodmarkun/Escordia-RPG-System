@@ -1,3 +1,4 @@
+import data_management
 import error_msgs
 import formulas
 import inventory
@@ -27,12 +28,13 @@ class Player(Battler):
         self.money: int = 50
         self.inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
-        self.skills = ["First Aid", "Small Fireball"]
+        self.skills = []
         self.current_area: int = 1
         self.in_fight: bool = False
         self.in_dungeon: bool = False
         self.defeated_bosses: list = []
-        self.job = None
+        self.job_dict = constants.INITIAL_JOB_DICT
+        self.current_job = 'Novice'
 
     """
     ///////////////
@@ -141,6 +143,21 @@ class Player(Battler):
         self.inventory.add_item(equipment, 1)
         for stat in equipment.stat_change_list:
             self.stats[stat] -= equipment.stat_change_list[stat]
+
+    def change_job(self, job_name: str) -> bool:
+        """
+        Changes the player's job.
+
+        :param job_name: Job name.
+        :return: True if job was changed, False if it was not.
+        """
+
+        if data_management.search_cache_job_by_name(job_name) is not None:
+            # TODO - Add job change requirements logic
+            self.current_job = job_name
+            messager.add_message(self.name, f'Your job is now {job_name}!')
+            return True
+        return False
 
     def die(self) -> None:
         """
@@ -261,11 +278,21 @@ class Player(Battler):
         self._defeated_bosses = value
 
     @property
-    def job(self) -> job.Job:
-        return self._job
+    def job_dict(self) -> dict:
+        return self._job_dict
 
-    @job.setter
-    def job(self, value: 'job.Job') -> None:
+    @job_dict.setter
+    def job_dict(self, value: dict) -> None:
         # if value is None:
         #    raise ValueError(f"A player must always have a valid Job.")
-        self._job = value
+        self._job_dict = value
+
+    @property
+    def current_job(self) -> str:
+        return self._current_job
+
+    @current_job.setter
+    def current_job(self, value: str) -> None:
+        if value is None:
+            raise ValueError(f"A player must always have a valid Job.")
+        self._current_job = value

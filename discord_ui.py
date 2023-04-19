@@ -159,6 +159,32 @@ class SkillSelectView(discord.ui.View):
         self.add_item(SkillSelect(ctx, skill_list))
 
 
+# TODO - Current job as default
+class JobSelect(discord.ui.Select):
+    def __init__(self, ctx, job_list):
+        jobs_in_options = [data_management.search_cache_job_by_name(i) for i in job_list]
+        options = [discord.SelectOption(label=j.name,
+                                        description=f"{j.description}",
+                                        emoji=emojis.job_to_emoji[j.name]) for j in jobs_in_options]
+        super().__init__(placeholder=f"Select a job to change to", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            job = data_management.search_cache_job_by_name(self.values[0])
+            no_error, msgs = interface.change_player_job(self.ctx.author.name, job.name)
+            if no_error:
+                await interaction.response.send_message(msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+
+class JobSelectView(discord.ui.View):
+    def __init__(self, ctx, job_list):
+        super().__init__()
+        self.add_item(JobSelect(ctx, job_list))
+
+
 def msgs_to_msg_str(msgs: list) -> str:
     """
     Converts a list of messages to a string

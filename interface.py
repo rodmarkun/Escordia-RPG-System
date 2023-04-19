@@ -151,6 +151,7 @@ def show_player_inventory(name: str) -> (bool, list):
 
     return True, [player_inst.inventory.show_inventory()]
 
+
 def show_shop_inventory(name: str) -> (bool, list):
     """
     Shows shop's inventory.
@@ -163,6 +164,7 @@ def show_shop_inventory(name: str) -> (bool, list):
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
     return True, [data_management.search_cache_shop_by_area(player_inst.current_area).show_items()]
+
 
 def buy_item(name: str, item_name: str) -> (bool, list):
     """
@@ -185,6 +187,7 @@ def buy_item(name: str, item_name: str) -> (bool, list):
     shop.buy_item(player_inst, item_name)
     return True, messager.empty_queue(name)
 
+
 def equip_item(name: str, item_name: str) -> (bool, list):
     """
     Player equips an item from their inventory.
@@ -203,3 +206,39 @@ def equip_item(name: str, item_name: str) -> (bool, list):
 
     player_inst.equip_item(item_name)
     return True, messager.empty_queue(name)
+
+
+def show_player_job(name: str) -> (bool, list):
+    """
+    Shows player's job.
+
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    return True, [f"{player_inst.name}, your current job is {player_inst.current_job}"]
+
+
+def change_player_job(name: str, job_name: str) -> (bool, list):
+    """
+    Changes player's job.
+
+    :param name: Player's name.
+    :param job_name: Job's name.
+    :return: Bool and list. True if job was changed. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    if player_inst.change_job(job_name):
+        return True, messager.empty_queue(name)
+    return False, [ERROR_JOB_DOES_NOT_EXIST]

@@ -152,6 +152,19 @@ async def equipment(ctx):
             await ctx.send(f"**{e_type}**", view=discord_ui.EquipmentSelectView(ctx, item_list, player_inst.equipment[e_type]))
 
 
+@bot.command()
+async def job(ctx):
+    """
+    !job command
+    Shows player's job, also allows to change it
+    """
+    no_error, msgs = interface.show_player_job(ctx.author.name)
+    if no_error:
+        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+
+
 def msgs_to_msg_str(msgs: list) -> str:
     """
     Converts a list of messages to a string

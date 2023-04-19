@@ -133,6 +133,19 @@ def search_cache_skill_by_name(skill_name: str) -> 'Skill':
     return None
 
 
+def search_cache_job_by_name(job_name: str) -> 'Job':
+    """
+    Searchs for a job in the job cache.
+
+    :param job_name: Job's name.
+    :return: Job instance. None if not found.
+    """
+    for j in JOB_CACHE:
+        if j.name.lower() == job_name.lower():
+            return j
+    return None
+
+
 """
 ///////////////
 /// DELETES ///
