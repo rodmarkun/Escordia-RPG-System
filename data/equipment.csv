@@ -1,5 +1,0 @@
-NAME;DESCRIPTION;INDIV_VALUE;OBJECT_TYPE;EQUIPMENT_TYPE;STAT_CHANGE_LIST
-Novice Sword;A novice's sword.;10;EQUIPMENT;SWORD;{"ATK": 3}
-Novice Dagger;A novice's dagger.;10;EQUIPMENT;DAGGER;{'ATK' : 1, 'CRITCH': 5, 'SPEED' : 1}
-Novice Staff;A novice's staff.;10;EQUIPMENT;STAFF;{"MATK": 3}
-Novice Armor;Starter armor.;10;EQUIPMENT;ARMOR;{"DEF": 3}

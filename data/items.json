@@ -1,0 +1,20 @@
+[
+  {
+    "NAME": "Bat Wing",
+    "DESCRIPTION": "A bat's wing.",
+    "INDIV_VALUE": 6,
+    "OBJECT_TYPE": "LOOT"
+  },
+  {
+    "NAME": "Wolf Fur",
+    "DESCRIPTION": "A bat's wing.",
+    "INDIV_VALUE": 6,
+    "OBJECT_TYPE": "LOOT"
+  },
+  {
+    "NAME": "Ant Fang",
+    "DESCRIPTION": "A bat's wing.",
+    "INDIV_VALUE": 6,
+    "OBJECT_TYPE": "LOOT"
+  }
+]

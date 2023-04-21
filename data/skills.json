@@ -1,0 +1,20 @@
+[
+  {
+    "NAME": "First Aid",
+    "DESCRIPTION": "Perform an improvised healing on yourself.",
+    "MP_COST": "3",
+    "TYPE": "HEALING_MAGIC",
+    "POWER": "10",
+    "ELEMENT": null,
+    "STATUS_EFFECT": null
+  },
+  {
+    "NAME": "Small Fireball",
+    "DESCRIPTION": "Launch fire from your fingertips!",
+    "MP_COST": "5",
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": "10",
+    "ELEMENT": "FIRE",
+    "STATUS_EFFECT": null
+  }
+]

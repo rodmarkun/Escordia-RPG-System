@@ -1,4 +1,0 @@
-NAME;STATS;XP_REWARD;GOLD_REWARD;POSSIBLE_LOOT;LOOT_CHANCE;IMAGE_URL;IS_BOSS
-Bat;{'MAXHP': 12,'HP': 12,'MAXMP': 10,'MP': 10,'ATK': 4,'DEF': 8,'MATK': 1,'MDEF': 1,'SPEED': 12};15;7;Bat Wing;70;https://i.postimg.cc/fLsrwz3Z/Colossal-Bat.png;False
-Wolf;{'MAXHP': 20,'HP': 20,'MAXMP': 10,'MP': 10,'ATK': 6,'DEF': 8,'MATK': 1,'MDEF': 5,'SPEED': 9};22;13;Wolf Fur;70;https://i.postimg.cc/1R65TbDJ/Mountain-Wolf.png;False
-Lion Ant;{'MAXHP': 18,'HP': 18,'MAXMP': 10,'MP': 10,'ATK': 5,'DEF': 9,'MATK': 1,'MDEF': 9,'SPEED': 7};19;10;Ant Fang;70;https://i.postimg.cc/tCq5Dgyc/Insects-Ant-Lion.png;False

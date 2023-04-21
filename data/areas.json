@@ -1,0 +1,9 @@
+[
+    {
+      "NAME": "Area 1",
+      "NUMBER": 1,
+      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant"],
+      "BOSS": "None",
+      "DUNGEONS": []
+    }
+]

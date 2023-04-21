@@ -1,4 +1,3 @@
-import messager
 import random
 from battler import Battler
 
@@ -15,13 +14,14 @@ class Enemy(Battler):
     """
 
     def __init__(self, name, stats, xp_reward, gold_reward, possible_loot=None, loot_chance=0,
-                 image_url='', is_boss=False):
+                 skills=[], image_url='', is_boss=False):
         super().__init__(name, stats)
 
         self.xp_reward = xp_reward
         self.gold_reward = gold_reward
         self.possible_loot = possible_loot
         self.loot_chance = loot_chance
+        self.skills = skills
         self.image_url = image_url
         self.is_boss = is_boss
 

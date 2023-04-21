@@ -44,6 +44,9 @@ async def fight(ctx):
     no_error, msgs = interface.begin_battle(ctx.author.name)
     if no_error:
         battle = data_management.search_cache_battle_by_player(ctx.author.name)
+
+        print(battle.enemy.__dict__)
+
         await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
@@ -137,7 +140,6 @@ async def equipment(ctx):
     Shows player's equipment
     """
 
-    # This shouldn't be here but there is no other way to safely do it
     player_inst = data_management.search_cache_player(ctx.author.name)
     if player_inst is None:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CHARACTER_DOES_NOT_EXIST}')
@@ -160,7 +162,7 @@ async def job(ctx):
     """
     no_error, msgs = interface.show_player_job(ctx.author.name)
     if no_error:
-        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
+        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice', 'Warrior', 'Rogue', 'Mage']))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 

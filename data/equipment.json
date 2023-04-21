@@ -1,0 +1,45 @@
+[
+    {
+      "NAME": "Novice Sword",
+      "DESCRIPTION": "A novice's sword.",
+      "INDIV_VALUE": 10,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "SWORD",
+      "STAT_CHANGE_LIST": {
+        "ATK": 3
+      }
+    },
+    {
+      "NAME": "Novice Dagger",
+      "DESCRIPTION": "A novice's dagger.",
+      "INDIV_VALUE": 10,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "DAGGER",
+      "STAT_CHANGE_LIST": {
+        "ATK": 1,
+        "CRITCH": 5,
+        "SPEED": 1
+      }
+    },
+    {
+      "NAME": "Novice Staff",
+      "DESCRIPTION": "A novice's staff.",
+      "INDIV_VALUE": 10,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "STAFF",
+      "STAT_CHANGE_LIST": {
+        "MATK": 3
+      }
+    },
+    {
+      "NAME": "Novice Armor",
+      "DESCRIPTION": "Starter armor.",
+      "INDIV_VALUE": 10,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "ARMOR",
+      "STAT_CHANGE_LIST": {
+        "DEF": 3
+      }
+    }
+  ]
+  

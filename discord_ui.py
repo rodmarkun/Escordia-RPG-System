@@ -46,7 +46,10 @@ class ActionMenu(discord.ui.View):
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
-            await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}", view=SkillSelectView(self.ctx, battle.player.skills))
+            if len(battle.player.skills) == 0:
+                await self.ctx.send(f"**Escordia Error** - {self.ctx.author.mention}: You have no skills to use!")
+            else:
+                await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}", view=SkillSelectView(self.ctx, battle.player.skills))
 
     @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):

@@ -1,6 +1,8 @@
 import csv
+import json
 
 import area
+import constants
 import enemy
 import equipment
 import item
@@ -178,12 +180,12 @@ def load_items_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/items.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/items.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            ITEM_CACHE.append(item.Item(row[0], row[1], int(row[2]), row[3]))
+        for i in json_file:
+            param_list = [i[key] for key in constants.ITEM_KEYS]
+            ITEM_CACHE.append(item.Item(*param_list))
 
 
 def load_equipment_from_csv() -> None:
@@ -192,12 +194,12 @@ def load_equipment_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/equipment.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/equipment.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            EQUIPMENT_CACHE.append(equipment.Equipment(row[0], row[1], int(row[2]), row[3], row[4], eval(row[5])))
+        for e in json_file:
+            param_list = [e[key] for key in constants.EQUIPMENT_KEYS]
+            EQUIPMENT_CACHE.append(equipment.Equipment(*param_list))
 
 
 def load_enemies_from_csv() -> None:
@@ -206,14 +208,16 @@ def load_enemies_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/enemies.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/enemies.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            print(row)
-            ENEMIES_CACHE.append(enemy.Enemy(row[0], eval(row[1]), int(row[2]), int(row[3]), row[4], int(row[5]),
-                                             row[6], bool(row[7])))
+        for e in json_file:
+            # why does this not work ¿?¿?¿?
+            param_list = [e[key] for key in constants.ENEMY_KEYS]
+            print(*param_list)
+            ENEMIES_CACHE.append(enemy.Enemy(*param_list))
+            #ENEMIES_CACHE.append(enemy.Enemy(e["NAME"], e["STATS"], e["XP_REWARD"], e["GOLD_REWARD"], e["POSSIBLE_LOOT"],
+            #                                 e["LOOT_CHANCE"], e["SKILLS"], e["IMAGE_URL"], e["IS_BOSS"]))
 
 
 def load_areas_from_csv() -> None:
@@ -222,12 +226,12 @@ def load_areas_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/areas.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/areas.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            AREAS_CACHE.update({int(row[1]): area.Area(row[0], int(row[1]), eval(row[2]), row[3], eval(row[4]))})
+        for a in json_file:
+            param_list = [a[key] for key in constants.AREAS_KEYS]
+            AREAS_CACHE.update({a["NUMBER"]: area.Area(*param_list)})
 
 
 def load_dungeons_from_csv() -> None:
@@ -245,12 +249,12 @@ def load_jobs_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/jobs.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/jobs.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            JOB_CACHE.append(job.Job(row[0], row[1], eval(row[2]), int(row[3])))
+        for j in json_file:
+            param_list = [j[key] for key in constants.JOB_KEYS]
+            JOB_CACHE.append(job.Job(*param_list))
 
 
 def load_shops_from_csv() -> None:
@@ -259,12 +263,12 @@ def load_shops_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/shops.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/shops.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            SHOP_CACHE.append(shop.Shop(int(row[0]), eval(row[1])))
+        for s in json_file:
+            param_list = [s[key] for key in constants.SHOP_KEYS]
+            SHOP_CACHE.append(shop.Shop(*param_list))
 
 
 def load_skills_from_csv() -> None:
@@ -273,15 +277,12 @@ def load_skills_from_csv() -> None:
 
     :return: None.
     """
-    with open("data/skills.csv", 'r', encoding='utf-8') as f:
-        csv_reader = csv.reader(f, delimiter=';')
-        next(csv_reader)  # Skip header row
+    with open("data/skills.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
 
-        for row in csv_reader:
-            if row[3] == "HEALING_MAGIC":
-                SKILLS_CACHE.append(skill.HealingMagicalSkill(row[0], row[1], int(row[2]), int(row[4]), eval(row[5])))
-            elif row[3] == "DAMAGING_MAGIC":
-                SKILLS_CACHE.append(skill.DamagingMagicalSkill(row[0], row[1], int(row[2]), int(row[4]), int(row[5])))
+        for s in json_file:
+            param_list = [s[key] for key in constants.SKILL_KEYS]
+            SKILLS_CACHE.append(skill.Skill(*param_list))
 
 
 def load_players_from_db() -> None:

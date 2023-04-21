@@ -1,3 +1,0 @@
-NAME;DESCRIPTION;MP_COST;TYPE;POWER;EXTRA_PARAM
-First Aid;Perform an improvised healing on yourself.;3;HEALING_MAGIC;10;False
-Small Fireball;Launch fire from your fingertips!;5;DAMAGING_MAGIC;10;1
