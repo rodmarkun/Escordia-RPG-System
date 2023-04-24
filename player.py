@@ -2,7 +2,6 @@ import data_management
 import error_msgs
 import formulas
 import inventory
-import job
 import messager
 from battler import Battler
 import constants
@@ -25,10 +24,12 @@ class Player(Battler):
         self.lvl: int = 1
         self.xp: int = 0
         self.xp_to_next_lvl: int = 15
+        self.xp_rate = 1
         self.money: int = 50
         self.inventory: inventory.Inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
-        self.skills = ['First Aid', 'Small Fireball', 'Ice Bolt', 'Ignis Ardere']
+        self.skills: list = ['First Aid', 'Small Fireball', 'Ice Bolt', 'Ignis Ardere', 'Quickflame']
+        self.passives: list = []
         self.current_area: int = 1
         self.in_fight: bool = False
         self.in_dungeon: bool = False
@@ -51,6 +52,7 @@ class Player(Battler):
         :return: True if player levels up, False if it does not.
         """
 
+        exp *= self.xp_rate
         self.xp += exp
         leveled_up = False
 
@@ -62,7 +64,8 @@ class Player(Battler):
             # You can change this formula for different exp progression
             self.xp_to_next_lvl = formulas.xp_next_lvl_formula(self.xp_to_next_lvl, self._lvl)
             for stat in self.stats:
-                self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
+                if stat not in constants.STATS_NOT_UPGRADING_WHEN_LEVELING_UP:
+                    self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
             if constants.FULLY_RECOVER_WHEN_LEVELING_UP:
                 self.stats['HP'] = self.stats['MAXHP']
                 self.stats['MP'] = self.stats['MAXMP']
@@ -228,6 +231,16 @@ class Player(Battler):
         self._xp_to_next_lvl = value
 
     @property
+    def xp_rate(self) -> float:
+        return self._xp_rate
+
+    @xp_rate.setter
+    def xp_rate(self, value: float) -> None:
+        if value < 0:
+            raise ValueError("Player's XP rate cannot be set to a value below 0.")
+        self._xp_rate = value
+
+    @property
     def money(self) -> int:
         return self._money
 
@@ -244,6 +257,22 @@ class Player(Battler):
     @equipment.setter
     def equipment(self, value: dict) -> None:
         self._equipment = value
+
+    @property
+    def skills(self) -> list:
+        return self._skills
+
+    @skills.setter
+    def skills(self, value: list) -> None:
+        self._skills = value
+
+    @property
+    def passives(self) -> list:
+        return self._passives
+
+    @passives.setter
+    def passives(self, value: list) -> None:
+        self._passives = value
 
     @property
     def current_area(self) -> int:

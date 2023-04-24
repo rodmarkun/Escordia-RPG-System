@@ -18,6 +18,8 @@ class Battler:
         self.name = name
         self.stats = stats
         self.alive = True
+        self.weaknesses = []
+        self.resistances = []
 
     """
     ///////////////
@@ -32,7 +34,6 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(self.name, f"{self.name} fully heals!")
         self.stats[constants.HP_STATKEY] = self.stats[constants.MAXHP_STATKEY]
 
     def fully_recover_mp(self) -> None:
@@ -42,7 +43,6 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(self.name, f"{self.name} fully recovers its MP!")
         self.stats[constants.MP_STATKEY] = self.stats[constants.MAXMP_STATKEY]
 
     def heal(self, amount: int) -> None:
@@ -54,7 +54,7 @@ class Battler:
         """
 
         new_hp = self.stats[constants.HP_STATKEY] + amount
-        if new_hp > self.stats[constants.MAXMP_STATKEY]:
+        if new_hp > self.stats[constants.MAXHP_STATKEY]:
             self.fully_heal()
         else:
             self.stats[constants.HP_STATKEY] = new_hp
@@ -73,17 +73,20 @@ class Battler:
         else:
             self.stats['MP'] = new_mp
 
-    def take_damage(self, dmg: int, element: str = None) -> None:
+    def take_damage(self, dmg: int, damage_type: str) -> int:
         """
         Battler takes damage from any source.
         Subtract damage from its health. Also checks if it dies.
 
         :param dmg: Damage about to be taken by the battler.
-        :return: None.
+        :param damage_type: Type of damage.
+        :return: Damage dealt.
         """
 
-        # TODO - Element check
-        
+        if damage_type in self.weaknesses:
+            dmg = round(dmg * 1.35)
+        elif damage_type in self.resistances:
+            dmg = round(dmg * 0.65)
         dmg = max(0, dmg)  # We don't like negative numbers in these lands
         self.stats[constants.HP_STATKEY] -= dmg
 
@@ -91,6 +94,8 @@ class Battler:
         if self.stats[constants.HP_STATKEY] <= 0:
             self.alive = False
             self.die()
+
+        return dmg
 
     def die(self) -> None:
         """

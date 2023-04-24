@@ -1,6 +1,8 @@
 import math
 import random
 
+import constants
+
 
 def xp_next_lvl_formula(xp_to_next_lvl: int, lvl: int) -> int:
     """
@@ -60,7 +62,7 @@ def normal_attack_dmg(atk_value: int, def_value: int) -> int:
     :return: DMG of normal attack.
     """
 
-    return round(atk_value * (100 / (100 + def_value * 2.5)))
+    return round(atk_value * random.uniform(0.9, 1.1) * (100 / (100 + def_value * 2.5)))
 
 
 def healing_spell_power(spell_power: int, matk_value: int) -> int:
@@ -72,7 +74,7 @@ def healing_spell_power(spell_power: int, matk_value: int) -> int:
     :return:
     """
 
-    return int(spell_power * (100 / (100 + matk_value * 2.5)))
+    return int(spell_power * random.uniform(1, 1.25) * (100 / (100 + matk_value * 2.5)))
 
 
 def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> int:
@@ -85,4 +87,13 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     :return:
     """
 
-    return int(spell_power * 1.25 * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 2.5)))
+    return int(spell_power * 1.2 * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 1.5)))
+
+
+def leech_calculation(damage: int) -> int:
+    """
+    Formula for calculating the heal amount caused by leeching.
+    :param damage: Damage dealt.
+    :return: Heal amount.
+    """
+    return round(damage * constants.LEECH_AMOUNT)

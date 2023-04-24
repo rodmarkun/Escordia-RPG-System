@@ -14,7 +14,7 @@ class Enemy(Battler):
     """
 
     def __init__(self, name, stats, xp_reward, gold_reward, possible_loot=None, loot_chance=0,
-                 skills=[], image_url='', is_boss=False):
+                 skills=[], weaknesses=[], resistances=[], image_url='', is_boss=False):
         super().__init__(name, stats)
 
         self.xp_reward = xp_reward
@@ -22,6 +22,8 @@ class Enemy(Battler):
         self.possible_loot = possible_loot
         self.loot_chance = loot_chance
         self.skills = skills
+        self.weaknesses = weaknesses
+        self.resistances = resistances
         self.image_url = image_url
         self.is_boss = is_boss
 
@@ -38,7 +40,6 @@ class Enemy(Battler):
         if self.possible_loot is not None and random.randint(0, 100) <= self.loot_chance:
             return self.possible_loot
         return ''
-
 
     """
     //////////////////

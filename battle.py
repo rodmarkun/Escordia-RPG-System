@@ -40,16 +40,28 @@ class Battle:
         :return: List of information strings about turn's events.
         """
 
+        no_enemy_turn = False
         if player_action["ACTION"] == "NORMAL_ATTACK":
             normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
         elif player_action["ACTION"] == "SKILL":
             skill = data_management.search_cache_skill_by_name(player_action["SKILL"])
-            caster, target = self.skill_based_target_selection(skill)
-            perform_skill(caster, target, skill, self.player.name)
+            target = self.skill_based_target_selection(skill, self.player)
+            perform_skill(self.player, target, skill, self.player.name)
+            if constants.SKILL_TAG_DOES_NOT_SKIP_TURN in skill.tags:
+                no_enemy_turn = True
+
+        print(self.enemy.alive)
         if self.enemy.alive:
-            normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
-            if not self.player.alive:
-                self.is_over = True
+            if not no_enemy_turn:
+                enemy_action = random.choice(constants.POSSIBLE_ENEMY_ACTIONS)
+                if enemy_action == "NORMAL_ATTACK" or len(self.enemy.skills) == 0:
+                    normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
+                elif enemy_action == "SKILL":
+                    skill = data_management.search_cache_skill_by_name(random.choice(self.enemy.skills))
+                    target = self.skill_based_target_selection(skill, self.enemy)
+                    perform_skill(self.enemy, target, skill, self.player.name)
+                if not self.player.alive:
+                    self.is_over = True
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
             self.is_over = True
@@ -90,16 +102,20 @@ class Battle:
         self.player.money //= 2
         self.player.respawn()
 
-    def skill_based_target_selection(self, skill: 'Skill') -> ('Battler', 'Battler'):
+    def skill_based_target_selection(self, skill: 'Skill', caster: 'Battler') -> 'Battler':
         """
         Selects the target of a skill based on its type.
         :param skill: Skill to be executed.
-        :return: Caster and target of the skill.
+        :return: Target of the skill.
         """
         if skill.type == constants.SKILL_TYPE_DMG:
-            return self.player, self.enemy
+            if type(caster) == Player:
+                return self.enemy
+            return self.player
         elif skill.type == constants.SKILL_TYPE_HEAL:
-            return self.player, self.player
+            if type(caster) == Player:
+                return self.player
+            return self.enemy
 
     """
     //////////////////
@@ -160,7 +176,7 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
                                               f"damage!")
         else:
             messager.add_message(player_name, f"{attacker.name} attacks {target.name} and deals {dmg} damage!")
-        target.take_damage(dmg)
+        target.take_damage(dmg, None)
     else:
         messager.add_message(player_name, f"{attacker.name}'s attack missed!")
 
@@ -175,7 +191,7 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: 'Skill', player
     :param player_name: Name of the player.
     :return: None.
     """
-    if attacker.pay_mana_cost(skill.mp_cost):
+    if attacker.pay_mana_cost(skill.mp_cost) or type(attacker) == Enemy:
         skill.effect(player_name, attacker, target)
     else:
         messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")

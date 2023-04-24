@@ -21,6 +21,8 @@ def embed_fight_msg(ctx, player_obj, enemy):
         title=f'Fight - {ctx.author}',
         description=f'You are fighting a **{enemy.name}**.\n'
                     f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}\n'
+                    f'Weak to: {" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n'
+                    f'Resists: {" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}\n'
                     f'What will you do?\n\n',
         color=discord.Colour.red()
     )

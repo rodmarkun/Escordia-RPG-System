@@ -2,7 +2,7 @@
     {
       "NAME": "Area 1",
       "NUMBER": 1,
-      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant"],
+      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant", "Colossal Caterpillar"],
       "BOSS": "None",
       "DUNGEONS": []
     }

@@ -7,7 +7,8 @@
     "POWER": 10,
     "ELEMENT": "HOLY",
     "STATUS_EFFECT": null,
-    "ACTIVATION_TIMES": 1
+    "ACTIVATION_TIMES": 1,
+    "TAGS": []
   },
   {
     "NAME": "Small Fireball",
@@ -17,7 +18,19 @@
     "POWER": 10,
     "ELEMENT": "FIRE",
     "STATUS_EFFECT": null,
-    "ACTIVATION_TIMES": 1
+    "ACTIVATION_TIMES": 1,
+    "TAGS": []
+  },
+  {
+    "NAME": "Quickflame",
+    "DESCRIPTION": "Deal a small amount of fire damage to an enemy. Does not skip the turn.\nPower: 18",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 18,
+    "ELEMENT": "FIRE",
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 1,
+    "TAGS": ["DOES_NOT_SKIP_TURN"]
   },
   {
     "NAME": "Ice Bolt",
@@ -27,7 +40,8 @@
     "POWER": 22,
     "ELEMENT": "ICE",
     "STATUS_EFFECT": null,
-    "ACTIVATION_TIMES": 1
+    "ACTIVATION_TIMES": 1,
+    "TAGS": []
   },
   {
     "NAME": "Ignis Ardere",
@@ -37,6 +51,18 @@
     "POWER": 20,
     "ELEMENT": "FIRE",
     "STATUS_EFFECT": null,
-    "ACTIVATION_TIMES": 3
+    "ACTIVATION_TIMES": 3,
+    "TAGS": []
+  },
+  {
+    "NAME": "Bloodstealer",
+    "DESCRIPTION": "Drain health from your enemy's blood.\nPower: 10",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 10,
+    "ELEMENT": "DARK",
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 1,
+    "TAGS": ["LEECH"]
   }
 ]

@@ -2,21 +2,23 @@
   {
     "NAME": "Bat",
     "STATS": {
-      "MAXHP": 12,
-      "HP": 12,
+      "MAXHP": 15,
+      "HP": 15,
       "MAXMP": 10,
       "MP": 10,
-      "ATK": 4,
-      "DEF": 8,
-      "MATK": 1,
-      "MDEF": 1,
+      "ATK": 5,
+      "DEF": 6,
+      "MATK": 5,
+      "MDEF": 4,
       "SPEED": 12
     },
     "XP_REWARD": 15,
     "GOLD_REWARD": 7,
     "POSSIBLE_LOOT": "Bat Wing",
     "LOOT_CHANCE": 70,
-    "SKILLS": [],
+    "SKILLS": ["Bloodstealer"],
+    "WEAKNESSES": ["THUNDER", "WIND"],
+    "RESISTANCES": ["FIRE"],
     "IMAGE_URL": "https://i.postimg.cc/fLsrwz3Z/Colossal-Bat.png",
     "IS_BOSS": false
   },
@@ -38,6 +40,8 @@
     "POSSIBLE_LOOT": "Wolf Fur",
     "LOOT_CHANCE": 70,
     "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "HOLY"],
+    "RESISTANCES": ["WIND"],
     "IMAGE_URL": "https://i.postimg.cc/1R65TbDJ/Mountain-Wolf.png",
     "IS_BOSS": false
   },
@@ -59,6 +63,8 @@
     "POSSIBLE_LOOT": "Ant Fang",
     "LOOT_CHANCE": 70,
     "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "ICE"],
+    "RESISTANCES": [],
     "IMAGE_URL": "https://i.postimg.cc/tCq5Dgyc/Insects-Ant-Lion.png",
     "IS_BOSS": false
   },
@@ -80,6 +86,8 @@
     "POSSIBLE_LOOT": null,
     "LOOT_CHANCE": 70,
     "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "WIND"],
+    "RESISTANCES": ["ICE", "HOLY"],
     "IMAGE_URL": "https://i.postimg.cc/7PV1Cy7n/Insects-Caterpillar-A.png",
     "IS_BOSS": false
   }
