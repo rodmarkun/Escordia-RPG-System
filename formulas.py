@@ -1,6 +1,7 @@
 import math
 import random
 
+
 def xp_next_lvl_formula(xp_to_next_lvl: int, lvl: int) -> int:
     """
     Formula for calculating how much XP is needed for next level.
@@ -84,4 +85,4 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     :return:
     """
 
-    return int(spell_power * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 2.5)))
+    return int(spell_power * 1.25 * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 2.5)))

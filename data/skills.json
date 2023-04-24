@@ -1,20 +1,42 @@
 [
   {
     "NAME": "First Aid",
-    "DESCRIPTION": "Perform an improvised healing on yourself.",
-    "MP_COST": "3",
+    "DESCRIPTION": "Perform an improvised healing on yourself.\nPower: 10",
+    "MP_COST": 2,
     "TYPE": "HEALING_MAGIC",
-    "POWER": "10",
-    "ELEMENT": null,
-    "STATUS_EFFECT": null
+    "POWER": 10,
+    "ELEMENT": "HOLY",
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 1
   },
   {
     "NAME": "Small Fireball",
-    "DESCRIPTION": "Launch fire from your fingertips!",
-    "MP_COST": "5",
+    "DESCRIPTION": "Deal a small amount of fire damage to an enemy.\nPower: 10",
+    "MP_COST": 2,
     "TYPE": "DAMAGING_MAGIC",
-    "POWER": "10",
+    "POWER": 10,
     "ELEMENT": "FIRE",
-    "STATUS_EFFECT": null
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 1
+  },
+  {
+    "NAME": "Ice Bolt",
+    "DESCRIPTION": "Deal ice damage to an enemy and has a chance to freeze them.\nPower: 22",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 22,
+    "ELEMENT": "ICE",
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 1
+  },
+  {
+    "NAME": "Ignis Ardere",
+    "DESCRIPTION": "Conjure severe fire magic damage three times.\nPower: 20",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 20,
+    "ELEMENT": "FIRE",
+    "STATUS_EFFECT": null,
+    "ACTIVATION_TIMES": 3
   }
 ]

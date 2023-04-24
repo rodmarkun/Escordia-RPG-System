@@ -33,7 +33,7 @@ class Battler:
         """
 
         messager.add_message(self.name, f"{self.name} fully heals!")
-        self.stats['HP'] = self.stats['MAXHP']
+        self.stats[constants.HP_STATKEY] = self.stats[constants.MAXHP_STATKEY]
 
     def fully_recover_mp(self) -> None:
         """
@@ -43,7 +43,7 @@ class Battler:
         """
 
         messager.add_message(self.name, f"{self.name} fully recovers its MP!")
-        self.stats['MP'] = self.stats['MAXMP']
+        self.stats[constants.MP_STATKEY] = self.stats[constants.MAXMP_STATKEY]
 
     def heal(self, amount: int) -> None:
         """
@@ -53,12 +53,11 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(self.name, f"{self.name} heals for {amount} HP!")
-        new_hp = self.stats['HP'] + amount
-        if new_hp > self.stats['MAXHP']:
+        new_hp = self.stats[constants.HP_STATKEY] + amount
+        if new_hp > self.stats[constants.MAXMP_STATKEY]:
             self.fully_heal()
         else:
-            self.stats['HP'] = new_hp
+            self.stats[constants.HP_STATKEY] = new_hp
 
     def recover_mp(self, amount: int) -> None:
         """
@@ -68,14 +67,13 @@ class Battler:
         :return: None.
         """
 
-        messager.add_message(self.name, f"{self.name} recovers {amount} MP!")
-        new_mp = self.stats['MP'] + amount
-        if new_mp > self.stats['MAXMP']:
+        new_mp = self.stats[constants.MP_STATKEY] + amount
+        if new_mp > self.stats[constants.MAXMP_STATKEY]:
             self.fully_recover_mp()
         else:
             self.stats['MP'] = new_mp
 
-    def take_dmg(self, dmg: int) -> None:
+    def take_damage(self, dmg: int, element: str = None) -> None:
         """
         Battler takes damage from any source.
         Subtract damage from its health. Also checks if it dies.
@@ -84,11 +82,13 @@ class Battler:
         :return: None.
         """
 
+        # TODO - Element check
+        
         dmg = max(0, dmg)  # We don't like negative numbers in these lands
-        self.stats['HP'] -= dmg
+        self.stats[constants.HP_STATKEY] -= dmg
 
         # Battler dies
-        if self.stats['HP'] <= 0:
+        if self.stats[constants.HP_STATKEY] <= 0:
             self.alive = False
             self.die()
 
@@ -109,8 +109,8 @@ class Battler:
         :return: True if player has enough mana. False if not.
         """
 
-        if self.stats['MP'] >= cost:
-            self.stats['MP'] -= cost
+        if self.stats[constants.MP_STATKEY] >= cost:
+            self.stats[constants.MP_STATKEY] -= cost
             return True
         return False
 

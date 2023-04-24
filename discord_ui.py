@@ -20,26 +20,7 @@ class ActionMenu(discord.ui.View):
     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             no_error, msgs = interface.normal_attack(self.ctx.author.name)
-            if no_error:
-                battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
-                msg_str = msgs_to_msg_str(msgs)
-                # Player won the fight
-                if battle.is_over:
-                    msg_str = msgs_to_msg_str(msgs)
-                    await self.ctx.send(msg_str)
-                    if battle.player.alive:
-                        battle.win_battle()
-                        await self.ctx.send('', embed=discord_embeds.embed_victory_msg(self.ctx, msgs_to_msg_str(
-                            messager.empty_queue(self.ctx.author.name))))
-                    else:
-                        battle.lose_battle()
-                        await self.ctx.send('', embed=discord_embeds.embed_death_msg(self.ctx, msgs_to_msg_str(
-                            messager.empty_queue(self.ctx.author.name))))
-                else:
-                    await self.ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(self.ctx, battle.player, battle.enemy),
-                                   view=ActionMenu(self.ctx))
-            else:
-                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+            await continue_battle(no_error, msgs, self.ctx)
             await interaction.response.defer()
 
     @discord.ui.button(label="Skill", style=discord.ButtonStyle.primary)
@@ -136,23 +117,7 @@ class SkillSelect(discord.ui.Select):
         if await check_button_pressed(self.ctx, interaction):
             skill = data_management.search_cache_skill_by_name(self.values[0])
             no_error, msgs = interface.skill_attack(self.ctx.author.name, skill.name)
-            if no_error:
-                battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
-                msg_str = msgs_to_msg_str(msgs)
-                # Player won the fight
-                if battle is None:
-                    # This is not the best way to do this
-                    loot_msg = msgs.pop()
-                    win_msg = msgs.pop()
-                    msg_str = msgs_to_msg_str(msgs)
-                    await self.ctx.send(msg_str,
-                                        embed=discord_embeds.embed_victory_msg(self.ctx, f"{win_msg}\n{loot_msg}"))
-                else:
-                    await self.ctx.send(msg_str,
-                                        embed=discord_embeds.embed_fight_msg(self.ctx, battle.player, battle.enemy),
-                                        view=ActionMenu(self.ctx))
-            else:
-                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+            await continue_battle(no_error, msgs, self.ctx)
             await interaction.response.defer()
 
 
@@ -214,3 +179,26 @@ async def check_button_pressed(ctx, interaction) -> bool:
     else:
         await interaction.response.send_message(f"That button is not for you, {interaction.user.mention}!")
         return False
+
+
+async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
+    if no_error:
+        battle = data_management.search_cache_battle_by_player(ctx.author.name)
+        msg_str = msgs_to_msg_str(msgs)
+        if battle.is_over:
+            msg_str = msgs_to_msg_str(msgs)
+            await ctx.send(msg_str)
+            if battle.player.alive:
+                battle.win_battle()
+                await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(
+                    messager.empty_queue(ctx.author.name))))
+            else:
+                battle.lose_battle()
+                await ctx.send('', embed=discord_embeds.embed_death_msg(ctx, msgs_to_msg_str(
+                    messager.empty_queue(ctx.author.name))))
+        else:
+            await ctx.send(msg_str,
+                                embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+                                view=ActionMenu(ctx))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')

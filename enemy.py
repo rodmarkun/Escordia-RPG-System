@@ -35,7 +35,7 @@ class Enemy(Battler):
         self.alive = False
 
     def loot(self) -> str:
-        if random.randint(0, 100) <= self.loot_chance:
+        if self.possible_loot is not None and random.randint(0, 100) <= self.loot_chance:
             return self.possible_loot
         return ''
 

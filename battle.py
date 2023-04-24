@@ -1,5 +1,6 @@
 import random
 
+import constants
 import data_management
 import emojis
 import formulas
@@ -42,7 +43,9 @@ class Battle:
         if player_action["ACTION"] == "NORMAL_ATTACK":
             normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
         elif player_action["ACTION"] == "SKILL":
-            perform_skill(self.player, self.enemy, player_action["SKILL"], self.player.name)
+            skill = data_management.search_cache_skill_by_name(player_action["SKILL"])
+            caster, target = self.skill_based_target_selection(skill)
+            perform_skill(caster, target, skill, self.player.name)
         if self.enemy.alive:
             normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
             if not self.player.alive:
@@ -87,6 +90,16 @@ class Battle:
         self.player.money //= 2
         self.player.respawn()
 
+    def skill_based_target_selection(self, skill: 'Skill') -> ('Battler', 'Battler'):
+        """
+        Selects the target of a skill based on its type.
+        :param skill: Skill to be executed.
+        :return: Caster and target of the skill.
+        """
+        if skill.type == constants.SKILL_TYPE_DMG:
+            return self.player, self.enemy
+        elif skill.type == constants.SKILL_TYPE_HEAL:
+            return self.player, self.player
 
     """
     //////////////////
@@ -147,12 +160,12 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
                                               f"damage!")
         else:
             messager.add_message(player_name, f"{attacker.name} attacks {target.name} and deals {dmg} damage!")
-        target.take_dmg(dmg)
+        target.take_damage(dmg)
     else:
         messager.add_message(player_name, f"{attacker.name}'s attack missed!")
 
 
-def perform_skill(attacker: 'Battler', target: 'Battler', skill: str, player_name: str) -> None:
+def perform_skill(attacker: 'Battler', target: 'Battler', skill: 'Skill', player_name: str) -> None:
     """
     Battler executes a skill.
 
@@ -162,9 +175,8 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: str, player_nam
     :param player_name: Name of the player.
     :return: None.
     """
-    skill = data_management.search_cache_skill_by_name(skill)
     if attacker.pay_mana_cost(skill.mp_cost):
-        skill.effect(attacker, target)
+        skill.effect(player_name, attacker, target)
     else:
         messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")
 

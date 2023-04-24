@@ -1,3 +1,4 @@
+import constants
 import formulas
 import messager
 from battler import Battler
@@ -8,7 +9,14 @@ class Skill:
     Class that represents a skill inside the game.
     """
 
-    def __init__(self, name: str, description: str, mp_cost: int, type: str, power: int, element: str = None, status_effect: str = None):
+    """
+    ///////////////////
+    /// CONSTRUCTOR ///
+    ///////////////////
+    """
+
+    def __init__(self, name: str, description: str, mp_cost: int, type: str, power: int, element: str = None,
+                 status_effect: str = None, activation_times: int = 1):
         self.name = name
         self.description = description
         self.mp_cost = mp_cost
@@ -16,6 +24,29 @@ class Skill:
         self.power = power
         self.element = element
         self.status_effect = status_effect
+        self.activation_times = activation_times
+
+    """
+    ///////////////
+    /// METHODS ///
+    ///////////////
+    """
+
+    def effect(self, player_name: str, caster: Battler, target: Battler):
+        if self.type == "DAMAGING_MAGIC":
+            messager.add_message(player_name, f"{caster.name} casts {self.name}!")
+            for i in range(self.activation_times):
+                damage = formulas.damage_spell_power(caster.stats[constants.MATK_STATKEY],
+                                                     target.stats[constants.MDEF_STATKEY], self.power)
+                target.take_damage(damage)
+                messager.add_message(player_name, f"{target.name} takes {damage} damage!")
+        elif self.type == "HEALING_MAGIC":
+            amount = formulas.healing_spell_power(self.power, caster.stats[constants.MATK_STATKEY])
+            if caster.name == target.name:
+                messager.add_message(caster.name, f"{caster.name} heals himself for {amount} HP!")
+            else:
+                messager.add_message(caster.name, f"{caster.name} heals {target.name} for {amount} HP!")
+            target.heal(amount)
 
     """
     //////////////////

@@ -61,5 +61,26 @@
     "SKILLS": [],
     "IMAGE_URL": "https://i.postimg.cc/tCq5Dgyc/Insects-Ant-Lion.png",
     "IS_BOSS": false
+  },
+  {
+    "NAME": "Colossal Caterpillar",
+    "STATS": {
+      "MAXHP": 35,
+      "HP": 35,
+      "MAXMP": 10,
+      "MP": 10,
+      "ATK": 4,
+      "DEF": 10,
+      "MATK": 1,
+      "MDEF": 8,
+      "SPEED": 2
+    },
+    "XP_REWARD": 19,
+    "GOLD_REWARD": 10,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 70,
+    "SKILLS": [],
+    "IMAGE_URL": "https://i.postimg.cc/7PV1Cy7n/Insects-Caterpillar-A.png",
+    "IS_BOSS": false
   }
 ]

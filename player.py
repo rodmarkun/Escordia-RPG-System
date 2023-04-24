@@ -26,14 +26,14 @@ class Player(Battler):
         self.xp: int = 0
         self.xp_to_next_lvl: int = 15
         self.money: int = 50
-        self.inventory = inventory.Inventory(self.name)
+        self.inventory: inventory.Inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
-        self.skills = []
+        self.skills = ['First Aid', 'Small Fireball', 'Ice Bolt', 'Ignis Ardere']
         self.current_area: int = 1
         self.in_fight: bool = False
         self.in_dungeon: bool = False
         self.defeated_bosses: list = []
-        self.job_dict = constants.INITIAL_JOB_DICT
+        self.job_dict: dict = constants.INITIAL_JOB_DICT
         self.current_job = 'Novice'
 
     """

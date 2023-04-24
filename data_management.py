@@ -1,4 +1,4 @@
-import csv
+import json
 import json
 
 import area
@@ -116,6 +116,7 @@ def search_cache_shop_by_area(area_index: int) -> 'Shop':
     :param area_index: Area's index.
     :return: Shop instance. None if not found.
     """
+
     for s in SHOP_CACHE:
         if s.area_number == area_index:
             return s
@@ -174,9 +175,9 @@ def delete_cache_battle_by_player(player_name: str) -> None:
 """
 
 
-def load_items_from_csv() -> None:
+def load_items_from_json() -> None:
     """
-    Loads items from CSV file.
+    Loads items from JSON file.
 
     :return: None.
     """
@@ -188,9 +189,9 @@ def load_items_from_csv() -> None:
             ITEM_CACHE.append(item.Item(*param_list))
 
 
-def load_equipment_from_csv() -> None:
+def load_equipment_from_json() -> None:
     """
-    Loads equipment from CSV file.
+    Loads equipment from JSON file.
 
     :return: None.
     """
@@ -202,9 +203,9 @@ def load_equipment_from_csv() -> None:
             EQUIPMENT_CACHE.append(equipment.Equipment(*param_list))
 
 
-def load_enemies_from_csv() -> None:
+def load_enemies_from_json() -> None:
     """
-    Loads enemies from CSV file.
+    Loads enemies from JSON file.
 
     :return: None.
     """
@@ -220,9 +221,9 @@ def load_enemies_from_csv() -> None:
             #                                 e["LOOT_CHANCE"], e["SKILLS"], e["IMAGE_URL"], e["IS_BOSS"]))
 
 
-def load_areas_from_csv() -> None:
+def load_areas_from_json() -> None:
     """
-    Loads areas from CSV file.
+    Loads areas from JSON file.
 
     :return: None.
     """
@@ -234,18 +235,18 @@ def load_areas_from_csv() -> None:
             AREAS_CACHE.update({a["NUMBER"]: area.Area(*param_list)})
 
 
-def load_dungeons_from_csv() -> None:
+def load_dungeons_from_json() -> None:
     """
-    Loads dungeons from CSV file.
+    Loads dungeons from JSON file.
 
     :return: None.
     """
     pass
 
 
-def load_jobs_from_csv() -> None:
+def load_jobs_from_json() -> None:
     """
-    Loads jobs from CSV file.
+    Loads jobs from JSON file.
 
     :return: None.
     """
@@ -257,9 +258,9 @@ def load_jobs_from_csv() -> None:
             JOB_CACHE.append(job.Job(*param_list))
 
 
-def load_shops_from_csv() -> None:
+def load_shops_from_json() -> None:
     """
-    Loads shops from CSV file.
+    Loads shops from JSON file.
 
     :return: None.
     """
@@ -268,12 +269,13 @@ def load_shops_from_csv() -> None:
 
         for s in json_file:
             param_list = [s[key] for key in constants.SHOP_KEYS]
+            print(param_list)
             SHOP_CACHE.append(shop.Shop(*param_list))
 
 
-def load_skills_from_csv() -> None:
+def load_skills_from_json() -> None:
     """
-    Loads skills from CSV file.
+    Loads skills from JSON file.
 
     :return: None.
     """
@@ -296,12 +298,12 @@ def load_players_from_db() -> None:
 
 def load_everything():
     print("Loading data...")
-    load_items_from_csv()
-    load_equipment_from_csv()
-    load_enemies_from_csv()
-    load_areas_from_csv()
-    load_dungeons_from_csv()
-    load_jobs_from_csv()
-    load_shops_from_csv()
-    load_skills_from_csv()
+    load_items_from_json()
+    load_equipment_from_json()
+    load_enemies_from_json()
+    load_areas_from_json()
+    load_dungeons_from_json()
+    load_jobs_from_json()
+    load_shops_from_json()
+    load_skills_from_json()
     load_players_from_db()

@@ -1,3 +1,5 @@
+import emojis
+
 SPARKLER_EMOJI = '\U0001F387'
 SKULL_EMOJI = '\U0001F480'
 
@@ -43,7 +45,7 @@ ESC_MAGE_ICON = "<:MageIcon:1098328105199865916>"
 equipment_to_emoji = {"HELMET": ESC_HELMET_ICON, "ARMOR": ESC_ARMOR_ICON, "ACCESSORY": ESC_ACCESSORY_ICON, "SWORD": ESC_SWORD_ICON, "AXE": ESC_AXE_ICON, "SPEAR": None, "DAGGER": ESC_DAGGER_ICON, "STAFF": ESC_STAFF_ICON, "BOW": ESC_BOW_ICON}
 obj_to_emoji = {"POTION": ESC_POTION_ICON, "LOOT": ESC_MATERIAL_ICON}
 job_to_emoji = {"Novice": ESC_NOVICE_ICON, "Warrior": ESC_WARRIOR_ICON, "Rogue": ESC_ROGUE_ICON, "Mage": ESC_MAGE_ICON}
-
+element_to_emoji = {"FIRE": ESC_FIRE_ICON, "ICE": ESC_ICE_ICON, "THUNDER": ESC_THUNDER_ICON, "WIND": ESC_WIND_ICON, "HOLY": ESC_HOLY_ICON, "DARK": ESC_DARK_ICON}
 
 FIRE_SKILLS = ["Small Fireball"]
 HOLY_SKILLS = ["First Aid"]
@@ -68,8 +70,7 @@ def skill_emoji(skill: 'Skill') -> str:
     :param skill: Skill instance.
     :return: String with the emoji.
     """
-    if skill.name in FIRE_SKILLS:
-        return ESC_FIRE_ICON
-    elif skill.name in HOLY_SKILLS:
-        return ESC_HOLY_ICON
-    return ""
+    try:
+        return emojis.element_to_emoji[skill.element]
+    except KeyError:
+        return ""
