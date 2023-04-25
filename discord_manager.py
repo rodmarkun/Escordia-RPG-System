@@ -41,13 +41,24 @@ async def fight(ctx):
     !fight command
     Makes the player fight a random enemy from current area
     '''
-    no_error, msgs = interface.begin_battle(ctx.author.name)
+    no_error, msgs = interface.begin_battle(ctx.author.name, False)
     if no_error:
         battle = data_management.search_cache_battle_by_player(ctx.author.name)
-
-        print(battle.enemy.__dict__)
-
         await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+
+@bot.command()
+async def boss(ctx):
+    '''
+    !boss command
+    Makes the player fight the boss of current area
+    '''
+    no_error, msgs = interface.begin_battle(ctx.author.name, True)
+    if no_error:
+        battle = data_management.search_cache_battle_by_player(ctx.author.name)
+        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+                       view=discord_ui.ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 

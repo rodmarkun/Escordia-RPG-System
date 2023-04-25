@@ -16,7 +16,7 @@ class Skill:
     """
 
     def __init__(self, name: str, description: str, mp_cost: int, type: str, power: int, element: str = None,
-                 status_effect: str = None, activation_times: int = 1, tags: list = []):
+                 status_effect: str = None, cooldown: int = 1, tags: list = []):
         self.name = name
         self.description = description
         self.mp_cost = mp_cost
@@ -24,7 +24,7 @@ class Skill:
         self.power = power
         self.element = element
         self.status_effect = status_effect
-        self.activation_times = activation_times
+        self.cooldown = cooldown
         self.tags = tags
 
     """
@@ -36,14 +36,13 @@ class Skill:
     def effect(self, player_name: str, caster: Battler, target: Battler):
         if self.type == "DAMAGING_MAGIC":
             messager.add_message(player_name, f"{caster.name} casts {self.name}!")
-            for i in range(self.activation_times):
-                damage = formulas.damage_spell_power(caster.stats[constants.MATK_STATKEY],
-                                                     target.stats[constants.MDEF_STATKEY], self.power)
-                damage = target.take_damage(damage, self.element)
-                if constants.SKILL_TAG_LEECH in self.tags:
-                    caster.heal(formulas.leech_calculation(damage))
-                    messager.add_message(player_name, f"{caster.name} heals himself for {formulas.leech_calculation(damage)} HP!")
-                messager.add_message(player_name, f"{target.name} takes {damage} damage!")
+            damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
+                                                 target.stats[constants.MDEF_STATKEY])
+            damage = target.take_damage(damage, self.element)
+            if constants.SKILL_TAG_LEECH in self.tags:
+                caster.heal(formulas.leech_calculation(damage))
+                messager.add_message(player_name, f"{caster.name} heals himself for {formulas.leech_calculation(damage)} HP!")
+            messager.add_message(player_name, f"{target.name} takes {damage} damage!")
         elif self.type == "HEALING_MAGIC":
             amount = formulas.healing_spell_power(self.power, caster.stats[constants.MATK_STATKEY])
             if caster.name == target.name:

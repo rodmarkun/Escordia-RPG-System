@@ -27,10 +27,16 @@ class ActionMenu(discord.ui.View):
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
-            if len(battle.player.skills) == 0:
+            skills_in_cooldown_str_list = [f"**{s}**: {battle.skills_in_cooldown[s] + 1}" for s in battle.skills_in_cooldown]
+            skill_list = battle.player.skills.copy()
+            for skill in battle.skills_in_cooldown:
+                skill_list.remove(skill)
+            if len(skill_list) == 0:
                 await self.ctx.send(f"**Escordia Error** - {self.ctx.author.mention}: You have no skills to use!")
             else:
-                await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}", view=SkillSelectView(self.ctx, battle.player.skills))
+                await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}"
+                                                        f"\nSkills in cooldown - {','.join(skills_in_cooldown_str_list)}",
+                                                        view=SkillSelectView(self.ctx, skill_list))
 
     @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -108,9 +114,9 @@ class SkillSelect(discord.ui.Select):
     def __init__(self, ctx, skill_list):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
-                                        description=f"{s.description}",
+                                        description=f"Power: {s.power} | Cooldown: {s.cooldown}",
                                         emoji=emojis.skill_emoji(s)) for s in skills_in_options]
-        super().__init__(placeholder="Select a skill to perform", max_values=1, min_values=1, options=options)
+        super().__init__(placeholder=f"Select a skill to perform", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
     async def callback(self, interaction: discord.Interaction):

@@ -25,6 +25,7 @@ class Battle:
         self.player = player
         self.enemy = enemy
         self.is_over = False
+        self.skills_in_cooldown = {}
 
     """
     ///////////////
@@ -47,10 +48,10 @@ class Battle:
             skill = data_management.search_cache_skill_by_name(player_action["SKILL"])
             target = self.skill_based_target_selection(skill, self.player)
             perform_skill(self.player, target, skill, self.player.name)
+            self.skills_in_cooldown.update({skill.name: skill.cooldown})
             if constants.SKILL_TAG_DOES_NOT_SKIP_TURN in skill.tags:
                 no_enemy_turn = True
 
-        print(self.enemy.alive)
         if self.enemy.alive:
             if not no_enemy_turn:
                 enemy_action = random.choice(constants.POSSIBLE_ENEMY_ACTIONS)
@@ -65,6 +66,7 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
             self.is_over = True
+        self.decrease_cooldowns()
         return messager.empty_queue(self.player.name)
 
     def win_battle(self) -> None:
@@ -116,6 +118,13 @@ class Battle:
             if type(caster) == Player:
                 return self.player
             return self.enemy
+
+    def decrease_cooldowns(self):
+        for skill in list(self.skills_in_cooldown):
+            if self.skills_in_cooldown[skill] == 0:
+                self.skills_in_cooldown.pop(skill)
+            else:
+                self.skills_in_cooldown[skill] -= 1
 
     """
     //////////////////
@@ -191,7 +200,7 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: 'Skill', player
     :param player_name: Name of the player.
     :return: None.
     """
-    if attacker.pay_mana_cost(skill.mp_cost) or type(attacker) == Enemy:
+    if type(attacker) == Enemy or attacker.pay_mana_cost(skill.mp_cost):
         skill.effect(player_name, attacker, target)
     else:
         messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")

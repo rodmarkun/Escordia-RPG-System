@@ -2,8 +2,8 @@
     {
       "NAME": "Area 1",
       "NUMBER": 1,
-      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant", "Colossal Caterpillar"],
-      "BOSS": "None",
+      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant", "Colossal Caterpillar", "Giant Dragonfly"],
+      "BOSS": "Daidarabotchi, Forest Guardian",
       "DUNGEONS": []
     }
 ]

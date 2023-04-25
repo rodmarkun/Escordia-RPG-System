@@ -86,8 +86,9 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     :param mdef_value: Magic DEF of defending Battler.
     :return:
     """
-
-    return int(spell_power * 1.2 * (100 / (100 + matk_value * 2.5)) * (100 / (100 + mdef_value * 1.5)))
+    print(spell_power, matk_value, mdef_value)
+    print(int(spell_power * (matk_value / mdef_value)) // 2)
+    return int(spell_power * (matk_value / mdef_value)) // 2
 
 
 def leech_calculation(damage: int) -> int:

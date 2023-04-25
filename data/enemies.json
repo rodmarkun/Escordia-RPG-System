@@ -4,8 +4,6 @@
     "STATS": {
       "MAXHP": 15,
       "HP": 15,
-      "MAXMP": 10,
-      "MP": 10,
       "ATK": 5,
       "DEF": 6,
       "MATK": 5,
@@ -27,8 +25,6 @@
     "STATS": {
       "MAXHP": 20,
       "HP": 20,
-      "MAXMP": 10,
-      "MP": 10,
       "ATK": 6,
       "DEF": 8,
       "MATK": 1,
@@ -50,8 +46,6 @@
     "STATS": {
       "MAXHP": 18,
       "HP": 18,
-      "MAXMP": 10,
-      "MP": 10,
       "ATK": 5,
       "DEF": 9,
       "MATK": 1,
@@ -73,8 +67,6 @@
     "STATS": {
       "MAXHP": 35,
       "HP": 35,
-      "MAXMP": 10,
-      "MP": 10,
       "ATK": 4,
       "DEF": 10,
       "MATK": 1,
@@ -89,6 +81,48 @@
     "WEAKNESSES": ["FIRE", "WIND"],
     "RESISTANCES": ["ICE", "HOLY"],
     "IMAGE_URL": "https://i.postimg.cc/7PV1Cy7n/Insects-Caterpillar-A.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Giant Dragonfly",
+    "STATS": {
+      "MAXHP": 22,
+      "HP": 22,
+      "ATK": 7,
+      "DEF": 6,
+      "MATK": 1,
+      "MDEF": 3,
+      "SPEED": 14
+    },
+    "XP_REWARD": 19,
+    "GOLD_REWARD": 10,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 70,
+    "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "THUNDER"],
+    "RESISTANCES": ["WIND"],
+    "IMAGE_URL": "https://i.postimg.cc/HskwXP9D/Insects-Dragonfly-B.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Daidarabotchi, Forest Guardian",
+    "STATS": {
+      "MAXHP": 102,
+      "HP": 102,
+      "ATK": 13,
+      "DEF": 13,
+      "MATK": 10,
+      "MDEF": 13,
+      "SPEED": 12
+    },
+    "XP_REWARD": 70,
+    "GOLD_REWARD": 50,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 70,
+    "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "DARK"],
+    "RESISTANCES": ["WIND", "HOLY"],
+    "IMAGE_URL": "https://i.postimg.cc/DygrbcK4/Boss-Daidarabotchi.png",
     "IS_BOSS": false
   }
 ]

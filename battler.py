@@ -20,6 +20,7 @@ class Battler:
         self.alive = True
         self.weaknesses = []
         self.resistances = []
+        self.buffs_and_debuffs = {}
 
     """
     ///////////////

@@ -26,11 +26,12 @@ def create_player(name: str) -> (bool, list):
     return False, [ERROR_CHARACTER_ALREADY_CREATED]
 
 
-def begin_battle(name: str) -> (bool, list):
+def begin_battle(name: str, boss: bool) -> (bool, list):
     """
     Creates a new Battle in the system.
 
     :param name: Player's name.
+    :param boss: True if the player wants to fight a boss, False if he wants to fight a normal enemy.
     :return: Bool and List. True if Battle was created, False if it was not. String contains info messages.
     """
     player_inst = data_management.search_cache_player(name)
@@ -40,7 +41,10 @@ def begin_battle(name: str) -> (bool, list):
 
     if data_management.search_cache_battle_by_player(name) is None:
         area = data_management.AREAS_CACHE[player_inst.current_area]
-        enemy_inst = area.spawn_enemy()
+        if boss:
+            enemy_inst = area.spawn_boss()
+        else:
+            enemy_inst = area.spawn_enemy()
         data_management.BATTLE_CACHE.append(battle.Battle(player_inst, enemy_inst))
         return True, ['']
     return False, [ERROR_CHARACTER_ALREADY_IN_FIGHT]
