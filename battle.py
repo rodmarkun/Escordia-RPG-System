@@ -42,8 +42,11 @@ class Battle:
         """
 
         no_enemy_turn = False
+        # Normal attack
         if player_action["ACTION"] == "NORMAL_ATTACK":
             normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
+
+        # Skill
         elif player_action["ACTION"] == "SKILL":
             skill = data_management.search_cache_skill_by_name(player_action["SKILL"])
             target = self.skill_based_target_selection(skill, self.player)
@@ -52,6 +55,7 @@ class Battle:
             if constants.SKILL_TAG_DOES_NOT_SKIP_TURN in skill.tags:
                 no_enemy_turn = True
 
+        # Enemy turn
         if self.enemy.alive:
             if not no_enemy_turn:
                 enemy_action = random.choice(constants.POSSIBLE_ENEMY_ACTIONS)
@@ -61,13 +65,20 @@ class Battle:
                     skill = data_management.search_cache_skill_by_name(random.choice(self.enemy.skills))
                     target = self.skill_based_target_selection(skill, self.enemy)
                     perform_skill(self.enemy, target, skill, self.player.name)
+
+                # Player dies
                 if not self.player.alive:
                     self.is_over = True
+
+        # Player wins
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
             self.is_over = True
         self.decrease_cooldowns()
+        self.decrease_buff_debuff_duration()
         return messager.empty_queue(self.player.name)
+
+    # def apply_buff_debuffs(self):
 
     def win_battle(self) -> None:
         """
@@ -75,11 +86,16 @@ class Battle:
 
         :return: None
         """
+
+        # Delete battle from cache
         data_management.delete_cache_battle_by_player(self.player.name)
 
         messager.add_message(self.player.name, f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
                              f"{self.enemy.gold_reward} G")
 
+        self.reset_buff_and_debuffs()
+
+        # Combat rewards
         self.player.add_exp(self.enemy.xp_reward)
         self.player.add_money(self.enemy.gold_reward)
 
@@ -90,19 +106,62 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
 
+        del self.enemy
+
     def lose_battle(self) -> None:
         """
         Player loses the battle.
 
         :return: None
         """
+
+        # Delete battle from cache
         data_management.delete_cache_battle_by_player(self.player.name)
 
         messager.add_message(self.player.name, f"{self.player.name} lost the battle! You are brought back to safety, "
                                                f"but half your gold is long gone...")
 
+        # Player loses money and respawns
         self.player.money //= 2
+        self.reset_buff_and_debuffs()
+        del self.enemy
         self.player.respawn()
+
+    def decrease_buff_debuff_duration(self) -> None:
+        """
+        Decreases the duration of all buffs and debuffs by 1.
+
+        :return: None.
+        """
+        # Player buffs and debuffs
+        for bd in list(self.player.buffs_and_debuffs):
+            if self.player.buffs_and_debuffs[bd] == 0:
+                self.player.buffs_and_debuffs.pop(bd)
+                self.player.stat_change_on_buff_debuff(bd, expires=True)
+            else:
+                self.player.buffs_and_debuffs[bd] -= 1
+        # Enemy buffs and debuffs
+        for bd in list(self.enemy.buffs_and_debuffs):
+            if self.enemy.buffs_and_debuffs[bd] == 0:
+                self.enemy.buffs_and_debuffs.pop(bd)
+                self.enemy.stat_change_on_buff_debuff(bd, expires=True)
+            else:
+                self.enemy.buffs_and_debuffs[bd] -= 1
+
+    def reset_buff_and_debuffs(self) -> None:
+        """
+        Erases all buffs and debuffs from the player and the enemy.
+
+        :return: None.
+        """
+
+        for bd in self.player.buffs_and_debuffs:
+            self.player.stat_change_on_buff_debuff(bd, expires=True)
+        for bd in self.enemy.buffs_and_debuffs:
+            self.enemy.stat_change_on_buff_debuff(bd, expires=True)
+
+        self.player.buffs_and_debuffs = {}
+        self.enemy.buffs_and_debuffs = {}
 
     def skill_based_target_selection(self, skill: 'Skill', caster: 'Battler') -> 'Battler':
         """
@@ -110,16 +169,25 @@ class Battle:
         :param skill: Skill to be executed.
         :return: Target of the skill.
         """
+
+        # Damage skills targets enemy
         if skill.type == constants.SKILL_TYPE_DMG:
             if type(caster) == Player:
                 return self.enemy
             return self.player
+        # Heal skills targets caster
         elif skill.type == constants.SKILL_TYPE_HEAL:
             if type(caster) == Player:
                 return self.player
             return self.enemy
 
-    def decrease_cooldowns(self):
+    def decrease_cooldowns(self) -> None:
+        """
+        Decreases the cooldown of all skills in cooldown by 1.
+        If the cooldown reaches 0, the skill is removed from the dictionary.
+
+        :return: None
+        """
         for skill in list(self.skills_in_cooldown):
             if self.skills_in_cooldown[skill] == 0:
                 self.skills_in_cooldown.pop(skill)
@@ -156,6 +224,10 @@ class Battle:
     def is_over(self, value: bool) -> None:
         self._is_over = value
 
+    @enemy.deleter
+    def enemy(self):
+        del self._enemy
+
 
 def start_battle(player: Player, enemy: Enemy):
     """
@@ -177,8 +249,10 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
     :param target: Battler to attack.
     :return: None.
     """
+    # Check if attack hits
     if not check_miss(attacker.stats['SPEED'], target.stats['SPEED']):
         dmg = formulas.normal_attack_dmg(attacker.stats['ATK'], target.stats['DEF'])
+        # Check for critical damage
         dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)
         if is_crit:
             messager.add_message(player_name, f"Critical hit! {attacker.name} attacks {target.name} and deals {dmg} "

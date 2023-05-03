@@ -6,7 +6,6 @@
     "TYPE": "HEALING_MAGIC",
     "POWER": 10,
     "ELEMENT": "HOLY",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 2,
     "TAGS": []
   },
@@ -17,7 +16,6 @@
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 4,
     "ELEMENT": "FIRE",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 1,
     "TAGS": []
   },
@@ -28,7 +26,6 @@
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 7,
     "ELEMENT": "FIRE",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 3,
     "TAGS": ["DOES_NOT_SKIP_TURN"]
   },
@@ -39,7 +36,6 @@
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 22,
     "ELEMENT": "ICE",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 2,
     "TAGS": []
   },
@@ -50,9 +46,28 @@
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 50,
     "ELEMENT": "FIRE",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 3,
     "TAGS": []
+  },
+  {
+    "NAME": "Hyperbeam",
+    "DESCRIPTION": "Perform a highly damage blow, but debuffs yourself.",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 10,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 3,
+    "TAGS": ["SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Bio",
+    "DESCRIPTION": "Lowers enemy defense.",
+    "MP_COST": 2,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 10,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
   },
   {
     "NAME": "Bloodstealer",
@@ -61,7 +76,6 @@
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 14,
     "ELEMENT": "DARK",
-    "STATUS_EFFECT": null,
     "COOLDOWN": 2,
     "TAGS": ["LEECH"]
   }

@@ -1,6 +1,7 @@
 import data_management
 import enemy
 import random
+import copy
 import dungeon
 
 
@@ -29,17 +30,23 @@ class Area:
     """
 
     def spawn_enemy(self) -> enemy.Enemy:
+        """
+        Spawns a random enemy from the area's enemy list.
+
+        :return: Enemy instance.
+        """
         enemy_name = random.choice(self.enemy_list)
         enemy_inst = data_management.search_cache_enemy_by_name(enemy_name)
-        return enemy.Enemy(enemy_inst.name, enemy_inst.stats.copy(), enemy_inst.xp_reward, enemy_inst.gold_reward,
-                           enemy_inst.possible_loot, enemy_inst.loot_chance, enemy_inst.skills, enemy_inst.weaknesses,
-                           enemy_inst.resistances, enemy_inst.image_url, enemy_inst.is_boss)
+        return copy.deepcopy(enemy_inst)
 
     def spawn_boss(self) -> enemy.Enemy:
+        """
+        Spawns the area's boss.
+
+        :return: Boss instance.
+        """
         enemy_inst = data_management.search_cache_enemy_by_name(self.boss)
-        return enemy.Enemy(enemy_inst.name, enemy_inst.stats.copy(), enemy_inst.xp_reward, enemy_inst.gold_reward,
-                           enemy_inst.possible_loot, enemy_inst.loot_chance, enemy_inst.skills, enemy_inst.weaknesses,
-                           enemy_inst.resistances, enemy_inst.image_url, enemy_inst.is_boss)
+        return copy.deepcopy(enemy_inst)
 
     """
     //////////////////

@@ -1,3 +1,5 @@
+import math
+
 import constants
 import formulas
 import messager
@@ -84,6 +86,7 @@ class Battler:
         :return: Damage dealt.
         """
 
+        # Check weaknesses and resistances
         if damage_type in self.weaknesses:
             dmg = round(dmg * 1.35)
         elif damage_type in self.resistances:
@@ -106,6 +109,58 @@ class Battler:
         """
 
         print(f"{self.name} has died.")
+
+    def add_buff_debuff(self, buff_debuff: str) -> None:
+        """
+        Adds a buff or debuff to the battler.
+
+        :return: None.
+        """
+        if buff_debuff in constants.BUFFS or constants.DEBUFFS:
+            self.buffs_and_debuffs[buff_debuff] = 3
+            self.stat_change_on_buff_debuff(buff_debuff, expires=False)
+        else:
+            raise ValueError(f"{buff_debuff} is not a valid buff or debuff.")
+
+    def stat_change_on_buff_debuff(self, buff_debuff: str, expires: bool = False) -> None:
+        """
+        Changes the stats of the battler based on the buff/debuff.
+
+        :param buff_debuff: Buff/debuff to be applied.
+        :param expires: False if buff/debuff is applied, True if it expires.
+        :return: None.
+        """
+        stat_affected = None
+        if buff_debuff in constants.ATK_BD:
+            stat_affected = constants.ATK_STATKEY
+        elif buff_debuff in constants.DEF_BD:
+            stat_affected = constants.DEF_STATKEY
+        elif buff_debuff in constants.MATK_BD:
+            stat_affected = constants.MATK_STATKEY
+        elif buff_debuff in constants.MDEF_BD:
+            stat_affected = constants.MDEF_STATKEY
+        elif buff_debuff in constants.LUK_BD:
+            stat_affected = constants.CRITCH_STATKEY
+
+        if buff_debuff in constants.BUFFS:
+            is_buff = True
+        else:
+            is_buff = False
+
+        if is_buff:
+            if not expires:
+                self.stats[stat_affected] = math.ceil(self.stats[stat_affected] * 1.35)
+                print(1)
+            else:
+                self.stats[stat_affected] = math.floor(self.stats[stat_affected] / 1.35)
+                print(2)
+        else:
+            if not expires:
+                self.stats[stat_affected] = math.floor(self.stats[stat_affected] * 0.65)
+                print(3)
+            else:
+                self.stats[stat_affected] = math.ceil(self.stats[stat_affected] / 0.65)
+                print(4)
 
     def pay_mana_cost(self, cost: int) -> bool:
         """

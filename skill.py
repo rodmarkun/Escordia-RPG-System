@@ -16,14 +16,13 @@ class Skill:
     """
 
     def __init__(self, name: str, description: str, mp_cost: int, type: str, power: int, element: str = None,
-                 status_effect: str = None, cooldown: int = 1, tags: list = []):
+                 cooldown: int = 1, tags: list = []):
         self.name = name
         self.description = description
         self.mp_cost = mp_cost
         self.type = type
         self.power = power
         self.element = element
-        self.status_effect = status_effect
         self.cooldown = cooldown
         self.tags = tags
 
@@ -33,7 +32,15 @@ class Skill:
     ///////////////
     """
 
-    def effect(self, player_name: str, caster: Battler, target: Battler):
+    def effect(self, player_name: str, caster: Battler, target: Battler) -> None:
+        """
+        Applies the effect of the skill to the target.
+
+        :param player_name: Player's name.
+        :param caster: Caster of the skill.
+        :param target: Target of the skill.
+        :return: None.
+        """
         if self.type == "DAMAGING_MAGIC":
             messager.add_message(player_name, f"{caster.name} casts {self.name}!")
             damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
@@ -50,6 +57,14 @@ class Skill:
             else:
                 messager.add_message(player_name, f"{caster.name} heals {target.name} for {amount} HP!")
             target.heal(amount)
+        if constants.SKILL_TAG_INFLICT_BUFF_DEBUFF in self.tags:
+            buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))
+            for bd in buffs_and_debuffs:
+                target.add_buff_debuff(bd)
+        if constants.SKILL_TAG_SELF_INFLICT_BUFF_DEBUFF in self.tags:
+            buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))
+            for bd in buffs_and_debuffs:
+                caster.add_buff_debuff(bd)
 
     """
     //////////////////
