@@ -20,18 +20,19 @@ def embed_fight_msg(ctx, player_obj, enemy):
     embed = discord.Embed(
         title=f'Fight - {ctx.author}',
         description=f'You are fighting a **{enemy.name}**.\n'
-                    f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}\n'
-                    f'Weak to: {" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n'
-                    f'Resists: {" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}\n'
-                    f'{" ".join([emojis.buff_debuff_to_emoji[bd] for bd in enemy.buffs_and_debuffs])}\n'
-                    f'What will you do?\n\n',
+                    f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}\n',
         color=discord.Colour.red()
     )
     embed.set_thumbnail(url=enemy.image_url)
     embed.set_image(url=ctx.author.avatar.url)
+    embed.add_field(name="Weak to:", value=" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses]), inline=True)
+    embed.add_field(name="Resists:", value=" ".join([emojis.element_to_emoji[e] for e in enemy.resistances]), inline=True)
+    if len(enemy.buffs_and_debuffs.keys()) > 0:
+        embed.add_field(name="Alterations:", value=" ".join([emojis.buff_debuff_to_emoji[bd] for bd in enemy.buffs_and_debuffs]), inline=True)
+    if len(player_obj.buffs_and_debuffs.keys()) > 0:
+        embed.add_field(name=f"{player_obj.name}'s alterations:", value=" ".join([emojis.buff_debuff_to_emoji[bd] for bd in player_obj.buffs_and_debuffs]), inline=True)
     embed.set_footer(
-        text=f'{" ".join([emojis.buff_debuff_to_emoji[bd] for bd in player_obj.buffs_and_debuffs])}\n'
-             f'{player_obj.name}\nHP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
+        text=f'{player_obj.name}\nHP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
              f'{player_obj.stats["MP"]}/{player_obj.stats["MAXMP"]} | {player_mp_bar[0]}\nHit chance: '
              f'{100 - formulas.miss_formula(player_obj.stats["SPEED"], enemy.stats["SPEED"])}% | Critical chance: '
              f'{player_obj.stats["CRITCH"]}%')

@@ -16,6 +16,18 @@ def xp_next_lvl_formula(xp_to_next_lvl: int, lvl: int) -> int:
     return round(xp_to_next_lvl * 1.25 + 10 * lvl * lvl / 2)
 
 
+def xp_next_lvl_job_formula(xp_to_next_lvl: int, lvl: int) -> int:
+    """
+    Formula for calculating how much XP is needed for next job level.
+
+    :param xp_to_next_lvl: Current XP to reach next job level.
+    :param lvl: Current Player's job lvl
+    :return: Integer containing XP necessary to reach next level.
+    """
+
+    return round(xp_to_next_lvl * 1.25 + 10 * lvl * lvl / 2)
+
+
 def money_lost_when_dying(money: int) -> int:
     """
     Formula for calculating how much money the player loses when dying.
@@ -86,8 +98,6 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     :param mdef_value: Magic DEF of defending Battler.
     :return:
     """
-    print(spell_power, matk_value, mdef_value)
-    print(int(spell_power * (matk_value / mdef_value)) // 2)
     return int(spell_power * (matk_value / mdef_value)) // 2
 
 

@@ -30,46 +30,6 @@
       "STAT_CHANGE_LIST": {
         "MATK": 3
       }
-    },
-    {
-        "NAME": "Novice Axe",
-        "DESCRIPTION": "A novice's axe.",
-        "INDIV_VALUE": 10,
-        "OBJECT_TYPE": "EQUIPMENT",
-        "EQUIPMENT_TYPE": "AXE",
-        "STAT_CHANGE_LIST": {
-          "MATK": 3
-        }
-      },
-    {
-      "NAME": "Novice Katana",
-      "DESCRIPTION": "A novice's katana.",
-      "INDIV_VALUE": 10,
-      "OBJECT_TYPE": "EQUIPMENT",
-      "EQUIPMENT_TYPE": "KATANA",
-      "STAT_CHANGE_LIST": {
-        "MATK": 3
-      }
-    },
-    {
-      "NAME": "Novice Book",
-      "DESCRIPTION": "A novice's book.",
-      "INDIV_VALUE": 10,
-      "OBJECT_TYPE": "EQUIPMENT",
-      "EQUIPMENT_TYPE": "BOOK",
-      "STAT_CHANGE_LIST": {
-        "MATK": 3
-      }
-    },
-    {
-      "NAME": "Novice Armor",
-      "DESCRIPTION": "Starter armor.",
-      "INDIV_VALUE": 10,
-      "OBJECT_TYPE": "EQUIPMENT",
-      "EQUIPMENT_TYPE": "ARMOR",
-      "STAT_CHANGE_LIST": {
-        "DEF": 3
-      }
     }
   ]
   

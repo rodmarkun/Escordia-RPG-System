@@ -26,6 +26,7 @@ class Battle:
         self.enemy = enemy
         self.is_over = False
         self.skills_in_cooldown = {}
+        self.player_stats_before_battle = self.player.stats.copy()
 
     """
     ///////////////
@@ -93,7 +94,7 @@ class Battle:
         messager.add_message(self.player.name, f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
                              f"{self.enemy.gold_reward} G")
 
-        self.reset_buff_and_debuffs()
+        self.battle_is_over()
 
         # Combat rewards
         self.player.add_exp(self.enemy.xp_reward)
@@ -123,7 +124,7 @@ class Battle:
 
         # Player loses money and respawns
         self.player.money //= 2
-        self.reset_buff_and_debuffs()
+        self.battle_is_over()
         del self.enemy
         self.player.respawn()
 
@@ -162,6 +163,15 @@ class Battle:
 
         self.player.buffs_and_debuffs = {}
         self.enemy.buffs_and_debuffs = {}
+
+    def battle_is_over(self) -> None:
+        """
+        Resets the player's stats and buffs and debuffs.
+        :return: None.
+        """
+        self.reset_buff_and_debuffs()
+        self.player.stats.update({key: self.player_stats_before_battle[key] for key in self.player_stats_before_battle
+                                  if key not in constants.STATS_NOT_COPYING_AFTER_BATTLE})
 
     def skill_based_target_selection(self, skill: 'Skill', caster: 'Battler') -> 'Battler':
         """

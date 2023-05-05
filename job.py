@@ -10,11 +10,10 @@ class Job:
     """
 
     def __init__(self, name: str, description: str, skill_dict: dict,
-                 xp_to_next_lvl: int = 50, xp_factor: int = 1):
+                 xp_factor: int = 1):
         self.name = name
         self.description = description
         self.skill_dict = skill_dict
-        self.xp_to_next_lvl = xp_to_next_lvl
         self.xp_factor = xp_factor
 
     """
@@ -50,16 +49,6 @@ class Job:
     @skill_dict.setter
     def skill_dict(self, value: dict) -> None:
         self._skill_dict = value
-
-    @property
-    def xp_to_next_lvl(self) -> int:
-        return self._xp_to_next_lvl
-
-    @xp_to_next_lvl.setter
-    def xp_to_next_lvl(self, value: int) -> None:
-        if value < 0:
-            raise ValueError(f"XP to next level cannot be negative.")
-        self._xp_to_next_lvl = value
         
     @property
     def xp_factor(self) -> int:

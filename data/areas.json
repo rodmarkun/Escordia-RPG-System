@@ -1,6 +1,6 @@
 [
     {
-      "NAME": "Area 1",
+      "NAME": "Quiet Woods",
       "NUMBER": 1,
       "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant", "Colossal Caterpillar", "Giant Dragonfly"],
       "BOSS": "Daidarabotchi, Forest Guardian",

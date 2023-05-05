@@ -57,13 +57,15 @@ POSSIBLE_PLAYER_ACTIONS = [NORMAL_ATTACK_OPTION, SKILL_OPTION]
 POSSIBLE_ENEMY_ACTIONS = [NORMAL_ATTACK_OPTION, SKILL_OPTION]
 LEECH_AMOUNT = 0.5
 
+STATS_NOT_COPYING_AFTER_BATTLE = [MAXHP_STATKEY, MAXMP_STATKEY, HP_STATKEY, MP_STATKEY]
+
 """
 ////////////
 /// JOBS ///
 ////////////
 """
 
-INITIAL_JOB_DICT = {"Name": "Novice", "lvl": 1, "xp": 0}
+INITIAL_JOB_DICT = {"Name": "Novice", "lvl": 1, "xp": 0, "xp_to_next_lvl": 50}
 
 """
 //////////////

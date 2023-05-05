@@ -28,13 +28,14 @@ class Player(Battler):
         self.money: int = 50
         self.inventory: inventory.Inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
-        self.skills: list = ['First Aid', 'Small Fireball', 'Ice Bolt', 'Ignis Ardere', 'Quickflame', 'Bio', 'Hyperbeam']
+        self.skills: list = ["First Aid"]
         self.passives: list = []
         self.current_area: int = 1
         self.in_fight: bool = False
         self.in_dungeon: bool = False
         self.defeated_bosses: list = []
-        self.job_dict: dict = constants.INITIAL_JOB_DICT
+        self.job_dict_list: list = []
+        self.current_job_dict: dict = constants.INITIAL_JOB_DICT
         self.current_job = 'Novice'
 
     """
@@ -51,6 +52,9 @@ class Player(Battler):
         :param exp: Experience points to be added to the player.
         :return: True if player levels up, False if it does not.
         """
+
+        # Exp for the job is not affected by Player's XP rate given by passives (change?)
+        self.add_exp_job(exp)
 
         exp *= self.xp_rate
         self.xp += exp
@@ -71,6 +75,33 @@ class Player(Battler):
                 self.stats['MP'] = self.stats['MAXMP']
 
             messager.add_message(self.name, f"You leveled up! You are now level {self.lvl}")
+        return leveled_up
+
+    def add_exp_job(self, exp: int) -> bool:
+        """
+        Adds a certain amount of XP to the player's job.
+        :param exp: Amount of XP to be added.
+        :return: True if player levels up, False if it does not.
+        """
+        curr_job = data_management.search_cache_job_by_name(self.current_job)
+        exp *= curr_job.xp_factor
+        self.current_job_dict['xp'] += exp
+        leveled_up = False
+
+        while self.current_job_dict['xp'] >= self.current_job_dict['xp_to_next_lvl']:
+            self.current_job_dict['xp'] -= self.current_job_dict['xp_to_next_lvl']
+            self.current_job_dict['lvl'] += 1
+            new_level_str = str(self.current_job_dict['lvl'])
+            leveled_up = True
+            self.current_job_dict['xp_to_next_lvl'] = formulas.xp_next_lvl_job_formula(self.current_job_dict['xp_to_next_lvl'], self.current_job_dict['lvl'])
+            messager.add_message(self.name,
+                                 f"Your job has leveled up! You are now a level {self.current_job_dict['lvl']} {self.current_job}")
+            if new_level_str in curr_job.skill_dict:
+                # TODO - Check if passive
+                self.skills.append(curr_job.skill_dict[new_level_str])
+                messager.add_message(self.name,
+                                     f"You learnt {curr_job.skill_dict[new_level_str]}!")
+        print("XP_NEXT_LVL_JOB", self.current_job_dict['xp'])
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -307,14 +338,12 @@ class Player(Battler):
         self._defeated_bosses = value
 
     @property
-    def job_dict(self) -> dict:
-        return self._job_dict
-
-    @job_dict.setter
-    def job_dict(self, value: dict) -> None:
-        # if value is None:
-        #    raise ValueError(f"A player must always have a valid Job.")
-        self._job_dict = value
+    def job_dict_list(self) -> list:
+        return self._job_dict_list
+    
+    @job_dict_list.setter
+    def job_dict_list(self, value: list) -> None:
+        self._job_dict_list = value
 
     @property
     def current_job(self) -> str:
