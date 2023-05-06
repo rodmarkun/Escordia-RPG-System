@@ -181,12 +181,12 @@ class Battle:
         """
 
         # Damage skills targets enemy
-        if skill.type == constants.SKILL_TYPE_DMG:
+        if skill.type != constants.SKILL_TYPE_HEAL:
             if type(caster) == Player:
                 return self.enemy
             return self.player
         # Heal skills targets caster
-        elif skill.type == constants.SKILL_TYPE_HEAL:
+        else:
             if type(caster) == Player:
                 return self.player
             return self.enemy

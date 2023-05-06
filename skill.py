@@ -41,9 +41,13 @@ class Skill:
         :param target: Target of the skill.
         :return: None.
         """
+        messager.add_message(player_name, f"{caster.name} casts {self.name}!")
         if self.type == "DAMAGING_MAGIC":
-            messager.add_message(player_name, f"{caster.name} casts {self.name}!")
-            damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
+            if constants.SKILL_TAG_PHYSICAL in self.tags:
+                damage = formulas.damage_physical_spell(self.power, caster.stats[constants.ATK_STATKEY],
+                                                  target.stats[constants.DEF_STATKEY])
+            else:
+                damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
                                                  target.stats[constants.MDEF_STATKEY])
             damage = target.take_damage(damage, self.element)
             if constants.SKILL_TAG_LEECH in self.tags:

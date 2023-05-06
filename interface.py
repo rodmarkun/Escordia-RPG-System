@@ -136,7 +136,7 @@ def player_rest(name: str) -> (bool, list):
 
     if data_management.search_cache_battle_by_player(name) is None:
         player_inst.recover()
-        return True, messager.empty_queue(name)
+        return True, [f"{name}, you are now rested and fully recovered your HP/MP."]
 
     return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
@@ -224,7 +224,7 @@ def show_player_job(name: str) -> (bool, list):
     if player_inst is None:
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
-    return True, [f"{player_inst.name}, your current job is {player_inst.current_job}"]
+    return True, [player_inst.show_player_info_job()]
 
 
 def change_player_job(name: str, job_name: str) -> (bool, list):

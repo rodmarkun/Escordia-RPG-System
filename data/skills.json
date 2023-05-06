@@ -2,21 +2,61 @@
   {
     "NAME": "First Aid",
     "DESCRIPTION": "Perform an improvised healing on yourself.",
-    "MP_COST": 2,
+    "MP_COST": 5,
     "TYPE": "HEALING_MAGIC",
-    "POWER": 10,
+    "POWER": 8,
     "ELEMENT": "HOLY",
-    "COOLDOWN": 2,
+    "COOLDOWN": 4,
     "TAGS": []
+  },
+  {
+    "NAME": "Intimidate",
+    "DESCRIPTION": "Intimidate the enemy and lower their attack.",
+    "MP_COST": 3,
+    "TYPE": "DEBUFF_MAGIC",
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 3,
+    "TAGS": ["INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Rushed Strike",
+    "DESCRIPTION": "Perform a rushed attack on an enemy, lowers your attack.",
+    "MP_COST": 3,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 18,
+    "ELEMENT": null,
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Fortify",
+    "DESCRIPTION": "Fortify yourself and raise your defense.",
+    "MP_COST": 4,
+    "TYPE": "BUFF_MAGIC",
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 3,
+    "TAGS": ["SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
   },
   {
     "NAME": "Small Fireball",
     "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
-    "MP_COST": 2,
+    "MP_COST": 4,
+    "TYPE": "DAMAGING_MAGIC",
+    "POWER": 5,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 2,
+    "TAGS": []
+  },
+  {
+    "NAME": "Whirlwind",
+    "DESCRIPTION": "Deal a small amount of wind damage to an enemy.",
+    "MP_COST": 3,
     "TYPE": "DAMAGING_MAGIC",
     "POWER": 4,
-    "ELEMENT": "FIRE",
-    "COOLDOWN": 1,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 2,
     "TAGS": []
   },
   {
@@ -74,7 +114,7 @@
     "DESCRIPTION": "Drain health from your enemy's blood.",
     "MP_COST": 2,
     "TYPE": "DAMAGING_MAGIC",
-    "POWER": 14,
+    "POWER": 15,
     "ELEMENT": "DARK",
     "COOLDOWN": 2,
     "TAGS": ["LEECH"]

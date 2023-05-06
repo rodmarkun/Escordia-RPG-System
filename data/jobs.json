@@ -4,9 +4,10 @@
     "DESCRIPTION": "Novice job",
     "SKILL_DICT": {
       "1": "First Aid",
-      "2": "Small Fireball"
+      "2": "Intimidate",
+      "3": "Rushed Strike"
     },
-    "XP_FACTOR": 1
+    "XP_FACTOR": 4
   },
   {
     "NAME": "Warrior",

@@ -156,7 +156,7 @@ async def job(ctx):
     """
     no_error, msgs = interface.show_player_job(ctx.author.name)
     if no_error:
-        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice', 'Warrior', 'Rogue', 'Mage']))
+        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 

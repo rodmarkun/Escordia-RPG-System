@@ -27,7 +27,10 @@ class ActionMenu(discord.ui.View):
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
-            skills_in_cooldown_str_list = [f"**{s}**: {battle.skills_in_cooldown[s] + 1}" for s in battle.skills_in_cooldown]
+            cooldown_str = ""
+            if len(battle.skills_in_cooldown) != 0:
+                skills_in_cooldown_str_list = [f"**{s}**: {battle.skills_in_cooldown[s] + 1}" for s in battle.skills_in_cooldown]
+                cooldown_str = f"\nSkills in cooldown - {','.join(skills_in_cooldown_str_list)}"
             skill_list = battle.player.skills.copy()
             for skill in battle.skills_in_cooldown:
                 skill_list.remove(skill)
@@ -35,8 +38,8 @@ class ActionMenu(discord.ui.View):
                 await self.ctx.send(f"**Escordia Error** - {self.ctx.author.mention}: You have no skills to use!")
             else:
                 await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}"
-                                                        f"\nSkills in cooldown - {','.join(skills_in_cooldown_str_list)}",
-                                                        view=SkillSelectView(self.ctx, skill_list))
+                                                        f"{cooldown_str}",
+                                                        view=SkillSelectView(self.ctx, skill_list, battle.player.current_job))
 
     @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -48,8 +51,8 @@ class ItemBuySelect(discord.ui.Select):
     def __init__(self, ctx, item_list):
         items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
         options = [discord.SelectOption(label=i.name,
-                                        description=f"{i.description}"
-                                                    f"{' ' + str(i.stat_change_list) if i.object_type == 'EQUIPMENT' else ''}"
+                                        description=f"{i.description if i.object_type != 'EQUIPMENT' else ''}"
+                                                    f"{' ' + str(i.stat_change_list).replace('{', '').replace('}', '') if i.object_type == 'EQUIPMENT' else ''}"
                                                     f" - {i.individual_value}G",
                                         emoji=emojis.obj_emoji(i)) for i in items_in_options]
         super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
@@ -111,11 +114,11 @@ class EquipmentSelectView(discord.ui.View):
 
 
 class SkillSelect(discord.ui.Select):
-    def __init__(self, ctx, skill_list):
+    def __init__(self, ctx, skill_list, curr_job):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
                                         description=f"Power: {s.power} | Cooldown: {s.cooldown}",
-                                        emoji=emojis.skill_emoji(s)) for s in skills_in_options]
+                                        emoji=emojis.skill_emoji(s, curr_job)) for s in skills_in_options]
         super().__init__(placeholder=f"Select a skill to perform", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
@@ -128,9 +131,9 @@ class SkillSelect(discord.ui.Select):
 
 
 class SkillSelectView(discord.ui.View):
-    def __init__(self, ctx, skill_list):
+    def __init__(self, ctx, skill_list, curr_job):
         super().__init__()
-        self.add_item(SkillSelect(ctx, skill_list))
+        self.add_item(SkillSelect(ctx, skill_list, curr_job))
 
 
 # TODO - Current job as default

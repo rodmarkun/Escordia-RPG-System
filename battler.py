@@ -117,8 +117,9 @@ class Battler:
         :return: None.
         """
         if buff_debuff in constants.BUFFS or constants.DEBUFFS:
-            self.buffs_and_debuffs[buff_debuff] = 3
-            self.stat_change_on_buff_debuff(buff_debuff, expires=False)
+            if buff_debuff not in self.buffs_and_debuffs:
+                self.stat_change_on_buff_debuff(buff_debuff, expires=False)
+            self.buffs_and_debuffs[buff_debuff] = constants.BUFF_DEBUFF_DURATION
         else:
             raise ValueError(f"{buff_debuff} is not a valid buff or debuff.")
 

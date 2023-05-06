@@ -137,6 +137,22 @@ class Player(Battler):
                f'**Money**: {self.money}\n' \
                f'**Bosses Defeated**: {self._defeated_bosses}\n'
 
+    def show_player_info_job(self) -> str:
+        """
+        Shows all the current info (profile) about the player's job.
+
+        :return: String containing the player's information.
+        """
+        job = data_management.search_cache_job_by_name(self.current_job)
+        skills_to_learn_str = '\n'
+        for lvl in job.skill_dict:
+            skills_to_learn_str += f'Level {lvl}: {job.skill_dict[lvl]}\n'
+
+        return f'**Job**: {self.current_job}\n' \
+               f'**Level**: {self.current_job_dict["lvl"]}\n' \
+               f'**Xp to next level**: {self.current_job_dict["xp_to_next_lvl"] - self.current_job_dict["xp"]}\n' \
+               f'**Skills to learn** {skills_to_learn_str}'
+
     def equip_item(self, equipment: str) -> (bool, list):
         """
         Equips an item from the player's inventory.

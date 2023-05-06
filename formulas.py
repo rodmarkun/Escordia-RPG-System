@@ -101,6 +101,18 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     return int(spell_power * (matk_value / mdef_value)) // 2
 
 
+def damage_physical_spell(spell_power: int, atk_value: int, def_value: int) -> int:
+    """
+    Formula for calculating the damage power of a spell.
+
+    :param spell_power: Spell's power.
+    :param atk_value: ATK of casting Battler.
+    :param def_value: DEF of defending Battler.
+    :return:
+    """
+    return int(spell_power * (atk_value * 1.5 / def_value)) // 2
+
+
 def leech_calculation(damage: int) -> int:
     """
     Formula for calculating the heal amount caused by leeching.

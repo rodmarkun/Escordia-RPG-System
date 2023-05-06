@@ -82,7 +82,7 @@ def obj_emoji(item: 'Item') -> str:
     return obj_to_emoji[item.object_type]
 
 
-def skill_emoji(skill: 'Skill') -> str:
+def skill_emoji(skill: 'Skill', skill_job) -> str:
     """
     Returns the emoji of a skill.
 
@@ -92,4 +92,4 @@ def skill_emoji(skill: 'Skill') -> str:
     try:
         return emojis.element_to_emoji[skill.element]
     except KeyError:
-        return ""
+        return emojis.job_to_emoji[skill_job]
