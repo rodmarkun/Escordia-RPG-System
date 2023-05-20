@@ -28,7 +28,7 @@ class Player(Battler):
         self.money: int = 50
         self.inventory: inventory.Inventory = inventory.Inventory(self.name)
         self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
-        self.skills: list = ["First Aid"]
+        self.skills: list = ["Small Fireball"]
         self.passives: list = []
         self.current_area: int = 1
         self.in_fight: bool = False

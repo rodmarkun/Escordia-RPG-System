@@ -6,6 +6,8 @@ import data_management
 import discord_embeds
 import messager
 
+import time
+
 
 class ActionMenu(discord.ui.View):
     """
@@ -19,9 +21,11 @@ class ActionMenu(discord.ui.View):
     @discord.ui.button(label="Attack", style=discord.ButtonStyle.red)
     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
+            start_time = time.time()
             no_error, msgs = interface.normal_attack(self.ctx.author.name)
             await continue_battle(no_error, msgs, self.ctx)
             await interaction.response.defer()
+            print(f"Attack took {time.time() - start_time} seconds")
 
     @discord.ui.button(label="Skill", style=discord.ButtonStyle.primary)
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -124,10 +128,12 @@ class SkillSelect(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction):
         if await check_button_pressed(self.ctx, interaction):
+            start_time = time.time()
             skill = data_management.search_cache_skill_by_name(self.values[0])
             no_error, msgs = interface.skill_attack(self.ctx.author.name, skill.name)
             await continue_battle(no_error, msgs, self.ctx)
             await interaction.response.defer()
+            print(f"Skill took {time.time() - start_time} seconds")
 
 
 class SkillSelectView(discord.ui.View):

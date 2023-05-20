@@ -17,6 +17,15 @@ class Area:
     """
 
     def __init__(self, name, number, enemy_list, boss, dungeons):
+        """
+        Area constructor.
+
+        :param name: Area's name.
+        :param number: Area's identifying number.
+        :param enemy_list: Possible enemies to spawn in the area.
+        :param boss: Boss of the area.
+        :param dungeons: Dungeons found in the area.
+        """
         self.name = name
         self.number = number
         self.enemy_list = enemy_list
@@ -29,7 +38,7 @@ class Area:
     ///////////////
     """
 
-    def spawn_enemy(self) -> enemy.Enemy:
+    def spawn_random_enemy(self) -> enemy.Enemy:
         """
         Spawns a random enemy from the area's enemy list.
 

@@ -3,27 +3,24 @@
     "NAME": "First Aid",
     "DESCRIPTION": "Perform an improvised healing on yourself.",
     "MP_COST": 5,
-    "TYPE": "HEALING_MAGIC",
     "POWER": 8,
     "ELEMENT": "HOLY",
     "COOLDOWN": 4,
-    "TAGS": []
+    "TAGS": ["HEALING"]
   },
   {
     "NAME": "Intimidate",
     "DESCRIPTION": "Intimidate the enemy and lower their attack.",
     "MP_COST": 3,
-    "TYPE": "DEBUFF_MAGIC",
     "POWER": 0,
     "ELEMENT": null,
     "COOLDOWN": 3,
-    "TAGS": ["INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
   },
   {
     "NAME": "Rushed Strike",
     "DESCRIPTION": "Perform a rushed attack on an enemy, lowers your attack.",
     "MP_COST": 3,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 18,
     "ELEMENT": null,
     "COOLDOWN": 3,
@@ -33,90 +30,81 @@
     "NAME": "Fortify",
     "DESCRIPTION": "Fortify yourself and raise your defense.",
     "MP_COST": 4,
-    "TYPE": "BUFF_MAGIC",
     "POWER": 0,
     "ELEMENT": null,
     "COOLDOWN": 3,
-    "TAGS": ["SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
   },
   {
     "NAME": "Small Fireball",
     "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
     "MP_COST": 4,
-    "TYPE": "DAMAGING_MAGIC",
-    "POWER": 5,
+    "POWER": 10,
     "ELEMENT": "FIRE",
     "COOLDOWN": 2,
-    "TAGS": []
+    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Whirlwind",
     "DESCRIPTION": "Deal a small amount of wind damage to an enemy.",
     "MP_COST": 3,
-    "TYPE": "DAMAGING_MAGIC",
-    "POWER": 4,
+    "POWER": 7,
     "ELEMENT": "WIND",
     "COOLDOWN": 2,
-    "TAGS": []
+    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Quickflame",
     "DESCRIPTION": "Deal a small amount of fire damage to an enemy. Does not skip the turn.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 7,
     "ELEMENT": "FIRE",
     "COOLDOWN": 3,
-    "TAGS": ["DOES_NOT_SKIP_TURN"]
+    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"]
   },
   {
     "NAME": "Ice Bolt",
     "DESCRIPTION": "Deal ice damage to an enemy and has a chance to freeze them.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 22,
     "ELEMENT": "ICE",
     "COOLDOWN": 2,
-    "TAGS": []
+    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Ignis Ardere",
     "DESCRIPTION": "Conjure severe fire magic damage.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 50,
     "ELEMENT": "FIRE",
     "COOLDOWN": 3,
-    "TAGS": []
+    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Hyperbeam",
     "DESCRIPTION": "Perform a highly damage blow, but debuffs yourself.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 10,
     "ELEMENT": "HOLY",
     "COOLDOWN": 3,
-    "TAGS": ["SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "TAGS": ["MAGICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
   },
   {
     "NAME": "Bio",
     "DESCRIPTION": "Lowers enemy defense.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 10,
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
-    "TAGS": ["INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
   },
   {
     "NAME": "Bloodstealer",
     "DESCRIPTION": "Drain health from your enemy's blood.",
     "MP_COST": 2,
-    "TYPE": "DAMAGING_MAGIC",
     "POWER": 15,
     "ELEMENT": "DARK",
     "COOLDOWN": 2,
-    "TAGS": ["LEECH"]
+    "TAGS": ["MAGICAL", "LEECH"]
   }
 ]

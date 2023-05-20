@@ -1,5 +1,4 @@
 import json
-import json
 
 import area
 import constants
@@ -17,6 +16,7 @@ import skill
 /// CACHE DATA ///
 //////////////////
 """
+
 ITEM_CACHE = []
 EQUIPMENT_CACHE = []
 AREAS_CACHE = {}
@@ -27,7 +27,6 @@ ENEMIES_CACHE = []
 BATTLE_CACHE = []
 SHOP_CACHE = []
 SKILLS_CACHE = []
-
 
 """
 ///////////////

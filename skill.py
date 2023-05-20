@@ -15,12 +15,11 @@ class Skill:
     ///////////////////
     """
 
-    def __init__(self, name: str, description: str, mp_cost: int, type: str, power: int, element: str = None,
+    def __init__(self, name: str, description: str, mp_cost: int, power: int, element: str = None,
                  cooldown: int = 1, tags: list = []):
         self.name = name
         self.description = description
         self.mp_cost = mp_cost
-        self.type = type
         self.power = power
         self.element = element
         self.cooldown = cooldown
@@ -42,7 +41,7 @@ class Skill:
         :return: None.
         """
         messager.add_message(player_name, f"{caster.name} casts {self.name}!")
-        if self.type == "DAMAGING_MAGIC":
+        if constants.SKILL_TAG_PHYSICAL in self.tags or constants.SKILL_TAG_MAGICAL in self.tags:
             if constants.SKILL_TAG_PHYSICAL in self.tags:
                 damage = formulas.damage_physical_spell(self.power, caster.stats[constants.ATK_STATKEY],
                                                   target.stats[constants.DEF_STATKEY])
@@ -54,7 +53,7 @@ class Skill:
                 caster.heal(formulas.leech_calculation(damage))
                 messager.add_message(player_name, f"{caster.name} heals himself for {formulas.leech_calculation(damage)} HP!")
             messager.add_message(player_name, f"{target.name} takes {damage} damage!")
-        elif self.type == "HEALING_MAGIC":
+        elif constants.SKILL_TAG_HEALING in self.tags:
             amount = formulas.healing_spell_power(self.power, caster.stats[constants.MATK_STATKEY])
             if caster.name == target.name:
                 messager.add_message(player_name, f"{caster.name} heals himself for {amount} HP!")
@@ -99,14 +98,6 @@ class Skill:
     @mp_cost.setter
     def mp_cost(self, value: int) -> None:
         self._mp_cost = value
-        
-    @property
-    def type(self) -> str:
-        return self._type
-    
-    @type.setter
-    def type(self, value: str) -> None:
-        self._type = value
     
     @property
     def power(self) -> int:

@@ -1,12 +1,22 @@
 import random
-
 import constants
 import data_management
-import emojis
 import formulas
 import messager
 from player import Player
 from enemy import Enemy
+
+
+def remove_buff_debuff(target: 'Battler', bd: str) -> None:
+    """
+    Removes a buff/debuff from the target.
+
+    :param target: Target Battler object.
+    :param bd: Buff/debuff name.
+    :return:
+    """
+    target.buffs_and_debuffs.pop(bd)
+    target.stat_change_on_buff_debuff(bd, expires=True)
 
 
 class Battle:
@@ -21,12 +31,19 @@ class Battle:
     """
 
     def __init__(self, player: Player, enemy: Enemy):
+        """
+        Battle constructor.
+
+        :param player: Player engaged in the battle.
+        :param enemy: Enemy engaged in the battle.
+        """
         print(f"Initializing battle with Player: {player.name} and Enemy: {enemy.name}")
         self.player = player
         self.enemy = enemy
-        self.is_over = False
-        self.skills_in_cooldown = {}
-        self.player_stats_before_battle = self.player.stats.copy()
+        self.is_over = False  # Flag to indicate if the battle is over
+        self.skills_in_cooldown = {}  # Dictionary with player's skills in cooldown
+        self.player_stats_before_battle = self.player.stats.copy()  # Player's stats before the battle. This is mainly
+        # used for not messing up the stats with buffs when the battle is over.
 
     """
     ///////////////
@@ -42,12 +59,13 @@ class Battle:
         :return: List of information strings about turn's events.
         """
 
-        no_enemy_turn = False
-        # Normal attack
+        no_enemy_turn = False  # Enemy's turn will be skipped if this is assigned to True
+
+        # Player performs a normal attack
         if player_action["ACTION"] == "NORMAL_ATTACK":
             normal_attack(attacker=self.player, target=self.enemy, player_name=self.player.name)
 
-        # Skill
+        # Player performs a skill
         elif player_action["ACTION"] == "SKILL":
             skill = data_management.search_cache_skill_by_name(player_action["SKILL"])
             target = self.skill_based_target_selection(skill, self.player)
@@ -59,13 +77,15 @@ class Battle:
         # Enemy turn
         if self.enemy.alive:
             if not no_enemy_turn:
+                # Enemy AI should go here. For now, it's just a random action.
                 enemy_action = random.choice(constants.POSSIBLE_ENEMY_ACTIONS)
-                if enemy_action == "NORMAL_ATTACK" or len(self.enemy.skills) == 0:
-                    normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
-                elif enemy_action == "SKILL":
+
+                if enemy_action == "SKILL" and len(self.enemy.skills) > 0:
                     skill = data_management.search_cache_skill_by_name(random.choice(self.enemy.skills))
                     target = self.skill_based_target_selection(skill, self.enemy)
                     perform_skill(self.enemy, target, skill, self.player.name)
+                else:
+                    normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
 
                 # Player dies
                 if not self.player.alive:
@@ -75,11 +95,10 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
             self.is_over = True
+
         self.decrease_cooldowns()
         self.decrease_buff_debuff_duration()
         return messager.empty_queue(self.player.name)
-
-    # def apply_buff_debuffs(self):
 
     def win_battle(self) -> None:
         """
@@ -94,7 +113,7 @@ class Battle:
         messager.add_message(self.player.name, f"{self.player.name} won the battle! You obtain {self.enemy.xp_reward} XP and "
                              f"{self.enemy.gold_reward} G")
 
-        self.battle_is_over()
+        self.actions_when_battle_is_over()
 
         # Combat rewards
         self.player.add_exp(self.enemy.xp_reward)
@@ -107,6 +126,7 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
 
+        # Delete enemy instance
         del self.enemy
 
     def lose_battle(self) -> None:
@@ -122,54 +142,62 @@ class Battle:
         messager.add_message(self.player.name, f"{self.player.name} lost the battle! You are brought back to safety, "
                                                f"but half your gold is long gone...")
 
+        self.actions_when_battle_is_over()
+
         # Player loses money and respawns
         self.player.money //= 2
-        self.battle_is_over()
+
+        # Delete enemy instance
         del self.enemy
+
         self.player.respawn()
 
     def decrease_buff_debuff_duration(self) -> None:
         """
-        Decreases the duration of all buffs and debuffs by 1.
+        Decreases the duration of all buffs and debuffs by 1. Removes them if necessary.
 
         :return: None.
         """
+
         # Player buffs and debuffs
         for bd in list(self.player.buffs_and_debuffs):
+            # Remove player's buff/debuff if it has expired
             if self.player.buffs_and_debuffs[bd] == 0:
-                self.player.buffs_and_debuffs.pop(bd)
-                self.player.stat_change_on_buff_debuff(bd, expires=True)
+                remove_buff_debuff(self.player, bd)
             else:
                 self.player.buffs_and_debuffs[bd] -= 1
+
         # Enemy buffs and debuffs
         for bd in list(self.enemy.buffs_and_debuffs):
             if self.enemy.buffs_and_debuffs[bd] == 0:
-                self.enemy.buffs_and_debuffs.pop(bd)
-                self.enemy.stat_change_on_buff_debuff(bd, expires=True)
+                remove_buff_debuff(self.enemy, bd)
             else:
                 self.enemy.buffs_and_debuffs[bd] -= 1
 
-    def reset_buff_and_debuffs(self) -> None:
+    def remove_all_buffs_and_debuffs(self) -> None:
         """
-        Erases all buffs and debuffs from the player and the enemy.
+        Erases all buffs and debuffs from the player and the enemy. Mainly used when the battle is over.
 
         :return: None.
         """
 
+        # Deletes all stat changes derived from buffs/debuffs
         for bd in self.player.buffs_and_debuffs:
             self.player.stat_change_on_buff_debuff(bd, expires=True)
         for bd in self.enemy.buffs_and_debuffs:
             self.enemy.stat_change_on_buff_debuff(bd, expires=True)
 
+        # Empties all buffs and debuffs
         self.player.buffs_and_debuffs = {}
         self.enemy.buffs_and_debuffs = {}
 
-    def battle_is_over(self) -> None:
+    def actions_when_battle_is_over(self) -> None:
         """
         Resets the player's stats and buffs and debuffs.
         :return: None.
         """
-        self.reset_buff_and_debuffs()
+        self.remove_all_buffs_and_debuffs()
+        # TODO - There's probably a better way to do this. We need to copy all stats except HP,MP,MAXHP,MAXMP.
         self.player.stats.update({key: self.player_stats_before_battle[key] for key in self.player_stats_before_battle
                                   if key not in constants.STATS_NOT_COPYING_AFTER_BATTLE})
 
@@ -181,7 +209,7 @@ class Battle:
         """
 
         # Damage skills targets enemy
-        if skill.type != constants.SKILL_TYPE_HEAL:
+        if constants.SKILL_TAG_HEALING not in skill.tags:
             if type(caster) == Player:
                 return self.enemy
             return self.player
@@ -234,6 +262,22 @@ class Battle:
     def is_over(self, value: bool) -> None:
         self._is_over = value
 
+    @property
+    def skills_in_cooldown(self) -> dict:
+        return self._skills_in_cooldown
+
+    @skills_in_cooldown.setter
+    def skills_in_cooldown(self, value: dict) -> None:
+        self._skills_in_cooldown = value
+
+    @property
+    def player_stats_before_battle(self) -> dict:
+        return self._player_stats_before_battle
+
+    @player_stats_before_battle.setter
+    def player_stats_before_battle(self, value: dict) -> None:
+        self._player_stats_before_battle = value
+
     @enemy.deleter
     def enemy(self):
         del self._enemy
@@ -247,7 +291,6 @@ def start_battle(player: Player, enemy: Enemy):
     :param enemy: Enemy to be fighted.
     :return: Battle instance.
     """
-
     messager.add_message(player.name, f'You are fighting a **{enemy.name}**')
     return Battle(player, enemy)
 
@@ -256,12 +299,14 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
     """
     Battler executes a normal attack.
 
+    :param attacker: Battler that executes the attack.
     :param target: Battler to attack.
+    :param player_name: Name of the player in the battle.
     :return: None.
     """
     # Check if attack hits
-    if not check_miss(attacker.stats['SPEED'], target.stats['SPEED']):
-        dmg = formulas.normal_attack_dmg(attacker.stats['ATK'], target.stats['DEF'])
+    if not check_miss(attacker.stats[constants.SPEED_STATKEY], target.stats[constants.SPEED_STATKEY]):
+        dmg = formulas.normal_attack_dmg(attacker.stats[constants.ATK_STATKEY], target.stats[constants.DEF_STATKEY])
         # Check for critical damage
         dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)
         if is_crit:
@@ -269,7 +314,7 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
                                               f"damage!")
         else:
             messager.add_message(player_name, f"{attacker.name} attacks {target.name} and deals {dmg} damage!")
-        target.take_damage(dmg, None)
+        target.take_damage(dmg, None)  # Normal attacks have no element
     else:
         messager.add_message(player_name, f"{attacker.name}'s attack missed!")
 
@@ -284,6 +329,7 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: 'Skill', player
     :param player_name: Name of the player.
     :return: None.
     """
+    # Enemies do not pay mana cost.
     if type(attacker) == Enemy or attacker.pay_mana_cost(skill.mp_cost):
         skill.effect(player_name, attacker, target)
     else:
@@ -298,6 +344,5 @@ def check_miss(atk_speed: int, def_speed: int) -> bool:
     :param def_speed: Defender's speed.
     :return: True if attack misses. False if not.
     """
-
     chance = formulas.miss_formula(atk_speed, def_speed)
     return chance > random.randint(0, 100)

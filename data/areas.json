@@ -2,7 +2,7 @@
     {
       "NAME": "Quiet Woods",
       "NUMBER": 1,
-      "ENEMY_LIST": ["Bat", "Wolf", "Lion Ant", "Colossal Caterpillar", "Giant Dragonfly"],
+      "ENEMY_LIST": ["Wolf"],
       "BOSS": "Daidarabotchi, Forest Guardian",
       "DUNGEONS": []
     }
