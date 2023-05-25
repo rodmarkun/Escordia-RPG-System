@@ -1,11 +1,9 @@
 import discord
-
 import emojis
 import interface
 import data_management
 import discord_embeds
 import messager
-
 import time
 
 
@@ -18,19 +16,21 @@ class ActionMenu(discord.ui.View):
         self.value = None
         self.ctx = ctx
 
+    # Normal Attack
     @discord.ui.button(label="Attack", style=discord.ButtonStyle.red)
     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
-            start_time = time.time()
             no_error, msgs = interface.normal_attack(self.ctx.author.name)
             await continue_battle(no_error, msgs, self.ctx)
             await interaction.response.defer()
-            print(f"Attack took {time.time() - start_time} seconds")
 
+    # Skill
     @discord.ui.button(label="Skill", style=discord.ButtonStyle.primary)
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             battle = data_management.search_cache_battle_by_player(self.ctx.author.name)
+
+            # All of this is to get all player skills that are not in cooldown
             cooldown_str = ""
             if len(battle.skills_in_cooldown) != 0:
                 skills_in_cooldown_str_list = [f"**{s}**: {battle.skills_in_cooldown[s] + 1}" for s in battle.skills_in_cooldown]
@@ -45,6 +45,7 @@ class ActionMenu(discord.ui.View):
                                                         f"{cooldown_str}",
                                                         view=SkillSelectView(self.ctx, skill_list, battle.player.current_job))
 
+    # Item
     @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
@@ -52,6 +53,9 @@ class ActionMenu(discord.ui.View):
 
 
 class ItemBuySelect(discord.ui.Select):
+    """
+    Class that handles the item selection for the shop.
+    """
     def __init__(self, ctx, item_list):
         items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
         options = [discord.SelectOption(label=i.name,
@@ -62,6 +66,7 @@ class ItemBuySelect(discord.ui.Select):
         super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
+    # Buys an item
     async def callback(self, interaction: discord.Interaction):
         if await check_button_pressed(self.ctx, interaction):
             item = data_management.search_cache_item_by_name(self.values[0])
@@ -79,15 +84,18 @@ class ItemBuySelectView(discord.ui.View):
 
 
 class EquipmentSelect(discord.ui.Select):
+    """
+    Class that handles the equipment selection.
+    """
     def __init__(self, ctx, item_list, player_equipment):
         default_option = None
         if player_equipment is not None:
             player_equipment = data_management.search_cache_item_by_name(player_equipment)
             default_option = discord.SelectOption(label=player_equipment.name,
-                                                    description=f"{player_equipment.description}"
-                                                        f"{' ' + str(player_equipment.stat_change_list)}",
-                                                    emoji=emojis.obj_emoji(player_equipment),
-                                                    default=True)
+                                                  description=f"{player_equipment.description}"
+                                                  f"{' ' + str(player_equipment.stat_change_list)}",
+                                                  emoji=emojis.obj_emoji(player_equipment),
+                                                  default=True)
 
         items_in_options = [data_management.search_cache_item_by_name(i.name) for i in item_list]
         options = [discord.SelectOption(label=i.name,
@@ -101,6 +109,7 @@ class EquipmentSelect(discord.ui.Select):
         super().__init__(placeholder="Select an item to equip", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
+    # Equips an item
     async def callback(self, interaction: discord.Interaction):
         if await check_button_pressed(self.ctx, interaction):
             item = data_management.search_cache_item_by_name(self.values[0])
@@ -118,6 +127,9 @@ class EquipmentSelectView(discord.ui.View):
 
 
 class SkillSelect(discord.ui.Select):
+    """
+    Class that handles the skill selection.
+    """
     def __init__(self, ctx, skill_list, curr_job):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
@@ -126,6 +138,7 @@ class SkillSelect(discord.ui.Select):
         super().__init__(placeholder=f"Select a skill to perform", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
+    # Uses a skill
     async def callback(self, interaction: discord.Interaction):
         if await check_button_pressed(self.ctx, interaction):
             start_time = time.time()
@@ -144,6 +157,9 @@ class SkillSelectView(discord.ui.View):
 
 # TODO - Current job as default
 class JobSelect(discord.ui.Select):
+    """
+    Class that handles the job selection.
+    """
     def __init__(self, ctx, job_list):
         jobs_in_options = [data_management.search_cache_job_by_name(i) for i in job_list]
         options = [discord.SelectOption(label=j.name,
@@ -152,6 +168,7 @@ class JobSelect(discord.ui.Select):
         super().__init__(placeholder=f"Select a job to change to", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
+    # Changes a player's job
     async def callback(self, interaction: discord.Interaction):
         if await check_button_pressed(self.ctx, interaction):
             job = data_management.search_cache_job_by_name(self.values[0])
@@ -175,10 +192,7 @@ def msgs_to_msg_str(msgs: list) -> str:
     :param msgs: List of messages
     :return: String containing all messages.
     """
-    msg_str = ""
-    for msg in msgs:
-        msg_str += msg + '\n'
-    return msg_str
+    return '\n'.join(msgs)
 
 
 async def check_button_pressed(ctx, interaction) -> bool:
@@ -209,11 +223,9 @@ async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
                     messager.empty_queue(ctx.author.name))))
             else:
                 battle.lose_battle()
-                await ctx.send('', embed=discord_embeds.embed_death_msg(ctx, msgs_to_msg_str(
-                    messager.empty_queue(ctx.author.name))))
+                await ctx.send('', embed=discord_embeds.embed_death_msg(ctx))
         else:
-            await ctx.send(msg_str,
-                                embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
-                                view=ActionMenu(ctx))
+            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+                                    view=ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')

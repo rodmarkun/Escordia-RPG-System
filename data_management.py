@@ -1,6 +1,7 @@
 import json
 
 import area
+import battle
 import constants
 import enemy
 import equipment
@@ -17,16 +18,16 @@ import skill
 //////////////////
 """
 
-ITEM_CACHE = []
-EQUIPMENT_CACHE = []
+ITEM_CACHE = {}
+EQUIPMENT_CACHE = {}
 AREAS_CACHE = {}
-DUNGEON_CACHE = []
-JOB_CACHE = []
-PLAYER_CACHE = []
-ENEMIES_CACHE = []
-BATTLE_CACHE = []
-SHOP_CACHE = []
-SKILLS_CACHE = []
+DUNGEON_CACHE = {}
+JOB_CACHE = {}
+PLAYER_CACHE = {}
+ENEMIES_CACHE = {}
+BATTLE_CACHE = {}
+SHOP_CACHE = {}
+SKILLS_CACHE = {}
 
 """
 ///////////////
@@ -42,9 +43,21 @@ def create_new_player(player_name: str) -> None:
     :param player_name: Player's name.
     :return: None.
     """
-    PLAYER_CACHE.append(player.Player(player_name))
+    PLAYER_CACHE.update({player_name: player.Player(player_name)})
     messager.messager_add_player(player_name)
+    print(f"Created player with name: {player_name}")
 
+
+def create_new_battle(player_inst: 'Player', enemy_inst: 'Enemy') -> None:
+    """
+    Creates a new battle in the system.
+
+    :param player_inst: Player instance.
+    :param enemy_inst: Enemy instance.
+    :return: None.
+    """
+    BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
+    print(f"Created battle with player: {player_inst.name} and enemy: {enemy_inst.name}")
 
 """
 ///////////////
@@ -60,10 +73,10 @@ def search_cache_player(player_name: str) -> 'Player':
     :param player_name: Player's name.
     :return: Player if found. Else None.
     """
-    for p in PLAYER_CACHE:
-        if p.name == player_name:
-            return p
-    return None
+    try:
+        return PLAYER_CACHE[player_name]
+    except KeyError:
+        return None
 
 
 def search_cache_battle_by_player(player_name: str) -> 'Battle':
@@ -73,10 +86,10 @@ def search_cache_battle_by_player(player_name: str) -> 'Battle':
     :param player_name: Player's name.
     :return: Battle if found. Else None.
     """
-    for b in BATTLE_CACHE:
-        if b.player.name == player_name:
-            return b
-    return None
+    try:
+        return BATTLE_CACHE[player_name]
+    except KeyError:
+        return None
 
 
 def search_cache_enemy_by_name(enemy_name: str) -> 'Enemy':
@@ -86,10 +99,10 @@ def search_cache_enemy_by_name(enemy_name: str) -> 'Enemy':
     :param enemy_name: Enemy's name.
     :return: Enemy instance. None if not found.
     """
-    for e in ENEMIES_CACHE:
-        if e.name.lower() == enemy_name.lower():
-            return e
-    return None
+    try:
+        return ENEMIES_CACHE[enemy_name]
+    except KeyError:
+        return None
 
 
 def search_cache_item_by_name(item_name: str) -> 'Item':
@@ -99,13 +112,13 @@ def search_cache_item_by_name(item_name: str) -> 'Item':
     :param item_name: Item's name.
     :return: Item instance. None if not found.
     """
-    for i in ITEM_CACHE:
-        if i.name.lower() == item_name.lower():
-            return i
-    for e in EQUIPMENT_CACHE:
-        if e.name.lower() == item_name.lower():
-            return e
-    return None
+    try:
+        return ITEM_CACHE[item_name]
+    except KeyError:
+        try:
+            return EQUIPMENT_CACHE[item_name]
+        except KeyError:
+            return None
 
 
 def search_cache_shop_by_area(area_index: int) -> 'Shop':
@@ -115,11 +128,10 @@ def search_cache_shop_by_area(area_index: int) -> 'Shop':
     :param area_index: Area's index.
     :return: Shop instance. None if not found.
     """
-
-    for s in SHOP_CACHE:
-        if s.area_number == area_index:
-            return s
-    return None
+    try:
+        return SHOP_CACHE[area_index]
+    except KeyError:
+        return None
 
 
 def search_cache_skill_by_name(skill_name: str) -> 'Skill':
@@ -129,10 +141,10 @@ def search_cache_skill_by_name(skill_name: str) -> 'Skill':
     :param skill_name: Skill's name.
     :return: Skill instance. None if not found.
     """
-    for s in SKILLS_CACHE:
-        if s.name.lower() == skill_name.lower():
-            return s
-    return None
+    try:
+        return SKILLS_CACHE[skill_name]
+    except KeyError:
+        return None
 
 
 def search_cache_job_by_name(job_name: str) -> 'Job':
@@ -142,10 +154,10 @@ def search_cache_job_by_name(job_name: str) -> 'Job':
     :param job_name: Job's name.
     :return: Job instance. None if not found.
     """
-    for j in JOB_CACHE:
-        if j.name.lower() == job_name.lower():
-            return j
-    return None
+    try:
+        return JOB_CACHE[job_name]
+    except KeyError:
+        return None
 
 
 """
@@ -164,7 +176,7 @@ def delete_cache_battle_by_player(player_name: str) -> None:
     """
     b = search_cache_battle_by_player(player_name)
     if b is not None:
-        BATTLE_CACHE.remove(b)
+        BATTLE_CACHE.pop(player_name)
 
 
 """
@@ -185,7 +197,7 @@ def load_items_from_json() -> None:
 
         for i in json_file:
             param_list = [i[key] for key in constants.ITEM_KEYS]
-            ITEM_CACHE.append(item.Item(*param_list))
+            ITEM_CACHE.update({i["NAME"]: item.Item(*param_list)})
 
 
 def load_equipment_from_json() -> None:
@@ -199,7 +211,7 @@ def load_equipment_from_json() -> None:
 
         for e in json_file:
             param_list = [e[key] for key in constants.EQUIPMENT_KEYS]
-            EQUIPMENT_CACHE.append(equipment.Equipment(*param_list))
+            EQUIPMENT_CACHE.update({e["NAME"]: equipment.Equipment(*param_list)})
 
 
 def load_enemies_from_json() -> None:
@@ -212,12 +224,9 @@ def load_enemies_from_json() -> None:
         json_file = json.load(f)
 
         for e in json_file:
-            # why does this not work ¿?¿?¿?
             param_list = [e[key] for key in constants.ENEMY_KEYS]
             print(*param_list)
-            ENEMIES_CACHE.append(enemy.Enemy(*param_list))
-            #ENEMIES_CACHE.append(enemy.Enemy(e["NAME"], e["STATS"], e["XP_REWARD"], e["GOLD_REWARD"], e["POSSIBLE_LOOT"],
-            #                                 e["LOOT_CHANCE"], e["SKILLS"], e["IMAGE_URL"], e["IS_BOSS"]))
+            ENEMIES_CACHE.update({e["NAME"]: enemy.Enemy(*param_list)})
 
 
 def load_areas_from_json() -> None:
@@ -254,7 +263,7 @@ def load_jobs_from_json() -> None:
 
         for j in json_file:
             param_list = [j[key] for key in constants.JOB_KEYS]
-            JOB_CACHE.append(job.Job(*param_list))
+            JOB_CACHE.update({j["NAME"]: job.Job(*param_list)})
 
 
 def load_shops_from_json() -> None:
@@ -268,8 +277,7 @@ def load_shops_from_json() -> None:
 
         for s in json_file:
             param_list = [s[key] for key in constants.SHOP_KEYS]
-            print(param_list)
-            SHOP_CACHE.append(shop.Shop(*param_list))
+            SHOP_CACHE.update({s["AREA_NUMBER"]: shop.Shop(*param_list)})
 
 
 def load_skills_from_json() -> None:
@@ -283,7 +291,7 @@ def load_skills_from_json() -> None:
 
         for s in json_file:
             param_list = [s[key] for key in constants.SKILL_KEYS]
-            SKILLS_CACHE.append(skill.Skill(*param_list))
+            SKILLS_CACHE.update({s["NAME"]: skill.Skill(*param_list)})
 
 
 def load_players_from_db() -> None:

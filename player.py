@@ -27,7 +27,7 @@ class Player(Battler):
         self.xp_rate = 1
         self.money: int = 50
         self.inventory: inventory.Inventory = inventory.Inventory(self.name)
-        self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_NAMES}
+        self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_TYPES}
         self.skills: list = ["Small Fireball"]
         self.passives: list = []
         self.current_area: int = 1
@@ -65,14 +65,12 @@ class Player(Battler):
             self.xp -= self.xp_to_next_lvl
             self.lvl += 1
             leveled_up = True
-            # You can change this formula for different exp progression
             self.xp_to_next_lvl = formulas.xp_next_lvl_formula(self.xp_to_next_lvl, self._lvl)
             for stat in self.stats:
                 if stat not in constants.STATS_NOT_UPGRADING_WHEN_LEVELING_UP:
                     self.stats[stat] += constants.STAT_UPGRADE_WHEN_LEVELING_UP
             if constants.FULLY_RECOVER_WHEN_LEVELING_UP:
-                self.stats['HP'] = self.stats['MAXHP']
-                self.stats['MP'] = self.stats['MAXMP']
+                self.recover()
 
             messager.add_message(self.name, f"You leveled up! You are now level {self.lvl}")
         return leveled_up
@@ -101,7 +99,6 @@ class Player(Battler):
                 self.skills.append(curr_job.skill_dict[new_level_str])
                 messager.add_message(self.name,
                                      f"You learnt {curr_job.skill_dict[new_level_str]}!")
-        print("XP_NEXT_LVL_JOB", self.current_job_dict['xp'])
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -121,7 +118,7 @@ class Player(Battler):
         :return: String containing the player's information.
         """
 
-        stat_string = ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STAT_NAMES])
+        stat_string = ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STATKEYS])
         equipment_string = ''.join([f"**{e}**: {self.equipment[e]}\n" if self.equipment[e] is not None else
                                     f"**{e}**: None\n" for e in self.equipment])
 
@@ -167,7 +164,7 @@ class Player(Battler):
             if e.object_type != "EQUIPMENT":
                 return False, [error_msgs.ERROR_CANNOT_EQUIP_THAT_ITEM]
             self.inventory.remove_item(equipment, 1)
-            if e.equipment_type in constants.WEAPON_NAMES:
+            if e.equipment_type in constants.WEAPON_TYPES:
                 if self.equipment["WEAPON"] is not None:
                     self.unequip_item(self.equipment["WEAPON"])
                 self.equipment.update({"WEAPON": e.name})

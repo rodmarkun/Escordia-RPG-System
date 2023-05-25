@@ -39,6 +39,7 @@ class Enemy(Battler):
     def loot(self) -> str:
         if self.possible_loot is not None and random.randint(0, 100) <= self.loot_chance:
             return self.possible_loot
+        # Returns an empty string for message convenience
         return ''
 
     """
@@ -66,3 +67,59 @@ class Enemy(Battler):
         if value < 0:
             raise ValueError(f"Gold Reward of enemy cannot be negative.")
         self._gold_reward = value
+
+    @property
+    def possible_loot(self) -> str:
+        return self._possible_loot
+
+    @possible_loot.setter
+    def possible_loot(self, value: str) -> None:
+        self._possible_loot = value
+
+    @property
+    def loot_chance(self) -> int:
+        return self._loot_chance
+
+    @loot_chance.setter
+    def loot_chance(self, value: int) -> None:
+        self._loot_chance = value
+
+    @property
+    def skills(self) -> list:
+        return self._skills
+
+    @skills.setter
+    def skills(self, value: list) -> None:
+        self._skills = value
+
+    @property
+    def weaknesses(self) -> list:
+        return self._weaknesses
+
+    @weaknesses.setter
+    def weaknesses(self, value: list) -> None:
+        self._weaknesses = value
+
+    @property
+    def resistances(self) -> list:
+        return self._resistances
+
+    @resistances.setter
+    def resistances(self, value: list) -> None:
+        self._resistances = value
+
+    @property
+    def image_url(self) -> str:
+        return self._image_url
+
+    @image_url.setter
+    def image_url(self, value: str) -> None:
+        self._image_url = value
+
+    @property
+    def is_boss(self) -> bool:
+        return self._is_boss
+
+    @is_boss.setter
+    def is_boss(self, value: bool) -> None:
+        self._is_boss = value

@@ -1,4 +1,6 @@
-import emojis
+'''
+Normal Icons/Emojis
+'''
 
 SPARKLER_EMOJI = '\U0001F387'
 SKULL_EMOJI = '\U0001F480'
@@ -57,6 +59,10 @@ ESC_WARRIOR_ICON = "<:WarriorIcon:1098328108551131186>"
 ESC_ROGUE_ICON = "<:RogueIcon:1098328107284439170>"
 ESC_MAGE_ICON = "<:MageIcon:1098328105199865916>"
 
+'''
+///////////////////////////////// Transforming Dictionaries ////////////////////////////////////
+'''
+
 equipment_to_emoji = {"HELMET": ESC_HELMET_ICON, "ARMOR": ESC_ARMOR_ICON, "ACCESSORY": ESC_ACCESSORY_ICON,
                       "SWORD": ESC_SWORD_ICON, "AXE": ESC_AXE_ICON, "DAGGER": ESC_DAGGER_ICON, "SCYTHE": ESC_SCYTHE_ICON,
                       "STAFF": ESC_STAFF_ICON, "BOW": ESC_BOW_ICON, "HAMMER": ESC_HAMMER_ICON, "BOOK": ESC_BOOK_ICON,
@@ -65,9 +71,10 @@ obj_to_emoji = {"POTION": ESC_POTION_ICON, "LOOT": ESC_MATERIAL_ICON}
 job_to_emoji = {"Novice": ESC_NOVICE_ICON, "Warrior": ESC_WARRIOR_ICON, "Rogue": ESC_ROGUE_ICON, "Mage": ESC_MAGE_ICON}
 element_to_emoji = {"FIRE": ESC_FIRE_ICON, "ICE": ESC_ICE_ICON, "THUNDER": ESC_THUNDER_ICON, "WIND": ESC_WIND_ICON,
                     "HOLY": ESC_HOLY_ICON, "DARK": ESC_DARK_ICON}
-buff_debuff_to_emoji = {"ATK_UP": ESC_ATK_UP_ICON, "ATK_DOWN": ESC_ATK_DOWN_ICON, "DEF_UP": ESC_DEF_UP_ICON, "DEF_DOWN": ESC_DEF_DOWN_ICON,
-                        "MAT_UP": ESC_MAT_UP_ICON, "MAT_DOWN": ESC_MAT_DOWN_ICON, "MDEF_UP": ESC_MDEF_UP_ICON, "MDEF_DOWN": ESC_MDEF_DOWN_ICON,
-                        "LUK_UP": ESC_LUK_UP_ICON, "LUK_DOWN": ESC_LUK_DOWN_ICON}
+buff_debuff_to_emoji = {"ATK_UP": ESC_ATK_UP_ICON, "ATK_DOWN": ESC_ATK_DOWN_ICON, "DEF_UP": ESC_DEF_UP_ICON,
+                        "DEF_DOWN": ESC_DEF_DOWN_ICON, "MAT_UP": ESC_MAT_UP_ICON, "MAT_DOWN": ESC_MAT_DOWN_ICON,
+                        "MDEF_UP": ESC_MDEF_UP_ICON, "MDEF_DOWN": ESC_MDEF_DOWN_ICON, "LUK_UP": ESC_LUK_UP_ICON,
+                        "LUK_DOWN": ESC_LUK_DOWN_ICON}
 
 
 def obj_emoji(item: 'Item') -> str:
@@ -90,6 +97,7 @@ def skill_emoji(skill: 'Skill', skill_job) -> str:
     :return: String with the emoji.
     """
     try:
-        return emojis.element_to_emoji[skill.element]
+        return element_to_emoji[skill.element]
     except KeyError:
-        return emojis.job_to_emoji[skill_job]
+        # If skill has no element, it has the same emoji as the job.
+        return job_to_emoji[skill_job]

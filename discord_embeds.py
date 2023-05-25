@@ -1,9 +1,8 @@
 import discord
-from StringProgressBar import progressBar
-
 import emojis
 import formulas
-import messager
+
+from StringProgressBar import progressBar
 
 
 def embed_fight_msg(ctx, player_obj, enemy):
@@ -14,23 +13,31 @@ def embed_fight_msg(ctx, player_obj, enemy):
     :param enemy: Enemy object
     :param player_obj: Player object
     '''
+    # Progress bars for HP and MP
     hp_bar = progressBar.filledBar(enemy.stats['MAXHP'], enemy.stats['HP'], size=10)
     player_hp_bar = progressBar.filledBar(player_obj.stats['MAXHP'], player_obj.stats['HP'], size=10)
     player_mp_bar = progressBar.filledBar(player_obj.stats['MAXMP'], player_obj.stats['MP'], size=10)
+
     embed = discord.Embed(
+        # General info
         title=f'Fight - {ctx.author}',
         description=f'You are fighting a **{enemy.name}**.\n'
                     f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}\n',
         color=discord.Colour.red()
     )
+    # Images
     embed.set_thumbnail(url=enemy.image_url)
     embed.set_image(url=ctx.author.avatar.url)
+
+    # Weaknesses, resistances, and buffs/debuffs
     embed.add_field(name="Weak to:", value=" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses]), inline=True)
     embed.add_field(name="Resists:", value=" ".join([emojis.element_to_emoji[e] for e in enemy.resistances]), inline=True)
     if len(enemy.buffs_and_debuffs.keys()) > 0:
         embed.add_field(name="Alterations:", value=" ".join([emojis.buff_debuff_to_emoji[bd] for bd in enemy.buffs_and_debuffs]), inline=True)
     if len(player_obj.buffs_and_debuffs.keys()) > 0:
         embed.add_field(name=f"{player_obj.name}'s alterations:", value=" ".join([emojis.buff_debuff_to_emoji[bd] for bd in player_obj.buffs_and_debuffs]), inline=True)
+
+    # Player stats
     embed.set_footer(
         text=f'{player_obj.name}\nHP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
              f'{player_obj.stats["MP"]}/{player_obj.stats["MAXMP"]} | {player_mp_bar[0]}\nHit chance: '
@@ -55,12 +62,11 @@ def embed_victory_msg(ctx, msg: str):
     return embed
 
 
-def embed_death_msg(ctx, msg: str):
+def embed_death_msg(ctx):
     '''
-    Sends an embed when victorious in combat
+    Sends an embed when player dies
 
     :param ctx: Discord CTX
-    :param msg: Victory message
     '''
     embed = discord.Embed(
         title=f'{emojis.SKULL_EMOJI} Death {emojis.SKULL_EMOJI}',

@@ -207,7 +207,7 @@ class Battler:
     @stats.setter
     def stats(self, value: dict) -> None:
         for stat in value:
-            if stat not in constants.STAT_NAMES:
+            if stat not in constants.STATKEYS:
                 raise ValueError(f"You specified a stat not found in your defined stat names: {stat}")
         self._stats = value
 

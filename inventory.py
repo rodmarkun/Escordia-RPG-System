@@ -76,6 +76,6 @@ class Inventory:
         items = []
         for item in self.items:
             i = data_management.search_cache_item_by_name(item)
-            if i.object_type == "EQUIPMENT" and (i.equipment_type == item_type or (item_type == "WEAPON" and i.equipment_type in constants.WEAPON_NAMES)):
+            if i.object_type == "EQUIPMENT" and (i.equipment_type == item_type or (item_type == "WEAPON" and i.equipment_type in constants.WEAPON_TYPES)):
                 items.append(i)
         return items

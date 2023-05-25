@@ -1,6 +1,5 @@
 import math
 import random
-
 import constants
 
 
@@ -59,6 +58,7 @@ def check_for_critical_damage(attacker: 'Battler', dmg: int) -> (int, bool):
     :param dmg: Damage the attacking is currently doing.
     :return: New damage after checking for critical hit. Also boolean with result of roll.
     """
+
     if 'CRITCH' in attacker.stats:
         if random.randint(0, 100) <= attacker.stats['CRITCH']:
             return int(dmg + dmg * attacker.stats['CRITDMG']/100), True  # Apply crit dmg %

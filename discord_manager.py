@@ -3,16 +3,13 @@ import data_management
 import os
 import discord
 import discord_embeds
-from discord.ext import commands
-
 import discord_ui
 import interface
-import messager
 
 from error_msgs import *
+from discord.ext import commands
 
 # Discord token from VENV
-
 DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
 
 # Bot initialization
@@ -47,6 +44,7 @@ async def fight(ctx):
         await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+
 
 @bot.command()
 async def boss(ctx):
@@ -140,7 +138,7 @@ async def equipment(ctx):
         return
 
     await ctx.send(f"This is your current equipment, {ctx.author.mention}:")
-    for e_type in constants.EQUIPMENT_NAMES:
+    for e_type in constants.EQUIPMENT_TYPES:
         item_list = player_inst.inventory.get_items_from_type(e_type)
         if len(item_list) == 0 and player_inst.equipment[e_type] is None:
             await ctx.send(f"**{e_type}**\nYou don't have any.")
@@ -168,10 +166,7 @@ def msgs_to_msg_str(msgs: list) -> str:
     :param msgs: List of messages
     :return: String containing all messages.
     """
-    msg_str = ""
-    for msg in msgs:
-        msg_str += msg + '\n'
-    return msg_str
+    return "\n".join(msgs)
 
 
 data_management.load_everything()
