@@ -46,6 +46,7 @@ def begin_battle(name: str, boss: bool) -> (bool, list):
         else:
             enemy_inst = area.spawn_random_enemy()
         data_management.BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
+        data_management.update_player_info(player_inst.name)
         return True, ['']
     return False, [ERROR_CHARACTER_ALREADY_IN_FIGHT]
 
@@ -84,6 +85,7 @@ def check_battle_is_over(name: str) -> (bool, list):
     if battle_inst is not None:
         if battle_inst.is_over:
             battle_inst.win_battle()
+            data_management.update_player_info(player_inst.name)
             return True, messager.empty_queue(name)
         return False, ["Battle is not over yet."]
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
@@ -136,6 +138,7 @@ def player_rest(name: str) -> (bool, list):
 
     if data_management.search_cache_battle_by_player(name) is None:
         player_inst.recover()
+        data_management.update_player_info(player_inst.name)
         return True, [f"{name}, you are now rested and fully recovered your HP/MP."]
 
     return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
@@ -189,6 +192,7 @@ def buy_item(name: str, item_name: str) -> (bool, list):
     # TODO - Check if item exists in shop of current area
 
     shop.buy_item(player_inst, item_name)
+    data_management.update_player_info(player_inst.name)
     return True, messager.empty_queue(name)
 
 
@@ -209,6 +213,7 @@ def equip_item(name: str, item_name: str) -> (bool, list):
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
     player_inst.equip_item(item_name)
+    data_management.update_player_info(player_inst.name)
     return True, messager.empty_queue(name)
 
 
@@ -244,5 +249,6 @@ def change_player_job(name: str, job_name: str) -> (bool, list):
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
     if player_inst.change_job(job_name):
+        data_management.update_player_info(player_inst.name)
         return True, messager.empty_queue(name)
     return False, [ERROR_JOB_DOES_NOT_EXIST]

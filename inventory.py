@@ -7,9 +7,9 @@ class Inventory:
     Class that manages the player's inventory
     """
 
-    def __init__(self, player_name):
+    def __init__(self, player_name, *, items: dict = {}):
         self.player_name = player_name
-        self.items = {}
+        self.items = items
 
     def add_item(self, item, quantity) -> None:
         """

@@ -1,7 +1,7 @@
 import data_management
 import error_msgs
 import formulas
-import inventory
+import inventory as inventory_module
 import messager
 from battler import Battler
 import constants
@@ -18,25 +18,29 @@ class Player(Battler):
     ///////////////////
     """
     
-    def __init__(self, name: str):
+    def __init__(self, name: str, *, lvl: int = 1, xp: int = 0, xp_to_next_lvl: int = 15, xp_rate: int = 1,
+                 money: int = 50, inventory: inventory_module.Inventory = None, equipment: dict = None, skills: list = [],
+                 passives: list = [], current_area: int = 1, in_fight: bool = False, in_dungeon: bool = False,
+                 defeated_bosses: list = [], job_dict_list: list = [], current_job_dict: dict = {}, current_job: str = 'Novice'):
+
         super().__init__(name, constants.INITIAL_STATS)
 
-        self.lvl: int = 1
-        self.xp: int = 0
-        self.xp_to_next_lvl: int = 15
-        self.xp_rate = 1
-        self.money: int = 50
-        self.inventory: inventory.Inventory = inventory.Inventory(self.name)
-        self.equipment: dict = {equipment: None for equipment in constants.EQUIPMENT_TYPES}
-        self.skills: list = ["Small Fireball"]
-        self.passives: list = []
-        self.current_area: int = 1
-        self.in_fight: bool = False
-        self.in_dungeon: bool = False
-        self.defeated_bosses: list = []
-        self.job_dict_list: list = []
-        self.current_job_dict: dict = constants.INITIAL_JOB_DICT
-        self.current_job = 'Novice'
+        self.lvl = lvl
+        self.xp = xp
+        self.xp_to_next_lvl = xp_to_next_lvl
+        self.xp_rate = xp_rate
+        self.money = money
+        self.inventory = inventory
+        self.equipment = equipment
+        self.skills = skills
+        self.passives = passives
+        self.current_area = current_area
+        self.in_fight = in_fight
+        self.in_dungeon = in_dungeon
+        self.defeated_bosses = defeated_bosses
+        self.job_dict_list = job_dict_list
+        self.current_job_dict = current_job_dict
+        self.current_job = current_job
 
     """
     ///////////////
@@ -82,6 +86,7 @@ class Player(Battler):
         :return: True if player levels up, False if it does not.
         """
         curr_job = data_management.search_cache_job_by_name(self.current_job)
+        print(self.current_job)
         exp *= curr_job.xp_factor
         self.current_job_dict['xp'] += exp
         leveled_up = False

@@ -126,6 +126,8 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
 
+        data_management.update_player_info(self.player.name)
+
         # Delete enemy instance
         del self.enemy
 
@@ -151,6 +153,7 @@ class Battle:
         del self.enemy
 
         self.player.respawn()
+        data_management.update_player_info(self.player.name)
 
     def decrease_buff_debuff_duration(self) -> None:
         """

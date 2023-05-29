@@ -42,6 +42,8 @@ HELM_TYPES = ["PHYS_HELM", "MAG_HELM"]
 ARMOR_TYPES = ["PHYS_ARMOR", "MAG_ARMOR"]
 WEAPON_TYPES = ["SWORD", "AXE", "DAGGER", "SCYTHE", "STAFF", "BOW", "HAMMER", "BOOK", "SCEPTER", "KATANA"]
 
+INITIAL_EQUIPMENT = {equipment: None for equipment in EQUIPMENT_TYPES}
+
 """
 ///////////////
 /// OPTIONS ///
