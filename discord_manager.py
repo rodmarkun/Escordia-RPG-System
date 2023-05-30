@@ -27,9 +27,9 @@ async def start(ctx):
     '''
     no_error, msgs = interface.create_player(ctx.author.name)
     if no_error:
-        await ctx.send(f'Welcome, {ctx.author.mention}, to the world of Escordia.')
+        await ctx.send(f'Welcome, {ctx.author.mention}, to the world of Escordia.\nWe recommend you see the `!tutorial`.')
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -43,7 +43,7 @@ async def fight(ctx):
         battle = data_management.search_cache_battle_by_player(ctx.author.name)
         await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -58,7 +58,7 @@ async def boss(ctx):
         await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
                        view=discord_ui.ActionMenu(ctx))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -82,7 +82,7 @@ async def rest(ctx):
         msg_str = msgs_to_msg_str(msgs)
         await ctx.send(msg_str)
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -95,7 +95,7 @@ async def inventory(ctx):
     if no_error:
         await ctx.send(msgs_to_msg_str(msgs))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -108,7 +108,7 @@ async def profile(ctx):
     if no_error:
         await ctx.send(embed=discord_embeds.embed_player_profile(ctx, ctx.author.name, msgs_to_msg_str(msgs)))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -122,7 +122,7 @@ async def shop(ctx):
         item_list = data_management.search_cache_shop_by_area(data_management.search_cache_player(ctx.author.name).current_area).item_list
         await ctx.send(f"Please select an item to buy, {ctx.author.mention}", view=discord_ui.ItemBuySelectView(ctx, item_list))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -156,7 +156,7 @@ async def job(ctx):
     if no_error:
         await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 def msgs_to_msg_str(msgs: list) -> str:

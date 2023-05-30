@@ -12,7 +12,7 @@ class ActionMenu(discord.ui.View):
     Class that handles the menu while in combat.
     """
     def __init__(self, ctx):
-        super().__init__()
+        super().__init__(timeout=None)
         self.value = None
         self.ctx = ctx
 
@@ -46,10 +46,10 @@ class ActionMenu(discord.ui.View):
                                                         view=SkillSelectView(self.ctx, skill_list, battle.player.current_job))
 
     # Item
-    @discord.ui.button(label="Item", style=discord.ButtonStyle.green)
+    @discord.ui.button(label="Inspect enemy", style=discord.ButtonStyle.green)
     async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
-            print("Item!")
+            await interaction.response.send_message(embed=discord_embeds.embed_enemy_info(self.ctx, data_management.search_cache_battle_by_player(self.ctx.author.name).enemy))
 
 
 class ItemBuySelect(discord.ui.Select):
@@ -79,7 +79,7 @@ class ItemBuySelect(discord.ui.Select):
 
 class ItemBuySelectView(discord.ui.View):
     def __init__(self, ctx, item_list):
-        super().__init__()
+        super().__init__(timeout=None)
         self.add_item(ItemBuySelect(ctx, item_list))
 
 
@@ -122,7 +122,7 @@ class EquipmentSelect(discord.ui.Select):
 
 class EquipmentSelectView(discord.ui.View):
     def __init__(self, ctx, item_list, player_equipment):
-        super().__init__()
+        super().__init__(timeout=None)
         self.add_item(EquipmentSelect(ctx, item_list, player_equipment))
 
 
@@ -151,7 +151,7 @@ class SkillSelect(discord.ui.Select):
 
 class SkillSelectView(discord.ui.View):
     def __init__(self, ctx, skill_list, curr_job):
-        super().__init__()
+        super().__init__(timeout=None)
         self.add_item(SkillSelect(ctx, skill_list, curr_job))
 
 
@@ -181,7 +181,7 @@ class JobSelect(discord.ui.Select):
 
 class JobSelectView(discord.ui.View):
     def __init__(self, ctx, job_list):
-        super().__init__()
+        super().__init__(timeout=None)
         self.add_item(JobSelect(ctx, job_list))
 
 

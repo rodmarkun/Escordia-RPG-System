@@ -45,8 +45,8 @@ def begin_battle(name: str, boss: bool) -> (bool, list):
             enemy_inst = area.spawn_boss()
         else:
             enemy_inst = area.spawn_random_enemy()
-        data_management.BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
         data_management.update_player_info(player_inst.name)
+        data_management.BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
         return True, ['']
     return False, [ERROR_CHARACTER_ALREADY_IN_FIGHT]
 

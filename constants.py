@@ -116,6 +116,17 @@ BUFF_DEBUFF_DURATION = 4
 BUFF_MULTIPLIER = 1.35
 DEBUFF_MULTIPLIER = 0.65
 
+BUFF_DEBUFF_TO_MESSAGE = {BUFF_ATK_UP: "Attack increased",
+                          BUFF_DEF_UP: "Defense increased",
+                          BUFF_MATK_UP: "Magic attack increased",
+                          BUFF_MDEF_UP: "Magic defense increased",
+                          BUFF_LUK_UP: "Luck increased",
+                          DEBUFF_ATK_DOWN: "Attack decreased",
+                          DEBUFF_DEF_DOWN: "Defense decreased",
+                          DEBUFF_MATK_DOWN: "Magic attack decreased",
+                          DEBUFF_MDEF_DOWN: "Magic defense decreased",
+                          DEBUFF_LUK_DOWN: "Luck decreased"}
+
 """
 ///////////
 /// CSV ///

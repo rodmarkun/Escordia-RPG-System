@@ -1,4 +1,5 @@
 import constants
+import emojis
 import formulas
 import messager
 from battler import Battler
@@ -40,7 +41,7 @@ class Skill:
         :param target: Target of the skill.
         :return: None.
         """
-        messager.add_message(player_name, f"{caster.name} casts {self.name}!")
+        messager.add_message(player_name, f"{caster.name} casts {self.name} {emojis.element_to_emoji[self.element] if self.element is not None else ''}!")
         # Damaging Skills
         if constants.SKILL_TAG_PHYSICAL in self.tags or constants.SKILL_TAG_MAGICAL in self.tags:
             if constants.SKILL_TAG_PHYSICAL in self.tags:
@@ -50,10 +51,10 @@ class Skill:
                 damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
                                                  target.stats[constants.MDEF_STATKEY])
             damage = target.take_damage(damage, self.element)
+            messager.add_message(player_name, f"{target.name} takes {damage} damage!")
             if constants.SKILL_TAG_LEECH in self.tags:
                 caster.heal(formulas.leech_calculation(damage))
                 messager.add_message(player_name, f"{caster.name} heals himself for {formulas.leech_calculation(damage)} HP!")
-            messager.add_message(player_name, f"{target.name} takes {damage} damage!")
         # Healing Skills
         elif constants.SKILL_TAG_HEALING in self.tags:
             amount = formulas.healing_spell_power(self.power, caster.stats[constants.MATK_STATKEY])
@@ -65,13 +66,16 @@ class Skill:
 
         # Buffs and Debuffs
         if constants.SKILL_TAG_INFLICT_BUFF_DEBUFF in self.tags:
-            buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))
-            for bd in buffs_and_debuffs:
-                target.add_buff_debuff(bd)
+            self.buff_debuff_logic(player_name, target)
         if constants.SKILL_TAG_SELF_INFLICT_BUFF_DEBUFF in self.tags:
-            buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))
-            for bd in buffs_and_debuffs:
-                caster.add_buff_debuff(bd)
+            self.buff_debuff_logic(player_name, caster)
+
+    def buff_debuff_logic(self, player_name: str, who: Battler):
+        buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))
+        for bd in buffs_and_debuffs:
+            who.add_buff_debuff(bd)
+            messager.add_message(player_name,
+                                 f"{who.name} stats are altered! {constants.BUFF_DEBUFF_TO_MESSAGE[bd]} {emojis.buff_debuff_to_emoji[bd]}!")
 
     """
     //////////////////

@@ -18,12 +18,12 @@ class Player(Battler):
     ///////////////////
     """
     
-    def __init__(self, name: str, *, lvl: int = 1, xp: int = 0, xp_to_next_lvl: int = 15, xp_rate: int = 1,
+    def __init__(self, name: str, *, stats: dict = constants.INITIAL_STATS, lvl: int = 1, xp: int = 0, xp_to_next_lvl: int = 15, xp_rate: int = 1,
                  money: int = 50, inventory: inventory_module.Inventory = None, equipment: dict = None, skills: list = [],
                  passives: list = [], current_area: int = 1, in_fight: bool = False, in_dungeon: bool = False,
                  defeated_bosses: list = [], job_dict_list: list = [], current_job_dict: dict = {}, current_job: str = 'Novice'):
 
-        super().__init__(name, constants.INITIAL_STATS)
+        super().__init__(name, stats)
 
         self.lvl = lvl
         self.xp = xp

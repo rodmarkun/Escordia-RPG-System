@@ -52,7 +52,7 @@ def create_new_player(player_name: str) -> None:
                                              equipment=constants.INITIAL_EQUIPMENT,
                                              current_job_dict=constants.INITIAL_JOB_DICT)
     PLAYER_CACHE.update({player_name: player_inst})
-    peewee_models.PlayerModel.create(name=player_name, stats=json.dumps(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
+    peewee_models.PlayerModel.create(name=player_name, stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
                               xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money,
                               inventory=str(player_inst.inventory.items), equipment=str(player_inst.equipment), skills=str(player_inst.skills),
                               passives=str(player_inst.passives), current_area=player_inst.current_area, in_fight=player_inst.in_fight,
@@ -81,9 +81,8 @@ def create_escordia_tables() -> None:
     """
     try:
         escordia_db.create_tables([peewee_models.PlayerModel])
-        print("Escordia tables created.")
     except peewee.OperationalError:
-        print("Escordia tables already created.")
+        print("Peewee error on creating/accessing tables.")
 
 
 """
@@ -101,7 +100,7 @@ def update_player_info(player_name: str) -> None:
     :return: None.
     """
     player_inst = PLAYER_CACHE[player_name]
-    peewee_models.PlayerModel.update(stats=json.dumps(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
+    peewee_models.PlayerModel.update(stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
                               xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money,
                               inventory=str(player_inst.inventory.items), equipment=str(player_inst.equipment), skills=str(player_inst.skills),
                               passives=str(player_inst.passives), current_area=player_inst.current_area, in_fight=player_inst.in_fight,
@@ -277,7 +276,6 @@ def load_enemies_from_json() -> None:
 
         for e in json_file:
             param_list = [e[key] for key in constants.ENEMY_KEYS]
-            print(*param_list)
             ENEMIES_CACHE.update({e["NAME"]: enemy.Enemy(*param_list)})
 
 
@@ -354,7 +352,7 @@ def load_players_from_db() -> None:
     """
     for player_model in peewee_models.PlayerModel.select():
         print(f"Loading player {player_model.name} into cache...")
-        player_inst = player.Player(player_model.name, lvl=player_model.lvl, xp=player_model.xp,
+        player_inst = player.Player(player_model.name, stats=eval(player_model.stats), lvl=player_model.lvl, xp=player_model.xp,
                                     xp_to_next_lvl=player_model.xp_to_next_lvl,
                                     xp_rate=player_model.xp_rate, money=player_model.money,
                                     inventory=inventory.Inventory(player_model.name,

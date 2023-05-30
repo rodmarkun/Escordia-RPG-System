@@ -1,4 +1,6 @@
 import random
+
+import constants
 from battler import Battler
 
 
@@ -41,6 +43,9 @@ class Enemy(Battler):
             return self.possible_loot
         # Returns an empty string for message convenience
         return ''
+
+    def show_enemy_info(self) -> str:
+        return ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in self.stats])
 
     """
     //////////////////

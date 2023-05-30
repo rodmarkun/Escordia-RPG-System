@@ -1,7 +1,7 @@
 [
     {
-      "NAME": "Novice Sword",
-      "DESCRIPTION": "A novice's sword.",
+      "NAME": "Rusty Sword",
+      "DESCRIPTION": "A sword full of rust. Not very powerful, but it's better than nothing.",
       "INDIV_VALUE": 10,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "SWORD",
@@ -10,8 +10,8 @@
       }
     },
     {
-      "NAME": "Novice Dagger",
-      "DESCRIPTION": "A novice's dagger.",
+      "NAME": "Broken Dagger",
+      "DESCRIPTION": "A dagger that's broken in half. It's not very useful, but at least it is light.",
       "INDIV_VALUE": 10,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "DAGGER",
@@ -22,8 +22,8 @@
       }
     },
     {
-      "NAME": "Novice Staff",
-      "DESCRIPTION": "A novice's staff.",
+      "NAME": "Old Staff",
+      "DESCRIPTION": "An old staff that's been used for many years. It's not very powerful, but it's better than nothing.",
       "INDIV_VALUE": 10,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "STAFF",

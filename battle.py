@@ -1,6 +1,7 @@
 import random
 import constants
 import data_management
+import emojis
 import formulas
 import messager
 from player import Player
@@ -167,6 +168,7 @@ class Battle:
             # Remove player's buff/debuff if it has expired
             if self.player.buffs_and_debuffs[bd] == 0:
                 remove_buff_debuff(self.player, bd)
+                messager.add_message(self.player.name, f"{self.player.name} {emojis.buff_debuff_to_emoji[bd]} alteration has expired.")
             else:
                 self.player.buffs_and_debuffs[bd] -= 1
 
@@ -174,6 +176,8 @@ class Battle:
         for bd in list(self.enemy.buffs_and_debuffs):
             if self.enemy.buffs_and_debuffs[bd] == 0:
                 remove_buff_debuff(self.enemy, bd)
+                messager.add_message(self.player.name,
+                                     f"{self.enemy.name} {emojis.buff_debuff_to_emoji[bd]} alteration has expired.")
             else:
                 self.enemy.buffs_and_debuffs[bd] -= 1
 

@@ -10,7 +10,7 @@
   },
   {
     "NAME": "Intimidate",
-    "DESCRIPTION": "Intimidate the enemy and lower their attack.",
+    "DESCRIPTION": "Intimidate the enemy and lowers their attack.",
     "MP_COST": 3,
     "POWER": 0,
     "ELEMENT": null,
