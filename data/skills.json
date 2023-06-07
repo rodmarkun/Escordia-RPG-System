@@ -9,40 +9,148 @@
     "TAGS": ["HEALING"]
   },
   {
-    "NAME": "Intimidate",
-    "DESCRIPTION": "Intimidate the enemy and lowers their attack.",
-    "MP_COST": 3,
-    "POWER": 0,
-    "ELEMENT": null,
-    "COOLDOWN": 3,
-    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "NAME": "Small Fireball",
+    "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
+    "MP_COST": 4,
+    "POWER": 8,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 2,
+    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Rushed Strike",
     "DESCRIPTION": "Perform a rushed attack on an enemy, lowers your attack.",
     "MP_COST": 3,
-    "POWER": 18,
+    "POWER": 15,
     "ELEMENT": null,
     "COOLDOWN": 3,
     "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Bloodstealer",
+    "DESCRIPTION": "Drain health from your enemy's blood.",
+    "MP_COST": 4,
+    "POWER": 12,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "LEECH"]
+  },
+  {
+    "NAME": "Disarm",
+    "DESCRIPTION": "Deal small physical damage to an enemy and lowers their attack.",
+    "MP_COST": 2,
+    "POWER": 10,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Shadow Strike",
+    "DESCRIPTION": "Deal some physical damage to an enemy. Does not skip your turn but lowers your defense.",
+    "MP_COST": 3,
+    "POWER": 10,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL", "DOES_NOT_SKIP_TURN", "SELF_INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
+  },
+  {
+    "NAME": "Sharpen Knives",
+    "DESCRIPTION": "Sharpen your knives, raising your attack, critical hit chance and critical damage.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "LUK_UP"]
+  },
+  {
+    "NAME": "Hurricane Blades",
+    "DESCRIPTION": "Deal great physical wind damage to an enemy",
+    "MP_COST": 9,
+    "POWER": 18,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL"]
+  },
+  {
+    "NAME": "Quickflame",
+    "DESCRIPTION": "Deal a small amount of fire damage to an enemy. Does not skip the turn.",
+    "MP_COST": 2,
+    "POWER": 6,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"]
+  },
+  {
+    "NAME": "Ice Bolt",
+    "DESCRIPTION": "Deal ice damage to an enemy.",
+    "MP_COST": 2,
+    "POWER": 18,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 2,
+    "TAGS": ["MAGICAL"]
+  },
+  {
+    "NAME": "Mana barrier",
+    "DESCRIPTION": "Spend 30% of your mana to buff your physical and magical defense.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"]
+  },
+  {
+    "NAME": "Meditate",
+    "DESCRIPTION": "Recover some amount of MP.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["RECOVER_MP"]
+  },
+  {
+    "NAME": "Thunder Spear",
+    "DESCRIPTION": "Deal both physical and magical thunder damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 15,
+    "ELEMENT": "THUNDER",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "MAGICAL"]
+  },
+  {
+    "NAME": "Shielded Strike",
+    "DESCRIPTION": "Deal small physical damage invoking a shield, raising your physical defense.",
+    "MP_COST": 3,
+    "POWER": 10,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+  },
+  {
+    "NAME": "Fire Fist",
+    "DESCRIPTION": "Deal physical fire damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 14,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL"]
+  },
+  {
+    "NAME": "Intimidate",
+    "DESCRIPTION": "Intimidate the enemy and lowers their attack.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
   },
   {
     "NAME": "Fortify",
     "DESCRIPTION": "Fortify yourself and raise your defense.",
     "MP_COST": 4,
     "POWER": 0,
-    "ELEMENT": null,
+    "ELEMENT": "HOLY",
     "COOLDOWN": 3,
     "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
-  },
-  {
-    "NAME": "Small Fireball",
-    "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
-    "MP_COST": 4,
-    "POWER": 10,
-    "ELEMENT": "FIRE",
-    "COOLDOWN": 2,
-    "TAGS": ["MAGICAL"]
   },
   {
     "NAME": "Whirlwind",
@@ -50,24 +158,6 @@
     "MP_COST": 3,
     "POWER": 7,
     "ELEMENT": "WIND",
-    "COOLDOWN": 2,
-    "TAGS": ["MAGICAL"]
-  },
-  {
-    "NAME": "Quickflame",
-    "DESCRIPTION": "Deal a small amount of fire damage to an enemy. Does not skip the turn.",
-    "MP_COST": 2,
-    "POWER": 7,
-    "ELEMENT": "FIRE",
-    "COOLDOWN": 3,
-    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"]
-  },
-  {
-    "NAME": "Ice Bolt",
-    "DESCRIPTION": "Deal ice damage to an enemy and has a chance to freeze them.",
-    "MP_COST": 2,
-    "POWER": 22,
-    "ELEMENT": "ICE",
     "COOLDOWN": 2,
     "TAGS": ["MAGICAL"]
   },
@@ -97,14 +187,5 @@
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
     "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
-  },
-  {
-    "NAME": "Bloodstealer",
-    "DESCRIPTION": "Drain health from your enemy's blood.",
-    "MP_COST": 2,
-    "POWER": 15,
-    "ELEMENT": "DARK",
-    "COOLDOWN": 2,
-    "TAGS": ["MAGICAL", "LEECH"]
   }
 ]

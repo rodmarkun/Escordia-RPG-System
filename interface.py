@@ -1,3 +1,5 @@
+import copy
+
 import messager
 import player
 import data_management
@@ -26,7 +28,7 @@ def create_player(name: str) -> (bool, list):
     return False, [ERROR_CHARACTER_ALREADY_CREATED]
 
 
-def begin_battle(name: str, boss: bool) -> (bool, list):
+def begin_battle(name: str, boss: bool, *, enemy: str = None) -> (bool, list):
     """
     Creates a new Battle in the system.
 
@@ -41,10 +43,13 @@ def begin_battle(name: str, boss: bool) -> (bool, list):
 
     if data_management.search_cache_battle_by_player(name) is None:
         area = data_management.AREAS_CACHE[player_inst.current_area]
-        if boss:
-            enemy_inst = area.spawn_boss()
+        if enemy is None:
+            if boss:
+                enemy_inst = area.spawn_boss()
+            else:
+                enemy_inst = area.spawn_random_enemy()
         else:
-            enemy_inst = area.spawn_random_enemy()
+            enemy_inst = copy.deepcopy(data_management.ENEMIES_CACHE[enemy])
         data_management.update_player_info(player_inst.name)
         data_management.BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
         return True, ['']
@@ -230,6 +235,59 @@ def show_player_job(name: str) -> (bool, list):
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
     return True, [player_inst.show_player_info_job()]
+
+
+def show_dungeons(name: str) -> (bool, list):
+    """
+    Shows dungeons available in player's current area.
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. List contains dungeon names.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    if player_inst.in_dungeon:
+        return False, [ERROR_ALREADY_IN_DUNGEON]
+
+    return True, data_management.search_cache_area_by_number(player_inst.current_area).dungeons
+
+
+def start_dungeon(name: str, dungeon_name: str) -> (bool, list):
+    """
+    Starts a dungeon.
+
+    :param name: Player's name.
+    :param dungeon_name: Dungeon's name.
+    :return: Bool and list. True if dungeon was started. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    if player_inst.in_dungeon:
+        return False, [ERROR_ALREADY_IN_DUNGEON]
+
+    if dungeon_name not in data_management.search_cache_area_by_number(player_inst.current_area).dungeons:
+        return False, [ERROR_DUNGEON_NOT_IN_AREA]
+
+    dungeon_inst = data_management.search_cache_dungeon_by_name(dungeon_name)
+
+    if dungeon_inst is None:
+        return False, [ERROR_DUNGEON_DOES_NOT_EXIST]
+
+    player_inst.in_dungeon = True
+    data_management.create_new_dungeon_inst(player_inst, dungeon_inst)
+
+    return True, messager.empty_queue(name)
 
 
 def change_player_job(name: str, job_name: str) -> (bool, list):

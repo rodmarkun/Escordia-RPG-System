@@ -12,7 +12,7 @@ def xp_next_lvl_formula(xp_to_next_lvl: int, lvl: int) -> int:
     :return: Integer containing XP necessary to reach next level.
     """
 
-    return round(xp_to_next_lvl * 1.25 + 10 * lvl * lvl / 2)
+    return round(xp_to_next_lvl * 1.25 + 5 * lvl * lvl / 2)
 
 
 def xp_next_lvl_job_formula(xp_to_next_lvl: int, lvl: int) -> int:
@@ -24,7 +24,7 @@ def xp_next_lvl_job_formula(xp_to_next_lvl: int, lvl: int) -> int:
     :return: Integer containing XP necessary to reach next level.
     """
 
-    return round(xp_to_next_lvl * 1.25 + 10 * lvl * lvl / 2)
+    return round(xp_to_next_lvl * 1.25 + 5 * lvl * lvl / 2)
 
 
 def money_lost_when_dying(money: int) -> int:
@@ -74,7 +74,7 @@ def normal_attack_dmg(atk_value: int, def_value: int) -> int:
     :return: DMG of normal attack.
     """
 
-    return round(atk_value * random.uniform(0.9, 1.1) * (100 / (100 + def_value * 2.5)))
+    return round(atk_value * (100 / (100 + def_value * 1.5)))
 
 
 def healing_spell_power(spell_power: int, matk_value: int) -> int:
@@ -86,7 +86,7 @@ def healing_spell_power(spell_power: int, matk_value: int) -> int:
     :return:
     """
 
-    return int(spell_power * random.uniform(1, 1.25) * (100 / (100 + matk_value * 2.5)))
+    return int(spell_power * (100 / (100 + matk_value * 1.5)))
 
 
 def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> int:
@@ -98,7 +98,7 @@ def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> in
     :param mdef_value: Magic DEF of defending Battler.
     :return:
     """
-    return int(spell_power * (matk_value / mdef_value)) // 2
+    return int(spell_power * matk_value / 10 * (100 / (100 + mdef_value * 1.5)))
 
 
 def damage_physical_spell(spell_power: int, atk_value: int, def_value: int) -> int:
@@ -110,7 +110,7 @@ def damage_physical_spell(spell_power: int, atk_value: int, def_value: int) -> i
     :param def_value: DEF of defending Battler.
     :return:
     """
-    return int(spell_power * (atk_value * 1.5 / def_value)) // 2
+    return int(spell_power * atk_value / 10 * (100 / (100 + def_value * 1.5)))
 
 
 def leech_calculation(damage: int) -> int:

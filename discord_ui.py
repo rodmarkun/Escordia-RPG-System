@@ -1,3 +1,5 @@
+import random
+
 import discord
 import emojis
 import interface
@@ -41,7 +43,8 @@ class ActionMenu(discord.ui.View):
             if len(skill_list) == 0:
                 await self.ctx.send(f"**Escordia Error** - {self.ctx.author.mention}: You have no skills to use!")
             else:
-                await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}"
+                await interaction.response.send_message(f"Please select a skill to perform, {self.ctx.author.mention}.\n"
+                                                        f"Remember you can see information about your skills in `!skills`\n"
                                                         f"{cooldown_str}",
                                                         view=SkillSelectView(self.ctx, skill_list, battle.player.current_job))
 
@@ -58,10 +61,11 @@ class ItemBuySelect(discord.ui.Select):
     """
     def __init__(self, ctx, item_list):
         items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
+        stat_str_remove = "'"
         options = [discord.SelectOption(label=i.name,
                                         description=f"{i.description if i.object_type != 'EQUIPMENT' else ''}"
-                                                    f"{' ' + str(i.stat_change_list).replace('{', '').replace('}', '') if i.object_type == 'EQUIPMENT' else ''}"
-                                                    f" - {i.individual_value}G",
+                                                    f"{' ' + str(i.stat_change_list).replace('{', '').replace('}', '').replace(stat_str_remove, '') if i.object_type == 'EQUIPMENT' else ''}"
+                                                    f"  - {i.individual_value}G",
                                         emoji=emojis.obj_emoji(i)) for i in items_in_options]
         super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
         self.ctx = ctx
@@ -126,6 +130,37 @@ class EquipmentSelectView(discord.ui.View):
         self.add_item(EquipmentSelect(ctx, item_list, player_equipment))
 
 
+class DungeonSelect(discord.ui.Select):
+    """
+    Class that handles the dungeon selection.
+    """
+    def __init__(self, ctx, dungeon_list):
+        options = [discord.SelectOption(label=i.dungeon_name,
+                                        description=f"Rec. Lvl: {i.recommended_lvl} | Enemies: {i.enemy_count + 1}",
+                                        emoji=emojis.ESC_DUNGEON_ICON) for i in dungeon_list]
+        super().__init__(placeholder="Select a dungeon to explore", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    # Starts a dungeon
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            dungeon = data_management.search_cache_dungeon_by_name(self.values[0])
+            no_error, msgs = interface.start_dungeon(self.ctx.author.name, dungeon.dungeon_name)
+            # Battles
+            if no_error:
+                if data_management.search_cache_player(self.ctx.author.name).in_dungeon:
+                    no_error, msgs = interface.begin_battle(self.ctx.author.name, False, enemy=random.choice(dungeon.enemy_list))
+                    await manage_battle(no_error, self.ctx, msgs)
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+
+class DungeonSelectView(discord.ui.View):
+    def __init__(self, ctx, dungeon_list):
+        super().__init__(timeout=None)
+        self.add_item(DungeonSelect(ctx, dungeon_list))
+
+
 class SkillSelect(discord.ui.Select):
     """
     Class that handles the skill selection.
@@ -133,7 +168,7 @@ class SkillSelect(discord.ui.Select):
     def __init__(self, ctx, skill_list, curr_job):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
-                                        description=f"Power: {s.power} | Cooldown: {s.cooldown}",
+                                        description=f"Power: {s.power} | MP Cost: {s.mp_cost} | Cooldown: {s.cooldown}",
                                         emoji=emojis.skill_emoji(s, curr_job)) for s in skills_in_options]
         super().__init__(placeholder=f"Select a skill to perform", max_values=1, min_values=1, options=options)
         self.ctx = ctx
@@ -195,6 +230,24 @@ def msgs_to_msg_str(msgs: list) -> str:
     return '\n'.join(msgs)
 
 
+async def manage_battle(no_error: bool, ctx, msgs: list):
+    """
+    Manages a battle after starting it.
+    :param no_error: Whether there was an error or not
+    :param ctx: Discord CTX
+    :param msgs: List of info messages.
+    :return: None.
+    """
+    if no_error:
+        battle = data_management.search_cache_battle_by_player(ctx.author.name)
+        await ctx.send(
+            embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+            view=ActionMenu(ctx))
+    else:
+        await ctx.send(
+            f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+
+
 async def check_button_pressed(ctx, interaction) -> bool:
     """
     Checks if button has been pressed by same user that initiated the interaction.
@@ -221,6 +274,8 @@ async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
                 battle.win_battle()
                 await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(
                     messager.empty_queue(ctx.author.name))))
+                if battle.player.in_dungeon:
+                    await traverse_dungeon(battle, ctx)
             else:
                 battle.lose_battle()
                 await ctx.send('', embed=discord_embeds.embed_death_msg(ctx))
@@ -229,3 +284,20 @@ async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
                                     view=ActionMenu(ctx))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
+
+
+async def traverse_dungeon(battle, ctx):
+    dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle.player.name)
+    if dungeon_inst.boss_defeated:
+        # Receive rewards
+        data_management.delete_cache_dungeon_inst(battle.player.name)
+        data_management.update_player_info(battle.player.name)
+    else:
+        if dungeon_inst.current_enemies_defeated != dungeon_inst.enemy_count:
+            no_error, msgs = interface.begin_battle(ctx.author.name, False,
+                                                    enemy=random.choice(dungeon_inst.enemy_list))
+            await manage_battle(no_error, ctx, msgs)
+        else:
+            no_error, msgs = interface.begin_battle(ctx.author.name, False,
+                                                    enemy=dungeon_inst.boss)
+            await manage_battle(no_error, ctx, msgs)

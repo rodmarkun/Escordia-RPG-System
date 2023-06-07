@@ -1,7 +1,9 @@
+import copy
 import json
 import area
 import battle
 import constants
+import dungeon
 import enemy
 import equipment
 import item
@@ -27,6 +29,7 @@ ITEM_CACHE = {}
 EQUIPMENT_CACHE = {}
 AREAS_CACHE = {}
 DUNGEON_CACHE = {}
+CURRENT_DUNGEONS_CACHE = {}
 JOB_CACHE = {}
 PLAYER_CACHE = {}
 ENEMIES_CACHE = {}
@@ -71,6 +74,17 @@ def create_new_battle(player_inst: 'Player', enemy_inst: 'Enemy') -> None:
     """
     BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
     print(f"Created battle with player: {player_inst.name} and enemy: {enemy_inst.name}")
+
+
+def create_new_dungeon_inst(player_inst: 'Player', dungeon_inst: 'Dungeon') -> None:
+    """
+    Creates a new dungeon instance for the player.
+
+    :param player_inst: Player instance.
+    :param dungeon_inst: Dungeon instance.
+    :return: None.
+    """
+    CURRENT_DUNGEONS_CACHE.update({player_inst.name: copy.deepcopy(dungeon_inst)})
 
 
 def create_escordia_tables() -> None:
@@ -156,6 +170,57 @@ def search_cache_enemy_by_name(enemy_name: str) -> 'Enemy':
         return None
 
 
+def search_cache_dungeon_by_player(player_name: str) -> 'Dungeon':
+    """
+    Searches available dungeons for a player.
+
+    :param player_name: Player's name.
+    :return: Dungeon instance. None if not found.
+    """
+    area = search_cache_player(player_name).current_area
+    try:
+        return AREAS_CACHE[area].dungeons
+    except KeyError:
+        return None
+
+
+def search_cache_dungeon_inst_by_player(player_name: str) -> 'Dungeon':
+    """
+    Searches an ongoing dungeon instance by the player's name.
+    :param player_name: Player's name.
+    :return: Dungeon instance.
+    """
+    try:
+        return CURRENT_DUNGEONS_CACHE[player_name]
+    except KeyError:
+        return None
+
+def search_cache_dungeon_by_name(dungeon_name: str) -> 'Dungeon':
+    """
+    Searches for a dungeon in the dungeon cache.
+
+    :param dungeon_name: Dungeon's name.
+    :return: Dungeon instance. None if not found.
+    """
+    try:
+        return DUNGEON_CACHE[dungeon_name]
+    except KeyError:
+        return None
+
+
+def search_cache_area_by_number(number: int) -> 'Area':
+    """
+    Searches for an area in the area cache.
+
+    :param number: Area's number.
+    :return: Area instance. None if not found.
+    """
+    try:
+        return AREAS_CACHE[number]
+    except KeyError:
+        return None
+
+
 def search_cache_item_by_name(item_name: str) -> 'Item':
     """
     Searches for an item in the item and equipment cache.
@@ -230,6 +295,16 @@ def delete_cache_battle_by_player(player_name: str) -> None:
         BATTLE_CACHE.pop(player_name)
 
 
+def delete_cache_dungeon_inst(player_name: str) -> None:
+    """
+    Deletes an ongoing dungeon instance
+    :param player_name: Player's name
+    :return: None
+    """
+    d = search_cache_dungeon_inst_by_player(player_name)
+    if d is not None:
+        CURRENT_DUNGEONS_CACHE.pop(player_name)
+
 """
 /////////////
 /// LOADS ///
@@ -299,7 +374,12 @@ def load_dungeons_from_json() -> None:
 
     :return: None.
     """
-    pass
+    with open("data/dungeons.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
+
+        for d in json_file:
+            param_list = [d[key] for key in constants.DUNGEON_KEYS]
+            DUNGEON_CACHE.update({d["DUNGEON_NAME"]: dungeon.Dungeon(*param_list)})
 
 
 def load_jobs_from_json() -> None:

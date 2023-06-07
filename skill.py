@@ -41,14 +41,17 @@ class Skill:
         :param target: Target of the skill.
         :return: None.
         """
-        messager.add_message(player_name, f"{caster.name} casts {self.name} {emojis.element_to_emoji[self.element] if self.element is not None else ''}!")
+        # Message
+        messager.add_message(player_name, f"{caster.name} casts {self.name} {emojis.element_to_emoji[self.element] if self.element is not None else get_job_emoji(player_name, caster)}!")
         # Damaging Skills
         if constants.SKILL_TAG_PHYSICAL in self.tags or constants.SKILL_TAG_MAGICAL in self.tags:
+            # Done in this way to allow skills that deal both physical and magical damage
+            damage = 0
             if constants.SKILL_TAG_PHYSICAL in self.tags:
-                damage = formulas.damage_physical_spell(self.power, caster.stats[constants.ATK_STATKEY],
+                damage += formulas.damage_physical_spell(self.power, caster.stats[constants.ATK_STATKEY],
                                                   target.stats[constants.DEF_STATKEY])
-            else:
-                damage = formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
+            if constants.SKILL_TAG_MAGICAL in self.tags:
+                damage += formulas.damage_spell_power(self.power, caster.stats[constants.MATK_STATKEY],
                                                  target.stats[constants.MDEF_STATKEY])
             damage = target.take_damage(damage, self.element)
             messager.add_message(player_name, f"{target.name} takes {damage} damage!")
@@ -63,6 +66,11 @@ class Skill:
             else:
                 messager.add_message(player_name, f"{caster.name} heals {target.name} for {amount} HP!")
             target.heal(amount)
+        # Recover MP Skills
+        elif constants.SKILL_TAG_RECOVER_MP in self.tags:
+            amount = formulas.healing_spell_power(self.power, caster.stats[constants.MATK_STATKEY])
+            messager.add_message(player_name, f"{caster.name} recovers {amount} MP!")
+            caster.recover_mp(amount)
 
         # Buffs and Debuffs
         if constants.SKILL_TAG_INFLICT_BUFF_DEBUFF in self.tags:
@@ -122,3 +130,18 @@ class Skill:
     @element.setter
     def element(self, value: str) -> None:
         self._element = value
+
+
+def get_job_emoji(player_name: str, caster: Battler) -> str:
+    """
+    If the caster is the player, returns the emoji of the job of the caster.
+    This is for skills that do not have an element.
+
+    :param player_name: Player's name
+    :param caster: Caster battler
+    :return: Emoji of the job of the caster.
+    """
+    if player_name == caster.name:
+        return emojis.job_to_emoji[caster.current_job]
+    else:
+        return ''

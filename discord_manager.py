@@ -4,6 +4,7 @@ import os
 import discord
 import discord_embeds
 import discord_ui
+import emojis
 import interface
 
 from error_msgs import *
@@ -155,6 +156,39 @@ async def job(ctx):
     no_error, msgs = interface.show_player_job(ctx.author.name)
     if no_error:
         await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+
+
+@bot.command()
+async def skills(ctx):
+    """
+    !skills command
+    Shows player's skills info
+    """
+    player_inst = data_management.search_cache_player(ctx.author.name)
+    if player_inst is None:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CHARACTER_DOES_NOT_EXIST}')
+        return
+
+    skill_str = ""
+    for s in player_inst.skills:
+        skill_inst = data_management.search_cache_skill_by_name(s)
+        skill_str += f"**{s}** - {emojis.element_to_emoji[skill_inst.element]}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost} | Cooldown: {skill_inst.cooldown}\n\n"
+
+    await ctx.send(f"These are your current skills, {ctx.author.mention}:\n\n{skill_str}")
+
+
+@bot.command()
+async def dungeon(ctx):
+    """
+    !dungeon command
+    Shows all dungeons in current area
+    """
+    no_error, msgs = interface.show_dungeons(ctx.author.name)
+    if no_error:
+        dungeon_list = [data_management.search_cache_dungeon_by_name(d) for d in msgs]
+        await ctx.send(f"Please select a dungeon, {ctx.author.mention}", view=discord_ui.DungeonSelectView(ctx, dungeon_list))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 

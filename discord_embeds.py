@@ -1,4 +1,6 @@
 import discord
+
+import data_management
 import emojis
 import formulas
 
@@ -88,9 +90,16 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     :param enemy: Enemy instance
     :return:
     """
+    bd_str = ''
+    if len(enemy.buffs_and_debuffs) > 0:
+        bd_str = f"\n**Alterations**\n{' '.join([emojis.buff_debuff_to_emoji[bd] for bd in enemy.buffs_and_debuffs])}\n\n"
+    enemy_skills_str = '\n'.join([f'- **{s}** {emojis.element_to_emoji[data_management.search_cache_skill_by_name(s).element]}' for s in enemy.skills])
     embed = discord.Embed(
         title=f'Enemy - {enemy.name}',
-        description=f'Enemy description goes in here\n\n{enemy.show_enemy_info()}\n**Weaknesses**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n**Resistances**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}',
+        description=f'Enemy description goes in here\n\n{enemy.show_enemy_info()}\n{bd_str}'
+                    f'**Weaknesses**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n'
+                    f'**Resistances**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}\n'
+                    f'**Skills**\n{enemy_skills_str}',
         color=discord.Colour.red()
     )
     embed.set_image(url=enemy.image_url)

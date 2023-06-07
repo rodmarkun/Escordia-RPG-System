@@ -127,6 +127,13 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
 
+        if self.player.in_dungeon:
+            dungeon_inst = data_management.search_cache_dungeon_inst_by_player(self.player.name)
+            dungeon_inst.current_enemies_defeated += 1
+            if dungeon_inst.enemy_count < dungeon_inst.current_enemies_defeated:
+                dungeon_inst.boss_defeated = True
+                self.player.in_dungeon = False
+
         data_management.update_player_info(self.player.name)
 
         # Delete enemy instance

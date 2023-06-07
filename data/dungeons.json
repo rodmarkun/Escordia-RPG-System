@@ -1,0 +1,10 @@
+[
+  {
+    "DUNGEON_NAME": "Goblins' Den",
+    "RECOMMENDED_LVL": 3,
+    "ENEMY_LIST": ["Wolf"],
+    "BOSS": "Bat",
+    "ENEMY_COUNT": 2,
+    "LOOT_POOL": ["Rusty Sword"]
+  }
+]
