@@ -1,3 +1,5 @@
+import random
+
 import constants
 import data_management
 import os
@@ -39,12 +41,19 @@ async def fight(ctx):
     !fight command
     Makes the player fight a random enemy from current area
     '''
-    no_error, msgs = interface.begin_battle(ctx.author.name, False)
-    if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
-        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
+    if constants.TREASURE_CHANCE_WHEN_FIGHTING >= random.randint(0, 100):
+        no_error, msgs = interface.receive_treasure(ctx.author.name, constants.NUMBER_OF_ITEMS_IN_TREASURE)
+        if no_error:
+            await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
+        else:
+            await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
     else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+        no_error, msgs = interface.begin_battle(ctx.author.name, False)
+        if no_error:
+            battle = data_management.search_cache_battle_by_player(ctx.author.name)
+            await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy), view=discord_ui.ActionMenu(ctx))
+        else:
+            await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 @bot.command()
@@ -140,7 +149,7 @@ async def equipment(ctx):
 
     await ctx.send(f"This is your current equipment, {ctx.author.mention}:")
     for e_type in constants.EQUIPMENT_TYPES:
-        item_list = player_inst.inventory.get_items_from_type(e_type)
+        item_list = player_inst.inventory.get_equipment_from_type(e_type)
         if len(item_list) == 0 and player_inst.equipment[e_type] is None:
             await ctx.send(f"**{e_type}**\nYou don't have any.")
         else:

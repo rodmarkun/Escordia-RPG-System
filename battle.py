@@ -132,7 +132,6 @@ class Battle:
             dungeon_inst.current_enemies_defeated += 1
             if dungeon_inst.enemy_count < dungeon_inst.current_enemies_defeated:
                 dungeon_inst.boss_defeated = True
-                self.player.in_dungeon = False
 
         data_management.update_player_info(self.player.name)
 

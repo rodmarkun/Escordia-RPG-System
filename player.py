@@ -36,7 +36,7 @@ class Player(Battler):
         self.passives = passives
         self.current_area = current_area
         self.in_fight = in_fight
-        self.in_dungeon = in_dungeon
+        self.in_dungeon = False
         self.defeated_bosses = defeated_bosses
         self.job_dict_list = job_dict_list
         self.current_job_dict = current_job_dict
@@ -222,6 +222,7 @@ class Player(Battler):
                                         f" long gone...")
         self._in_fight = False
         self._in_dungeon = False
+        data_management.delete_cache_dungeon_inst(self.name)
         self.money = formulas.money_lost_when_dying(self.money)
 
     def respawn(self) -> None:

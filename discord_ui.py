@@ -1,6 +1,8 @@
 import random
 
 import discord
+
+import constants
 import emojis
 import interface
 import data_management
@@ -151,6 +153,7 @@ class DungeonSelect(discord.ui.Select):
                 if data_management.search_cache_player(self.ctx.author.name).in_dungeon:
                     no_error, msgs = interface.begin_battle(self.ctx.author.name, False, enemy=random.choice(dungeon.enemy_list))
                     await manage_battle(no_error, self.ctx, msgs)
+                    await interaction.response.defer()
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
@@ -289,7 +292,13 @@ async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
 async def traverse_dungeon(battle, ctx):
     dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle.player.name)
     if dungeon_inst.boss_defeated:
+        battle.player.in_dungeon = False
         # Receive rewards
+        no_error, msgs = interface.receive_treasure(ctx.author.name, random.randint(2, 3))
+        if no_error:
+            await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
+        else:
+            await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
         data_management.delete_cache_dungeon_inst(battle.player.name)
         data_management.update_player_info(battle.player.name)
     else:

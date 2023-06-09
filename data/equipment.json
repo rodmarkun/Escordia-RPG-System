@@ -2,7 +2,7 @@
     {
       "NAME": "Rusty Sword",
       "DESCRIPTION": "A sword full of rust. Not very powerful, but it's better than nothing.",
-      "INDIV_VALUE": 10,
+      "INDIV_VALUE": 20,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "SWORD",
       "STAT_CHANGE_LIST": {
@@ -11,8 +11,8 @@
     },
     {
       "NAME": "Broken Dagger",
-      "DESCRIPTION": "A dagger that's broken in half. It's not very useful, but at least it is light.",
-      "INDIV_VALUE": 10,
+      "DESCRIPTION": "A dagger that's broken in half. At least it's light.",
+      "INDIV_VALUE": 20,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "DAGGER",
       "STAT_CHANGE_LIST": {
@@ -23,13 +23,104 @@
     },
     {
       "NAME": "Old Staff",
-      "DESCRIPTION": "An old staff that's been used for many years. It's not very powerful, but it's better than nothing.",
-      "INDIV_VALUE": 10,
+      "DESCRIPTION": "An old staff that's been used for many years.",
+      "INDIV_VALUE": 20,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "STAFF",
       "STAT_CHANGE_LIST": {
         "MATK": 3
       }
+    },
+    {
+      "NAME": "Longsword",
+      "DESCRIPTION": "A standard iron sword.",
+      "INDIV_VALUE": 45,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "SWORD",
+      "STAT_CHANGE_LIST": {
+        "ATK": 5,
+        "DEF": 2
+      }
+    },
+    {
+      "NAME": "Dagger",
+      "DESCRIPTION": "A standard and deadly dagger.",
+      "INDIV_VALUE": 45,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "DAGGER",
+      "STAT_CHANGE_LIST": {
+        "ATK": 4,
+        "CRITCH": 10,
+        "SPEED": 2
+      }
+    },
+    {
+      "NAME": "Student Staff",
+      "DESCRIPTION": "A standard staff from the Academy.",
+      "INDIV_VALUE": 45,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "STAFF",
+      "STAT_CHANGE_LIST": {
+        "ATK": 2,
+        "MATK": 3,
+        "MAXMP": 3
+      }
+    },
+    {
+      "NAME": "Bronze Armor",
+      "DESCRIPTION": "A sturdy armor made from bronze.",
+      "INDIV_VALUE": 50,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "HEAVY_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MAXHP": 4,
+        "DEF": 4,
+        "MDEF": 2,
+        "SPEED": -2
+      }
+    },
+    {
+      "NAME": "Cloth Armor",
+      "DESCRIPTION": "A lightweight armor made from cloth.",
+      "INDIV_VALUE": 45,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "LIGHT_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MAXHP": 2,
+        "DEF": 3,
+        "MDEF": 2,
+        "SPEED": 2
+      }
+    },
+    {
+      "NAME": "Student Robes",
+      "DESCRIPTION": "Student robes from the academy.",
+      "INDIV_VALUE": 50,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "MAGIC_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MDEF": 2
+      }
+    },
+    {
+      "NAME": "PhysHelm",
+      "DESCRIPTION": "A standard iron sword.",
+      "INDIV_VALUE": 1,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "PHYS_HELM",
+      "STAT_CHANGE_LIST": {
+        "DEF": 3
+      }
+    },
+    {
+      "NAME": "MagHelm",
+      "DESCRIPTION": "A standard iron sword.",
+      "INDIV_VALUE": 1,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "MAG_HELM",
+      "STAT_CHANGE_LIST": {
+        "MDEF": 4
+      }
     }
-  ]
+]
   

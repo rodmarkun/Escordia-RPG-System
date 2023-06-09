@@ -110,6 +110,8 @@ def embed_player_profile(ctx, player_name: str, msgs: str) -> discord.Embed:
     """
     Embed for whenever the player checks their profile.
 
+    :param player_name: Player's name
+    :param msgs: Message to be displayed containing the player's profile info
     :param ctx: Discord's CTX
     :return: Embed
     """
@@ -119,4 +121,19 @@ def embed_player_profile(ctx, player_name: str, msgs: str) -> discord.Embed:
         color=discord.Colour.red()
     )
     embed.set_image(url=ctx.author.avatar.url)
+    return embed
+
+
+def embed_treasure_found(ctx, item_list: list) -> discord.Embed:
+    """
+    Embed for whenever the player finds treasure.
+
+    :param ctx: Discord's CTX
+    :param item_list: List of item names found
+    """
+    embed = discord.Embed(
+        title=f'{emojis.ESC_CHEST_ICON} Treasure found! {emojis.ESC_CHEST_ICON}',
+        description=f'You found:\n\n' + '\n'.join([f'- {item}' for item in item_list]),
+        color=discord.Colour.red()
+    )
     return embed

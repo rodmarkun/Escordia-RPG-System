@@ -4,6 +4,7 @@
       "NUMBER": 1,
       "ENEMY_LIST": ["Bat","Wolf","Lion Ant","Colossal Caterpillar","Giant Dragonfly"],
       "BOSS": "Daidarabotchi, Forest Guardian",
-      "DUNGEONS": ["Goblins' Den"]
+      "DUNGEONS": ["Goblins' Den"],
+      "TREASURES": ["Broken Dagger", "Old Staff", "HArmor", "LArmor", "MArmor", "PhysHelm", "MagHelm"]
     }
 ]

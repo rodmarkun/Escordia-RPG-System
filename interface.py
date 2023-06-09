@@ -1,4 +1,5 @@
 import copy
+import random
 
 import messager
 import player
@@ -235,6 +236,35 @@ def show_player_job(name: str) -> (bool, list):
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
     return True, [player_inst.show_player_info_job()]
+
+
+def receive_treasure(name: str, item_amount: int) -> (bool, list):
+    """
+    Player receives treasure from a defeated enemy.
+
+    :param name: Player's name.
+    :param item_amount: Amount of items to receive.
+    :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if player_inst.in_dungeon:
+        items = data_management.search_cache_dungeon_by_player(name).loot_pool
+    else:
+        items = data_management.search_cache_area_by_number(player_inst.current_area).treasures
+
+    given_items = []
+
+    for _ in range(item_amount):
+        item = random.choice(items)
+        given_items.append(item)
+        player_inst.inventory.add_item(item, 1)
+
+    data_management.update_player_info(player_inst.name)
+    return True, given_items
 
 
 def show_dungeons(name: str) -> (bool, list):

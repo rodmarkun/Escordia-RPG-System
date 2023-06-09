@@ -5,6 +5,6 @@
     "ENEMY_LIST": ["Wolf"],
     "BOSS": "Bat",
     "ENEMY_COUNT": 2,
-    "LOOT_POOL": ["Rusty Sword"]
+    "LOOT_POOL": ["Rusty Sword", "Broken Dagger", "Old Staff"]
   }
 ]

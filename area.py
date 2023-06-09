@@ -16,7 +16,7 @@ class Area:
     ///////////////////
     """
 
-    def __init__(self, name, number, enemy_list, boss, dungeons):
+    def __init__(self, name, number, enemy_list, boss, dungeons, treasures):
         """
         Area constructor.
 
@@ -31,6 +31,7 @@ class Area:
         self.enemy_list = enemy_list
         self.boss = boss
         self.dungeons = dungeons
+        self.treasures = treasures
 
     """
     ///////////////
@@ -56,6 +57,14 @@ class Area:
         """
         enemy_inst = data_management.search_cache_enemy_by_name(self.boss)
         return copy.deepcopy(enemy_inst)
+
+    def spawn_random_treasure(self) -> str:
+        """
+        Spawns a random treasure from the area's treasure list.
+
+        :return: Item instance.
+        """
+        return random.choice(self.treasures)
 
     """
     //////////////////

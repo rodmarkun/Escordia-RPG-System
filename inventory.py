@@ -66,16 +66,33 @@ class Inventory:
             inventory_str += f"[x{self.items[item]}] **{i.name}** ({i.object_type})\n"
         return inventory_str
 
-    def get_items_from_type(self, item_type: str) -> list:
+    def get_equipment_from_type(self, item_type: str) -> list:
         """
-        Returns a list of items from a certain type.
+        Returns a list of equipment from a certain type.
 
         :param item_type: Item type.
-        :return: List of items.
+        :return: List with items.
         """
         items = []
         for item in self.items:
             i = data_management.search_cache_item_by_name(item)
-            if i.object_type == "EQUIPMENT" and (i.equipment_type == item_type or (item_type == "WEAPON" and i.equipment_type in constants.WEAPON_TYPES)):
+            if i.object_type == "EQUIPMENT" and equipment_equivalences(item_type, i):
                 items.append(i)
         return items
+
+
+def equipment_equivalences(equipment_type: str, equipment: 'Equipment') -> bool:
+    """
+    Checks if a certain item has a type equivalent to the specified (ex: ARMOR is equivalent to HEAVY_ARMOR)
+    :param equipment_type: Equipment to compare
+    :return: True if equivalent, False if not
+    """
+    if equipment_type == "ARMOR" and equipment.equipment_type in constants.ARMOR_TYPES:
+        return True
+    elif equipment_type == "WEAPON" and equipment.equipment_type in constants.WEAPON_TYPES:
+        return True
+    elif equipment_type == "HELMET" and equipment.equipment_type in constants.HELM_TYPES:
+        return True
+    elif equipment_type == "ACCESSORY":
+        return True
+    return False
