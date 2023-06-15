@@ -1,5 +1,7 @@
 import copy
 import json
+import os
+
 import area
 import battle
 import constants
@@ -276,6 +278,39 @@ def search_cache_job_by_name(job_name: str) -> 'Job':
         return None
 
 
+def search_available_jobs_by_player(player_name: str) -> list:
+    """
+    Searches for available jobs for a player.
+
+    :param player_name: Player's name.
+    :return: List containing available jobs.
+    """
+    player_inst = search_cache_player(player_name)
+    available_jobs = []
+    for job_inst in JOB_CACHE.values():
+        all_requisites = True
+        for key in job_inst.requisites.keys():
+            job_req = player_inst.return_job_dict(key)
+            if job_req is not None:
+                if job_inst.requisites[key] > job_req["lvl"]:
+                    all_requisites = False
+                    break
+            else:
+                all_requisites = False
+        if all_requisites:
+            available_jobs.append(job_inst.name)
+    return available_jobs
+
+
+def search_all_jobs() -> list:
+    """
+    Searches for all jobs in the job cache.
+
+    :return: List containing all jobs.
+    """
+    return list(JOB_CACHE.values())
+
+
 """
 ///////////////
 /// DELETES ///
@@ -332,12 +367,13 @@ def load_equipment_from_json() -> None:
 
     :return: None.
     """
-    with open("data/equipment.json", 'r', encoding='utf-8') as f:
-        json_file = json.load(f)
+    for file in os.listdir(constants.EQUIPMENT_PATH):
+        with open(constants.EQUIPMENT_PATH + file, 'r', encoding='utf-8') as f:
+            json_file = json.load(f)
 
-        for e in json_file:
-            param_list = [e[key] for key in constants.EQUIPMENT_KEYS]
-            EQUIPMENT_CACHE.update({e["NAME"]: equipment.Equipment(*param_list)})
+            for e in json_file:
+                param_list = [e[key] for key in constants.EQUIPMENT_KEYS]
+                EQUIPMENT_CACHE.update({e["NAME"]: equipment.Equipment(*param_list)})
 
 
 def load_enemies_from_json() -> None:
@@ -346,12 +382,13 @@ def load_enemies_from_json() -> None:
 
     :return: None.
     """
-    with open("data/enemies.json", 'r', encoding='utf-8') as f:
-        json_file = json.load(f)
+    for file in os.listdir(constants.ENEMIES_PATH):
+        with open(constants.ENEMIES_PATH + file, 'r', encoding='utf-8') as f:
+            json_file = json.load(f)
 
-        for e in json_file:
-            param_list = [e[key] for key in constants.ENEMY_KEYS]
-            ENEMIES_CACHE.update({e["NAME"]: enemy.Enemy(*param_list)})
+            for e in json_file:
+                param_list = [e[key] for key in constants.ENEMY_KEYS]
+                ENEMIES_CACHE.update({e["NAME"]: enemy.Enemy(*param_list)})
 
 
 def load_areas_from_json() -> None:
@@ -416,12 +453,13 @@ def load_skills_from_json() -> None:
 
     :return: None.
     """
-    with open("data/skills.json", 'r', encoding='utf-8') as f:
-        json_file = json.load(f)
+    for file in os.listdir(constants.SKILLS_PATH):
+        with open(constants.SKILLS_PATH + file, 'r', encoding='utf-8') as f:
+            json_file = json.load(f)
 
-        for s in json_file:
-            param_list = [s[key] for key in constants.SKILL_KEYS]
-            SKILLS_CACHE.update({s["NAME"]: skill.Skill(*param_list)})
+            for s in json_file:
+                param_list = [s[key] for key in constants.SKILL_KEYS]
+                SKILLS_CACHE.update({s["NAME"]: skill.Skill(*param_list)})
 
 
 def load_players_from_db() -> None:

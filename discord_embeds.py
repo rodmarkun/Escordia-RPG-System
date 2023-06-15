@@ -22,7 +22,7 @@ def embed_fight_msg(ctx, player_obj, enemy):
 
     embed = discord.Embed(
         # General info
-        title=f'Fight - {ctx.author}',
+        title=f'Fight - {ctx.author.name.capitalize()}',
         description=f'You are fighting a **{enemy.name}**.\n'
                     f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}',
         color=discord.Colour.red()
@@ -116,7 +116,7 @@ def embed_player_profile(ctx, player_name: str, msgs: str) -> discord.Embed:
     :return: Embed
     """
     embed = discord.Embed(
-        title=f'Profile - {player_name}',
+        title=f'Profile - {player_name.capitalize()}',
         description=msgs,
         color=discord.Colour.red()
     )
@@ -133,7 +133,38 @@ def embed_treasure_found(ctx, item_list: list) -> discord.Embed:
     """
     embed = discord.Embed(
         title=f'{emojis.ESC_CHEST_ICON} Treasure found! {emojis.ESC_CHEST_ICON}',
-        description=f'You found:\n\n' + '\n'.join([f'- {item}' for item in item_list]),
+        description=f'You found:\n\n' + '\n'.join([f'- {item} {emojis.obj_emoji(data_management.search_cache_item_by_name(item))}' for item in item_list]),
+        color=discord.Colour.red()
+    )
+    return embed
+
+
+def embed_current_job(ctx, job: str, msgs: str) -> discord.Embed:
+    """
+    Embed for whenever the player checks their current job.
+
+    :param ctx: Discord's CTX
+    :param msgs: Message to be displayed containing the player's current job info
+    :param job: Job name
+    :return: Embed
+    """
+    job_inst = data_management.search_cache_job_by_name(job)
+    job_reqs_str = ""
+    for job in data_management.search_all_jobs():
+        other_job_reqs_list = []
+        for other_job in job.requisites:
+            other_job_reqs_list.append(f"{other_job} - lvl {job.requisites[other_job]}")
+        if len(other_job_reqs_list) == 0:
+            str_displayed = "None"
+        else:
+            str_displayed = ", ".join(other_job_reqs_list)
+        job_reqs_str += f"- {job.name} {emojis.job_to_emoji[job.name]}: Requires {str_displayed}\n"
+
+    embed = discord.Embed(
+        title=f"{job_inst.name} - {emojis.job_to_emoji[job_inst.name]}",
+        description=f'{msgs}\n' \
+                    f'--- Job Requirements ---\n' \
+                    f'{job_reqs_str}\n',
         color=discord.Colour.red()
     )
     return embed

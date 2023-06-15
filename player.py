@@ -1,3 +1,5 @@
+from StringProgressBar import progressBar
+
 import data_management
 import error_msgs
 import formulas
@@ -103,7 +105,7 @@ class Player(Battler):
                 # TODO - Check if passive
                 self.skills.append(curr_job.skill_dict[new_level_str])
                 messager.add_message(self.name,
-                                     f"You learnt {curr_job.skill_dict[new_level_str]}!")
+                                     f"- You learnt {curr_job.skill_dict[new_level_str]}!")
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -124,17 +126,13 @@ class Player(Battler):
         """
 
         stat_string = ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STATKEYS])
-        equipment_string = ''.join([f"**{e}**: {self.equipment[e]}\n" if self.equipment[e] is not None else
-                                    f"**{e}**: None\n" for e in self.equipment])
+        player_xp_bar = progressBar.filledBar(int(self.xp_to_next_lvl), int(self.xp), size=10)[0]
 
-        return f'**Player Name**: {self.name}\n' \
-               f'**Level**: {self.lvl}\n' \
-               f'**Xp**: {self.xp}\n' \
-               f'**Xp to next level**: {self.xp_to_next_lvl - self.xp}\n' \
-               f'**---STATS---**\n' \
+        return f'**Player Name**: {self.name.capitalize()}\n' \
+               f'**Player Level**: {self.lvl}\n' \
+               f'**XP**: {self.xp}/{self.xp_to_next_lvl} {player_xp_bar}\n' \
+               f'\n**---STATS---**\n' \
                f'{stat_string}' \
-               f'**---EQUIPMENT---**\n' \
-               f'{equipment_string}' \
                f'**----------------**\n' \
                f'**Money**: {self.money}\n' \
                f'**Bosses Defeated**: {self._defeated_bosses}\n'
@@ -146,14 +144,14 @@ class Player(Battler):
         :return: String containing the player's information.
         """
         job = data_management.search_cache_job_by_name(self.current_job)
+        job_xp_bar = progressBar.filledBar(int(self.current_job_dict["xp_to_next_lvl"]), int(self.current_job_dict["xp"]), size=10)[0]
         skills_to_learn_str = '\n'
         for lvl in job.skill_dict:
-            skills_to_learn_str += f'Level {lvl}: {job.skill_dict[lvl]}\n'
+            skills_to_learn_str += f'- Level {lvl}: {job.skill_dict[lvl]}\n'
 
-        return f'**Job**: {self.current_job}\n' \
-               f'**Level**: {self.current_job_dict["lvl"]}\n' \
-               f'**Xp to next level**: {self.current_job_dict["xp_to_next_lvl"] - self.current_job_dict["xp"]}\n' \
-               f'**Skills to learn** {skills_to_learn_str}'
+        return f'**Level**: {self.current_job_dict["lvl"]}\n' \
+               f'**XP**: {self.current_job_dict["xp"]}/{self.current_job_dict["xp_to_next_lvl"]} {job_xp_bar}\n\n' \
+               f'**Skills to learn:** {skills_to_learn_str}'
 
     def equip_item(self, equipment: str) -> (bool, list):
         """
@@ -169,14 +167,9 @@ class Player(Battler):
             if e.object_type != "EQUIPMENT":
                 return False, [error_msgs.ERROR_CANNOT_EQUIP_THAT_ITEM]
             self.inventory.remove_item(equipment, 1)
-            if e.equipment_type in constants.WEAPON_TYPES:
-                if self.equipment["WEAPON"] is not None:
-                    self.unequip_item(self.equipment["WEAPON"])
-                self.equipment.update({"WEAPON": e.name})
-            else:
-                if self.equipment[e.equipment_type] is not None:
-                    self.unequip_item(self.equipment[e.equipment_type])
-                self.equipment.update({e.equipment_type: e.name})
+            if self.equipment[e.translate_equipment_type()] is not None:
+                self.unequip_item(self.equipment[e.translate_equipment_type()])
+            self.equipment.update({e.translate_equipment_type(): e.name})
 
             # Adds stats to player
             for stat in e.stat_change_list:
@@ -193,6 +186,7 @@ class Player(Battler):
         :return: None.
         """
         self.inventory.add_item(equipment, 1)
+        equipment = data_management.search_cache_item_by_name(equipment)
         for stat in equipment.stat_change_list:
             self.stats[stat] -= equipment.stat_change_list[stat]
 
@@ -205,11 +199,53 @@ class Player(Battler):
         """
 
         if data_management.search_cache_job_by_name(job_name) is not None:
-            # TODO - Add job change requirements logic
             self.current_job = job_name
+            # Append current job to job_dict_list if not in there
+            if self.current_job_dict not in self.job_dict_list:
+                self.job_dict_list.append(self.current_job_dict)
+            # Set current job dict
+            new_job = True
+            for job_dict in self.job_dict_list:
+                if job_dict["Name"] == job_name:
+                    self.current_job_dict = job_dict
+                    new_job = False
+                    break
+
+            if new_job:
+                self.current_job_dict = {"Name": job_name, "lvl": 1, "xp": 0, "xp_to_next_lvl": 30}
+
+            self.assign_skills_based_on_job()
+
             messager.add_message(self.name, f'Your job is now {job_name}!')
             return True
         return False
+
+    def assign_skills_based_on_job(self) -> None:
+        """
+        Assigns skills based on the player's job.
+        :return: None
+        """
+        self.skills = []
+
+        job = data_management.search_cache_job_by_name(self.current_job)
+        for skill in job.skill_dict:
+            if self.current_job_dict["lvl"] >= int(skill):
+                self.skills.append(job.skill_dict[skill])
+
+    def return_job_dict(self, job_name: str) -> dict:
+        """
+        Returns a job dictionary.
+
+        :param job_name: Job name.
+        :return: Job dictionary.
+        """
+
+        if self.current_job_dict["Name"] == job_name:
+            return self.current_job_dict
+
+        for j in self.job_dict_list:
+            if j["Name"] == job_name:
+                return j
 
     def die(self) -> None:
         """

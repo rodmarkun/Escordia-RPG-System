@@ -5,6 +5,6 @@
       "ENEMY_LIST": ["Bat","Wolf","Lion Ant","Colossal Caterpillar","Giant Dragonfly"],
       "BOSS": "Daidarabotchi, Forest Guardian",
       "DUNGEONS": ["Goblins' Den"],
-      "TREASURES": ["Broken Dagger", "Old Staff", "HArmor", "LArmor", "MArmor", "PhysHelm", "MagHelm"]
+      "TREASURES": ["Bronze Armor", "Cloth Armor", "Student Robes", "Crystal Ring"]
     }
 ]

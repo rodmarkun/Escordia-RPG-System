@@ -43,7 +43,7 @@
       }
     },
     {
-      "NAME": "Dagger",
+      "NAME": "Steel Dagger",
       "DESCRIPTION": "A standard and deadly dagger.",
       "INDIV_VALUE": 45,
       "OBJECT_TYPE": "EQUIPMENT",
@@ -67,6 +67,18 @@
       }
     },
     {
+      "NAME": "Novice Armor",
+      "DESCRIPTION": "A standard armor from the Guild.",
+      "INDIV_VALUE": 30,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "LIGHT_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MAXHP": 1,
+        "DEF": 2,
+        "MDEF": 1
+      }
+    },
+    {
       "NAME": "Bronze Armor",
       "DESCRIPTION": "A sturdy armor made from bronze.",
       "INDIV_VALUE": 50,
@@ -75,7 +87,7 @@
       "STAT_CHANGE_LIST": {
         "MAXHP": 4,
         "DEF": 4,
-        "MDEF": 2,
+        "MDEF": 3,
         "SPEED": -2
       }
     },
@@ -99,13 +111,16 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "MAGIC_ARMOR",
       "STAT_CHANGE_LIST": {
-        "MDEF": 2
+        "MAXHP": 1,
+        "MAXMP": 3,
+        "DEF": 3,
+        "MDEF": 3
       }
     },
     {
-      "NAME": "PhysHelm",
-      "DESCRIPTION": "A standard iron sword.",
-      "INDIV_VALUE": 1,
+      "NAME": "Bronze Helmet",
+      "DESCRIPTION": "A bronze helmet.",
+      "INDIV_VALUE": 30,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "PHYS_HELM",
       "STAT_CHANGE_LIST": {
@@ -113,13 +128,36 @@
       }
     },
     {
-      "NAME": "MagHelm",
-      "DESCRIPTION": "A standard iron sword.",
-      "INDIV_VALUE": 1,
+      "NAME": "Magic Hoodie",
+      "DESCRIPTION": "A hoodie that's imbued with magic.",
+      "INDIV_VALUE": 30,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "MAG_HELM",
       "STAT_CHANGE_LIST": {
-        "MDEF": 4
+        "MAXMP": 1,
+        "DEF": 1,
+        "MDEF": 3
+      }
+    },
+    {
+      "NAME": "Crystal Ring",
+      "DESCRIPTION": "A ring which contains a small amount of magic.",
+      "INDIV_VALUE": 50,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "ACCESSORY",
+      "STAT_CHANGE_LIST": {
+        "MAXMP": 3,
+        "MATK": 3
+      }
+    },
+    {
+      "NAME": "Bronze Bracelet",
+      "DESCRIPTION": "A defensive bracelet made from bronze.",
+      "INDIV_VALUE": 20,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "ACCESSORY",
+      "STAT_CHANGE_LIST": {
+        "DEF": 2
       }
     }
 ]

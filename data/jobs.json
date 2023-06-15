@@ -1,39 +1,50 @@
 [
   {
     "NAME": "Novice",
-    "DESCRIPTION": "Novice job",
+    "DESCRIPTION": "Starting job",
     "SKILL_DICT": {
       "1": "First Aid",
       "2": "Small Fireball",
       "3": "Rushed Strike"
     },
-    "XP_FACTOR": 4
+    "REQUISITES": {},
+    "XP_FACTOR": 2
   },
   {
     "NAME": "Warrior",
     "DESCRIPTION": "Warrior job",
     "SKILL_DICT": {
-      "1": "First Aid",
-      "2": "Small Fireball"
+      "1": "Shielded Strike",
+      "2": "Flame Blade",
+      "3": "Vitalizing Ward",
+      "4": "Great Charge"
     },
+    "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
   },
   {
     "NAME": "Rogue",
     "DESCRIPTION": "Rogue job",
     "SKILL_DICT": {
-      "1": "First Aid",
-      "2": "Small Fireball"
+      "1": "Disarm",
+      "2": "Shadow Strike",
+      "3": "Sharpen Knives",
+      "4": "Hurricane Blades"
     },
+    "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
   },
   {
     "NAME": "Mage",
     "DESCRIPTION": "Mage job",
     "SKILL_DICT": {
-      "1": "First Aid",
-      "2": "Small Fireball"
+      "1": "Ice Bolt",
+      "2": "Quickflame",
+      "3": "Mana Barrier",
+      "4": "Meditate",
+      "5": "Thunder Spear"
     },
+    "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
   }
 ]

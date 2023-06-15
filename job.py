@@ -9,11 +9,12 @@ class Job:
     ///////////////////
     """
 
-    def __init__(self, name: str, description: str, skill_dict: dict,
+    def __init__(self, name: str, description: str, skill_dict: dict, requisites: list,
                  xp_factor: int = 1):
         self.name = name
         self.description = description
         self.skill_dict = skill_dict
+        self.requisites = requisites
         self.xp_factor = xp_factor
 
     """

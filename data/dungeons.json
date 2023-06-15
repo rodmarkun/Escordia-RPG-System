@@ -2,9 +2,9 @@
   {
     "DUNGEON_NAME": "Goblins' Den",
     "RECOMMENDED_LVL": 3,
-    "ENEMY_LIST": ["Wolf"],
-    "BOSS": "Bat",
+    "ENEMY_LIST": ["Goblin Raider", "Goblin Archer", "Goblin Mage"],
+    "BOSS": "Goblin Elite",
     "ENEMY_COUNT": 2,
-    "LOOT_POOL": ["Rusty Sword", "Broken Dagger", "Old Staff"]
+    "LOOT_POOL": ["Longsword", "Steel Dagger", "Student Staff", "Bronze Armor", "Cloth Armor", "Student Robes", "Bronze Helmet", "Magic Hoodie"]
   }
 ]

@@ -44,6 +44,7 @@ async def fight(ctx):
     if constants.TREASURE_CHANCE_WHEN_FIGHTING >= random.randint(0, 100):
         no_error, msgs = interface.receive_treasure(ctx.author.name, constants.NUMBER_OF_ITEMS_IN_TREASURE)
         if no_error:
+            await ctx.send(f'While searching the area, {ctx.author.mention} found a treasure!')
             await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
         else:
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
@@ -130,7 +131,7 @@ async def shop(ctx):
     no_error, msgs = interface.show_shop_inventory(ctx.author.name)
     if no_error:
         item_list = data_management.search_cache_shop_by_area(data_management.search_cache_player(ctx.author.name).current_area).item_list
-        await ctx.send(f"Please select an item to buy, {ctx.author.mention}", view=discord_ui.ItemBuySelectView(ctx, item_list))
+        await ctx.send(f"Please select an item to buy, {ctx.author.mention}. You currently have **{data_management.search_cache_player(ctx.author.name).money}G**", view=discord_ui.ItemBuySelectView(ctx, item_list))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
@@ -164,7 +165,8 @@ async def job(ctx):
     """
     no_error, msgs = interface.show_player_job(ctx.author.name)
     if no_error:
-        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.JobSelectView(ctx, ['Novice']))
+        player_inst = data_management.search_cache_player(ctx.author.name)
+        await ctx.send(embed=discord_embeds.embed_current_job(ctx, player_inst.current_job, msgs_to_msg_str(msgs)), view=discord_ui.JobSelectView(ctx, data_management.search_available_jobs_by_player(player_inst.name)))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
@@ -183,7 +185,7 @@ async def skills(ctx):
     skill_str = ""
     for s in player_inst.skills:
         skill_inst = data_management.search_cache_skill_by_name(s)
-        skill_str += f"**{s}** - {emojis.element_to_emoji[skill_inst.element]}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost} | Cooldown: {skill_inst.cooldown}\n\n"
+        skill_str += f"**{s}** - {emojis.skill_emoji(skill_inst, player_inst.current_job)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost} | Cooldown: {skill_inst.cooldown}\n\n"
 
     await ctx.send(f"These are your current skills, {ctx.author.mention}:\n\n{skill_str}")
 

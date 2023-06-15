@@ -1,0 +1,47 @@
+[
+  {
+    "NAME": "Quickflame",
+    "DESCRIPTION": "Deal a small amount of fire damage to an enemy. Does not skip the turn.",
+    "MP_COST": 2,
+    "POWER": 6,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"]
+  },
+  {
+    "NAME": "Ice Bolt",
+    "DESCRIPTION": "Deal ice damage to an enemy.",
+    "MP_COST": 2,
+    "POWER": 13,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 2,
+    "TAGS": ["MAGICAL"]
+  },
+  {
+    "NAME": "Mana barrier",
+    "DESCRIPTION": "Spend your mana to buff your physical and magical defense.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"]
+  },
+  {
+    "NAME": "Meditate",
+    "DESCRIPTION": "Recover some amount of MP.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["RECOVER_MP"]
+  },
+  {
+    "NAME": "Thunder Spear",
+    "DESCRIPTION": "Deal both physical and magical thunder damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 15,
+    "ELEMENT": "THUNDER",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "MAGICAL"]
+  }
+]

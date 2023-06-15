@@ -1,0 +1,38 @@
+[
+  {
+    "NAME": "Bloodstealer",
+    "DESCRIPTION": "Drain health from your enemy's blood.",
+    "MP_COST": 4,
+    "POWER": 12,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "LEECH"]
+  },
+  {
+    "NAME": "Fortify",
+    "DESCRIPTION": "Fortify yourself and raise your defense.",
+    "MP_COST": 4,
+    "POWER": 0,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 3,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+  },
+  {
+    "NAME": "Whirlwind",
+    "DESCRIPTION": "Deal a small amount of wind damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 10,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 2,
+    "TAGS": ["MAGICAL"]
+  },
+  {
+    "NAME": "Intimidate",
+    "DESCRIPTION": "Intimidate the enemy and lowers their attack.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  }
+]

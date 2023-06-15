@@ -1,0 +1,38 @@
+[
+  {
+    "NAME": "Shielded Strike",
+    "DESCRIPTION": "Deal small physical damage invoking a shield, raising your physical defense.",
+    "MP_COST": 3,
+    "POWER": 10,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+  },
+  {
+    "NAME": "Flame Blade",
+    "DESCRIPTION": "Deal physical fire damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 14,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL"]
+  },
+  {
+    "NAME": "Vitalizing Ward",
+    "DESCRIPTION": "Heal yourself a small amount and raise your magical defense.",
+    "MP_COST": 3,
+    "POWER": 15,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 5,
+    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "MDEF_UP"]
+  },
+  {
+    "NAME": "Great Charge",
+    "DESCRIPTION": "Charge against an enemy, dealing high damage but reducing your attack.",
+    "MP_COST": 3,
+    "POWER": 18,
+    "ELEMENT": null,
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  }
+]

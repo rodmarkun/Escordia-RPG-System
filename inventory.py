@@ -93,6 +93,6 @@ def equipment_equivalences(equipment_type: str, equipment: 'Equipment') -> bool:
         return True
     elif equipment_type == "HELMET" and equipment.equipment_type in constants.HELM_TYPES:
         return True
-    elif equipment_type == "ACCESSORY":
+    elif equipment_type == "ACCESSORY" and equipment.equipment_type == "ACCESSORY":
         return True
     return False

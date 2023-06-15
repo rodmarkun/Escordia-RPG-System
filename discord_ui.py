@@ -66,7 +66,7 @@ class ItemBuySelect(discord.ui.Select):
         stat_str_remove = "'"
         options = [discord.SelectOption(label=i.name,
                                         description=f"{i.description if i.object_type != 'EQUIPMENT' else ''}"
-                                                    f"{' ' + str(i.stat_change_list).replace('{', '').replace('}', '').replace(stat_str_remove, '') if i.object_type == 'EQUIPMENT' else ''}"
+                                                    f"{i.stat_list_formatted()}"
                                                     f"  - {i.individual_value}G",
                                         emoji=emojis.obj_emoji(i)) for i in items_in_options]
         super().__init__(placeholder="Select an item to buy", max_values=1, min_values=1, options=options)
@@ -98,15 +98,17 @@ class EquipmentSelect(discord.ui.Select):
         if player_equipment is not None:
             player_equipment = data_management.search_cache_item_by_name(player_equipment)
             default_option = discord.SelectOption(label=player_equipment.name,
-                                                  description=f"{player_equipment.description}"
-                                                  f"{' ' + str(player_equipment.stat_change_list)}",
+                                                  description=f"{player_equipment.stat_list_formatted()}",
                                                   emoji=emojis.obj_emoji(player_equipment),
                                                   default=True)
 
         items_in_options = [data_management.search_cache_item_by_name(i.name) for i in item_list]
+
+        if player_equipment in items_in_options:
+            items_in_options.remove(player_equipment)
+
         options = [discord.SelectOption(label=i.name,
-                                        description=f"{i.description}"
-                                                    f"{' ' + str(i.stat_change_list)}",
+                                        description=f"{i.stat_list_formatted()}",
                                         emoji=emojis.obj_emoji(i)) for i in items_in_options]
 
         if default_option is not None:

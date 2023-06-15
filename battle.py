@@ -78,10 +78,13 @@ class Battle:
         # Enemy turn
         if self.enemy.alive:
             if not no_enemy_turn:
-                # Enemy AI should go here. For now, it's just a random action.
-                enemy_action = random.choice(constants.POSSIBLE_ENEMY_ACTIONS)
+                if self.enemy.stats[constants.MATK_STATKEY] > self.enemy.stats[constants.ATK_STATKEY]:
+                    weights = [1, 3]
+                else:
+                    weights = [2, 1]
+                enemy_action = random.choices(constants.POSSIBLE_ENEMY_ACTIONS, weights=weights)[0]
 
-                if enemy_action == "SKILL" and len(self.enemy.skills) > 0:
+                if enemy_action == constants.SKILL_OPTION and len(self.enemy.skills) > 0:
                     skill = data_management.search_cache_skill_by_name(random.choice(self.enemy.skills))
                     target = self.skill_based_target_selection(skill, self.enemy)
                     perform_skill(self.enemy, target, skill, self.player.name)
@@ -122,7 +125,7 @@ class Battle:
 
         loot = self.enemy.loot()
         if loot:
-            messager.add_message(self.player.name, f"You looted a {loot}")
+            messager.add_message(self.player.name, f"- You looted a {loot}")
             self.player.inventory.add_item(loot, 1)
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
@@ -147,9 +150,6 @@ class Battle:
 
         # Delete battle from cache
         data_management.delete_cache_battle_by_player(self.player.name)
-
-        messager.add_message(self.player.name, f"{self.player.name} lost the battle! You are brought back to safety, "
-                                               f"but half your gold is long gone...")
 
         self.actions_when_battle_is_over()
 

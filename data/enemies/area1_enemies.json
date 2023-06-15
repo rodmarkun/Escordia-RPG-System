@@ -6,7 +6,7 @@
       "HP": 17,
       "ATK": 5,
       "DEF": 7,
-      "MATK": 9,
+      "MATK": 10,
       "MDEF": 4,
       "SPEED": 13
     },
@@ -16,7 +16,7 @@
     "LOOT_CHANCE": 70,
     "SKILLS": ["Bloodstealer"],
     "WEAKNESSES": ["THUNDER", "WIND"],
-    "RESISTANCES": ["FIRE"],
+    "RESISTANCES": ["DARK"],
     "IMAGE_URL": "https://i.postimg.cc/fLsrwz3Z/Colossal-Bat.png",
     "IS_BOSS": false
   },
@@ -57,7 +57,7 @@
     "POSSIBLE_LOOT": "Ant Fang",
     "LOOT_CHANCE": 70,
     "SKILLS": [],
-    "WEAKNESSES": ["FIRE", "ICE"],
+    "WEAKNESSES": ["FIRE"],
     "RESISTANCES": [],
     "IMAGE_URL": "https://i.postimg.cc/tCq5Dgyc/Insects-Ant-Lion.png",
     "IS_BOSS": false
@@ -78,7 +78,7 @@
     "POSSIBLE_LOOT": null,
     "LOOT_CHANCE": 70,
     "SKILLS": ["Fortify"],
-    "WEAKNESSES": ["FIRE", "WIND"],
+    "WEAKNESSES": ["FIRE", "DARK"],
     "RESISTANCES": ["ICE", "HOLY"],
     "IMAGE_URL": "https://i.postimg.cc/7PV1Cy7n/Insects-Caterpillar-A.png",
     "IS_BOSS": false
@@ -123,6 +123,90 @@
     "WEAKNESSES": ["FIRE", "DARK"],
     "RESISTANCES": ["WIND", "HOLY"],
     "IMAGE_URL": "https://i.postimg.cc/DygrbcK4/Boss-Daidarabotchi.png",
+    "IS_BOSS": true
+  },
+  {
+    "NAME": "Goblin Raider",
+    "STATS": {
+      "MAXHP": 25,
+      "HP": 25,
+      "ATK": 8,
+      "DEF": 7,
+      "MATK": 2,
+      "MDEF": 7,
+      "SPEED": 14
+    },
+    "XP_REWARD": 20,
+    "GOLD_REWARD": 12,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "HOLY"],
+    "RESISTANCES": ["WIND"],
+    "IMAGE_URL": "https://i.postimg.cc/pX2mzsxW/Goblin-Raider.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Goblin Archer",
+    "STATS": {
+      "MAXHP": 22,
+      "HP": 22,
+      "ATK": 10,
+      "DEF": 7,
+      "MATK": 2,
+      "MDEF": 7,
+      "SPEED": 10
+    },
+    "XP_REWARD": 20,
+    "GOLD_REWARD": 12,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": [],
+    "WEAKNESSES": ["FIRE", "WIND"],
+    "RESISTANCES": [],
+    "IMAGE_URL": "https://i.postimg.cc/tTXK2ngx/Goblin-Archer.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Goblin Mage",
+    "STATS": {
+      "MAXHP": 25,
+      "HP": 25,
+      "ATK": 6,
+      "DEF": 8,
+      "MATK": 11,
+      "MDEF": 12,
+      "SPEED": 10
+    },
+    "XP_REWARD": 20,
+    "GOLD_REWARD": 12,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": ["Bloodstealer"],
+    "WEAKNESSES": ["FIRE"],
+    "RESISTANCES": ["HOLY", "DARK"],
+    "IMAGE_URL": "https://i.postimg.cc/fL7m1s6v/Goblin-Mage.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Goblin Elite",
+    "STATS": {
+      "MAXHP": 35,
+      "HP": 35,
+      "ATK": 11,
+      "DEF": 12,
+      "MATK": 10,
+      "MDEF": 10,
+      "SPEED": 10
+    },
+    "XP_REWARD": 40,
+    "GOLD_REWARD": 12,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": ["Fortify", "Intimidate"],
+    "WEAKNESSES": ["FIRE", "HOLY"],
+    "RESISTANCES": ["WIND", "DARK"],
+    "IMAGE_URL": "https://i.postimg.cc/VvXHwY58/Goblin-Elite.png",
     "IS_BOSS": false
   }
 ]

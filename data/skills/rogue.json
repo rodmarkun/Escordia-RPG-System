@@ -1,0 +1,38 @@
+[
+  {
+    "NAME": "Disarm",
+    "DESCRIPTION": "Deal small physical damage to an enemy and lowers their attack.",
+    "MP_COST": 2,
+    "POWER": 10,
+    "ELEMENT": null,
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Shadow Strike",
+    "DESCRIPTION": "Deal some physical dark damage to an enemy. Does not skip your turn but lowers your defense.",
+    "MP_COST": 3,
+    "POWER": 10,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL", "DOES_NOT_SKIP_TURN", "SELF_INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
+  },
+  {
+    "NAME": "Sharpen Knives",
+    "DESCRIPTION": "Sharpen your knives, raising your attack, critical hit chance and critical damage.",
+    "MP_COST": 3,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "LUK_UP"]
+  },
+  {
+    "NAME": "Hurricane Blades",
+    "DESCRIPTION": "Deal great physical wind damage to an enemy",
+    "MP_COST": 9,
+    "POWER": 18,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL"]
+  }
+]
