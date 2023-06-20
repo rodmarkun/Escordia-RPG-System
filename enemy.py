@@ -15,10 +15,11 @@ class Enemy(Battler):
     ///////////////////
     """
 
-    def __init__(self, name, stats, xp_reward, gold_reward, possible_loot=None, loot_chance=0,
+    def __init__(self, name, stats, description, xp_reward, gold_reward, possible_loot=None, loot_chance=0,
                  skills=[], weaknesses=[], resistances=[], image_url='', is_boss=False):
         super().__init__(name, stats)
 
+        self.description = description
         self.xp_reward = xp_reward
         self.gold_reward = gold_reward
         self.possible_loot = possible_loot

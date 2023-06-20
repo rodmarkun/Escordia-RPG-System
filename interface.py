@@ -176,6 +176,9 @@ def show_shop_inventory(name: str) -> (bool, list):
     if player_inst is None:
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
     return True, [data_management.search_cache_shop_by_area(player_inst.current_area).show_items()]
 
 
@@ -235,6 +238,9 @@ def show_player_job(name: str) -> (bool, list):
     if player_inst is None:
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
     return True, [player_inst.show_player_info_job()]
 
 
@@ -252,7 +258,7 @@ def receive_treasure(name: str, item_amount: int) -> (bool, list):
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
 
     if player_inst.in_dungeon:
-        items = data_management.search_cache_dungeon_by_player(name).loot_pool
+        items = data_management.search_cache_dungeon_inst_by_player(name).loot_pool
     else:
         items = data_management.search_cache_area_by_number(player_inst.current_area).treasures
 

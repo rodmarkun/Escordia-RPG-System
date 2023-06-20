@@ -4,6 +4,7 @@ Normal Icons/Emojis
 
 SPARKLER_EMOJI = '\U0001F387'
 SKULL_EMOJI = '\U0001F480'
+CHARACTER_EMOJI = '\U0001F9D9'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////

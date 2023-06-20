@@ -1,0 +1,112 @@
+[
+  {
+    "NAME": "Rogue Swordsman",
+    "STATS": {
+      "MAXHP": 40,
+      "HP": 40,
+      "ATK": 16,
+      "DEF": 13,
+      "MATK": 4,
+      "MDEF": 11,
+      "SPEED": 13
+    },
+    "DESCRIPTION": "The Nocturnis bats of Escordia, with their shimmering obsidian wings and piercing crimson eyes, are feared for their uncanny agility and hypnotic ultrasonic cries, believed to carry an ancient curse that brings eternal darkness to those unfortunate enough to cross their path.",
+    "XP_REWARD": 23,
+    "GOLD_REWARD": 19,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": ["Berserk"],
+    "WEAKNESSES": ["WIND", "LIGHT"],
+    "RESISTANCES": ["DARK"],
+    "IMAGE_URL": "https://i.postimg.cc/Kck0mvrf/Rogue-Bastard-Sword.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Rogue Monk",
+    "STATS": {
+      "MAXHP": 46,
+      "HP": 46,
+      "ATK": 11,
+      "DEF": 19,
+      "MATK": 14,
+      "MDEF": 16,
+      "SPEED": 11
+    },
+    "DESCRIPTION": "The Nocturnis bats of Escordia, with their shimmering obsidian wings and piercing crimson eyes, are feared for their uncanny agility and hypnotic ultrasonic cries, believed to carry an ancient curse that brings eternal darkness to those unfortunate enough to cross their path.",
+    "XP_REWARD": 25,
+    "GOLD_REWARD": 23,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": ["Cursed Light"],
+    "WEAKNESSES": ["THUNDER"],
+    "RESISTANCES": ["LIGHT"],
+    "IMAGE_URL": "https://i.postimg.cc/MpDD9cq6/Rogue-Dagger-Monk.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Rogue Assassin",
+    "STATS": {
+      "MAXHP": 37,
+      "HP": 37,
+      "ATK": 17,
+      "DEF": 12,
+      "MATK": 13,
+      "MDEF": 9,
+      "SPEED": 19
+    },
+    "DESCRIPTION": "The Nocturnis bats of Escordia, with their shimmering obsidian wings and piercing crimson eyes, are feared for their uncanny agility and hypnotic ultrasonic cries, believed to carry an ancient curse that brings eternal darkness to those unfortunate enough to cross their path.",
+    "XP_REWARD": 18,
+    "GOLD_REWARD": 27,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": ["Ice Blades"],
+    "WEAKNESSES": ["THUNDER", "ICE"],
+    "RESISTANCES": ["DARK"],
+    "IMAGE_URL": "https://i.postimg.cc/q7DGd9NW/Rogue-Twin-Dagger.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Earth Worm",
+    "STATS": {
+      "MAXHP": 70,
+      "HP": 70,
+      "ATK": 14,
+      "DEF": 10,
+      "MATK": 8,
+      "MDEF": 8,
+      "SPEED": 10
+    },
+    "DESCRIPTION": "The Nocturnis bats of Escordia, with their shimmering obsidian wings and piercing crimson eyes, are feared for their uncanny agility and hypnotic ultrasonic cries, believed to carry an ancient curse that brings eternal darkness to those unfortunate enough to cross their path.",
+    "XP_REWARD": 20,
+    "GOLD_REWARD": 21,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": [],
+    "WEAKNESSES": ["ICE", "DARK"],
+    "RESISTANCES": ["THUNDER"],
+    "IMAGE_URL": "https://i.postimg.cc/MpW0fWRh/Cave-Dweller-Worm.png",
+    "IS_BOSS": false
+  },
+  {
+    "NAME": "Mountain Harpy",
+    "STATS": {
+      "MAXHP": 32,
+      "HP": 32,
+      "ATK": 16,
+      "DEF": 12,
+      "MATK": 17,
+      "MDEF": 19,
+      "SPEED": 20
+    },
+    "DESCRIPTION": "The Nocturnis bats of Escordia, with their shimmering obsidian wings and piercing crimson eyes, are feared for their uncanny agility and hypnotic ultrasonic cries, believed to carry an ancient curse that brings eternal darkness to those unfortunate enough to cross their path.",
+    "XP_REWARD": 18,
+    "GOLD_REWARD": 27,
+    "POSSIBLE_LOOT": null,
+    "LOOT_CHANCE": 0,
+    "SKILLS": [],
+    "WEAKNESSES": ["ICE", "THUNDER"],
+    "RESISTANCES": ["WIND"],
+    "IMAGE_URL": "https://i.postimg.cc/jdPjyPK1/Wind-Harpy.png",
+    "IS_BOSS": false
+  }
+]

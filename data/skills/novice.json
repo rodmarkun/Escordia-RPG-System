@@ -3,7 +3,7 @@
     "NAME": "First Aid",
     "DESCRIPTION": "Perform an improvised healing on yourself.",
     "MP_COST": 5,
-    "POWER": 11,
+    "POWER": 14,
     "ELEMENT": "HOLY",
     "COOLDOWN": 4,
     "TAGS": ["HEALING"]
@@ -12,7 +12,7 @@
     "NAME": "Small Fireball",
     "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
     "MP_COST": 4,
-    "POWER": 10,
+    "POWER": 11,
     "ELEMENT": "FIRE",
     "COOLDOWN": 2,
     "TAGS": ["MAGICAL"]

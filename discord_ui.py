@@ -294,9 +294,9 @@ async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
 async def traverse_dungeon(battle, ctx):
     dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle.player.name)
     if dungeon_inst.boss_defeated:
-        battle.player.in_dungeon = False
         # Receive rewards
         no_error, msgs = interface.receive_treasure(ctx.author.name, random.randint(2, 3))
+        battle.player.in_dungeon = False
         if no_error:
             await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
         else:

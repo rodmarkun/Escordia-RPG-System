@@ -7,6 +7,7 @@ import discord
 import discord_embeds
 import discord_ui
 import emojis
+import info_msgs
 import interface
 
 from error_msgs import *
@@ -33,6 +34,24 @@ async def start(ctx):
         await ctx.send(f'Welcome, {ctx.author.mention}, to the world of Escordia.\nWe recommend you see the `!tutorial`.')
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+
+
+@bot.command()
+async def help(ctx):
+    '''
+    !help command
+    Shows all commands
+    '''
+    await ctx.send(embed=discord_embeds.embed_help_msg(ctx))
+
+
+@bot.command()
+async def tutorial(ctx):
+    '''
+    !help command
+    Shows all commands
+    '''
+    await ctx.send(f"{ctx.author.mention} - {info_msgs.TUTORIAL_MSG}")
 
 
 @bot.command()
@@ -146,6 +165,10 @@ async def equipment(ctx):
     player_inst = data_management.search_cache_player(ctx.author.name)
     if player_inst is None:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CHARACTER_DOES_NOT_EXIST}')
+        return
+
+    if data_management.search_cache_battle_by_player(ctx.author.name) is not None:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CANNOT_DO_WHILE_IN_FIGHT}')
         return
 
     await ctx.send(f"This is your current equipment, {ctx.author.mention}:")

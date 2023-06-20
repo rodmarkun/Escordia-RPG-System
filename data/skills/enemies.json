@@ -34,5 +34,41 @@
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
     "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+  },
+  {
+    "NAME": "Forest Blessing",
+    "DESCRIPTION": "Heal yourself and raise your defenses.",
+    "MP_COST": 3,
+    "POWER": 15,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 3,
+    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"]
+  },
+  {
+    "NAME": "Berserk",
+    "DESCRIPTION": "Enter an enraged state and raise both your attack and physical defense.",
+    "MP_COST": 5,
+    "POWER": 0,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "DEF_UP"]
+  },
+  {
+    "NAME": "Cursed Light",
+    "DESCRIPTION": "Deal some light damage and reduce the enemy's magic defense.",
+    "MP_COST": 5,
+    "POWER": 12,
+    "ELEMENT": "LIGHT",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"]
+  },
+  {
+    "NAME": "Ice Blades",
+    "DESCRIPTION": "Deal physical ice damage and increase your attack.",
+    "MP_COST": 6,
+    "POWER": 11,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"]
   }
 ]

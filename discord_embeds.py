@@ -6,6 +6,23 @@ import formulas
 
 from StringProgressBar import progressBar
 
+import info_msgs
+
+
+def embed_help_msg(ctx):
+    """
+    Sends embed used for !help command
+
+    :param ctx: Discord CTX
+    :return: Embed
+    """
+    embed = discord.Embed(
+        # General info
+        title=f'Escordia Help',
+        description=f'{info_msgs.HELP_MSG}',
+        color=discord.Colour.red()
+    )
+    return embed
 
 def embed_fight_msg(ctx, player_obj, enemy):
     '''
@@ -96,7 +113,7 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     enemy_skills_str = '\n'.join([f'- **{s}** {emojis.element_to_emoji[data_management.search_cache_skill_by_name(s).element]}' for s in enemy.skills])
     embed = discord.Embed(
         title=f'Enemy - {enemy.name}',
-        description=f'Enemy description goes in here\n\n{enemy.show_enemy_info()}\n{bd_str}'
+        description=f'_{enemy.description}_\n\n{enemy.show_enemy_info()}\n{bd_str}'
                     f'**Weaknesses**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n'
                     f'**Resistances**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}\n'
                     f'**Skills**\n{enemy_skills_str}',

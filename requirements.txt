@@ -1,2 +1,3 @@
 discord.py==2.2.2
 StringProgressBar==1.1.1
+peewee~=3.16.2

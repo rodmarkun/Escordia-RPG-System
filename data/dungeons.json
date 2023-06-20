@@ -5,6 +5,6 @@
     "ENEMY_LIST": ["Goblin Raider", "Goblin Archer", "Goblin Mage"],
     "BOSS": "Goblin Elite",
     "ENEMY_COUNT": 2,
-    "LOOT_POOL": ["Longsword", "Steel Dagger", "Student Staff", "Bronze Armor", "Cloth Armor", "Student Robes", "Bronze Helmet", "Magic Hoodie"]
+    "LOOT_POOL": ["Longsword", "Steel Dagger", "Student Staff", "Bronze Armor", "Cloth Armor", "Student Robes"]
   }
 ]

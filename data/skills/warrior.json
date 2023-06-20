@@ -19,9 +19,9 @@
   },
   {
     "NAME": "Vitalizing Ward",
-    "DESCRIPTION": "Heal yourself a small amount and raise your magical defense.",
+    "DESCRIPTION": "Heal yourself and raise your magical defense.",
     "MP_COST": 3,
-    "POWER": 15,
+    "POWER": 17,
     "ELEMENT": "HOLY",
     "COOLDOWN": 5,
     "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "MDEF_UP"]

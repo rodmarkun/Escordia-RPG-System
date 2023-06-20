@@ -28,24 +28,25 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "STAFF",
       "STAT_CHANGE_LIST": {
-        "MATK": 3
+        "MATK": 2,
+        "MAXMP": 2
       }
     },
     {
       "NAME": "Longsword",
       "DESCRIPTION": "A standard iron sword.",
-      "INDIV_VALUE": 45,
+      "INDIV_VALUE": 50,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "SWORD",
       "STAT_CHANGE_LIST": {
-        "ATK": 5,
+        "ATK": 6,
         "DEF": 2
       }
     },
     {
       "NAME": "Steel Dagger",
       "DESCRIPTION": "A standard and deadly dagger.",
-      "INDIV_VALUE": 45,
+      "INDIV_VALUE": 50,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "DAGGER",
       "STAT_CHANGE_LIST": {
@@ -57,11 +58,11 @@
     {
       "NAME": "Student Staff",
       "DESCRIPTION": "A standard staff from the Academy.",
-      "INDIV_VALUE": 45,
+      "INDIV_VALUE": 50,
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "STAFF",
       "STAT_CHANGE_LIST": {
-        "ATK": 2,
+        "ATK": 3,
         "MATK": 3,
         "MAXMP": 3
       }
@@ -73,7 +74,7 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "LIGHT_ARMOR",
       "STAT_CHANGE_LIST": {
-        "MAXHP": 1,
+        "MAXHP": 2,
         "DEF": 2,
         "MDEF": 1
       }
@@ -86,7 +87,7 @@
       "EQUIPMENT_TYPE": "HEAVY_ARMOR",
       "STAT_CHANGE_LIST": {
         "MAXHP": 4,
-        "DEF": 4,
+        "DEF": 6,
         "MDEF": 3,
         "SPEED": -2
       }
@@ -98,8 +99,8 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "LIGHT_ARMOR",
       "STAT_CHANGE_LIST": {
-        "MAXHP": 2,
-        "DEF": 3,
+        "MAXHP": 3,
+        "DEF": 4,
         "MDEF": 2,
         "SPEED": 2
       }
@@ -111,8 +112,8 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "MAGIC_ARMOR",
       "STAT_CHANGE_LIST": {
-        "MAXHP": 1,
-        "MAXMP": 3,
+        "MAXHP": 3,
+        "MAXMP": 4,
         "DEF": 3,
         "MDEF": 3
       }
@@ -124,6 +125,7 @@
       "OBJECT_TYPE": "EQUIPMENT",
       "EQUIPMENT_TYPE": "PHYS_HELM",
       "STAT_CHANGE_LIST": {
+        "MAXHP": 1,
         "DEF": 3
       }
     },
@@ -135,7 +137,7 @@
       "EQUIPMENT_TYPE": "MAG_HELM",
       "STAT_CHANGE_LIST": {
         "MAXMP": 1,
-        "DEF": 1,
+        "DEF": 2,
         "MDEF": 3
       }
     },
@@ -147,7 +149,7 @@
       "EQUIPMENT_TYPE": "ACCESSORY",
       "STAT_CHANGE_LIST": {
         "MAXMP": 3,
-        "MATK": 3
+        "MATK": 2
       }
     },
     {

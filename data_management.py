@@ -54,8 +54,8 @@ def create_new_player(player_name: str) -> None:
     :return: None.
     """
     player_inst = player.Player(player_name, inventory=inventory.Inventory(player_name),
-                                             equipment=constants.INITIAL_EQUIPMENT,
-                                             current_job_dict=constants.INITIAL_JOB_DICT)
+                                             equipment=constants.INITIAL_EQUIPMENT.copy(),
+                                             current_job_dict=constants.INITIAL_JOB_DICT.copy())
     PLAYER_CACHE.update({player_name: player_inst})
     peewee_models.PlayerModel.create(name=player_name, stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
                               xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money,
