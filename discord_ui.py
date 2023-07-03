@@ -1,13 +1,10 @@
 import random
-
 import discord
-
-import constants
+import discord_logic
 import emojis
 import interface
 import data_management
 import discord_embeds
-import messager
 import time
 
 
@@ -24,8 +21,7 @@ class ActionMenu(discord.ui.View):
     @discord.ui.button(label="Attack", style=discord.ButtonStyle.red)
     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
-            no_error, msgs = interface.normal_attack(self.ctx.author.name)
-            await continue_battle(no_error, msgs, self.ctx)
+            await discord_logic.attack(self.ctx)
             await interaction.response.defer()
 
     # Skill
@@ -57,6 +53,77 @@ class ActionMenu(discord.ui.View):
             await interaction.response.send_message(embed=discord_embeds.embed_enemy_info(self.ctx, data_management.search_cache_battle_by_player(self.ctx.author.name).enemy))
 
 
+class PlayerMenu(discord.ui.View):
+    """
+    Class that handles general menu.
+    """
+    def __init__(self, ctx):
+        super().__init__(timeout=None)
+        self.value = None
+        self.ctx = ctx
+
+    # Fight
+    @discord.ui.button(label=emojis.CROSSED_SWORDS_EMOJI + " Fight", style=discord.ButtonStyle.red)
+    async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.begin_fight(self.ctx, ActionMenu(self.ctx))
+            await interaction.response.defer()
+
+    # Fight
+    @discord.ui.button(label=emojis.CASTLE_EMOJI + " Dungeon", style=discord.ButtonStyle.red)
+    async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.begin_fight(self.ctx, ActionMenu(self.ctx))
+            await interaction.response.defer()
+
+    # Boss
+    @discord.ui.button(label=emojis.SKULL_EMOJI + " Boss", style=discord.ButtonStyle.red)
+    async def menu3(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.begin_boss_fight(self.ctx, ActionMenu(self.ctx))
+            await interaction.response.defer()
+
+
+    # Equipment
+    @discord.ui.button(label=emojis.MAGE_EMOJI + " Equipment", style=discord.ButtonStyle.primary)
+    async def menu4(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.equipment(self.ctx)
+            await interaction.response.defer()
+
+
+    # Skill Info
+    @discord.ui.button(label=emojis.SPARKLER_EMOJI + " Skills", style=discord.ButtonStyle.primary)
+    async def menu5(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.show_skills(self.ctx)
+            await interaction.response.defer()
+
+
+    # Job
+    @discord.ui.button(label=emojis.CRYSTAL_BALL_EMOJI + " Job", style=discord.ButtonStyle.primary)
+    async def menu6(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.job(self.ctx)
+            await interaction.response.defer()
+
+
+    # Rest
+    @discord.ui.button(label=emojis.BED_EMOJI + " Rest", style=discord.ButtonStyle.green)
+    async def menu7(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.rest(self.ctx)
+            await interaction.response.defer()
+
+
+    # Shop
+    @discord.ui.button(label=emojis.SHOP_EMOJI + " Shop", style=discord.ButtonStyle.green)
+    async def menu8(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.shop(self.ctx)
+            await interaction.response.defer()
+
+
 class ItemBuySelect(discord.ui.Select):
     """
     Class that handles the item selection for the shop.
@@ -78,7 +145,7 @@ class ItemBuySelect(discord.ui.Select):
             item = data_management.search_cache_item_by_name(self.values[0])
             no_error, msgs = interface.buy_item(self.ctx.author.name, item.name)
             if no_error:
-                await interaction.response.send_message(msgs_to_msg_str(msgs))
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
@@ -123,7 +190,7 @@ class EquipmentSelect(discord.ui.Select):
             item = data_management.search_cache_item_by_name(self.values[0])
             no_error, msgs = interface.equip_item(self.ctx.author.name, item.name)
             if no_error:
-                await interaction.response.send_message(msgs_to_msg_str(msgs))
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
@@ -154,7 +221,7 @@ class DungeonSelect(discord.ui.Select):
             if no_error:
                 if data_management.search_cache_player(self.ctx.author.name).in_dungeon:
                     no_error, msgs = interface.begin_battle(self.ctx.author.name, False, enemy=random.choice(dungeon.enemy_list))
-                    await manage_battle(no_error, self.ctx, msgs)
+                    await discord_logic.manage_battle(no_error, self.ctx, msgs, ActionMenu(self.ctx))
                     await interaction.response.defer()
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
@@ -184,7 +251,7 @@ class SkillSelect(discord.ui.Select):
             start_time = time.time()
             skill = data_management.search_cache_skill_by_name(self.values[0])
             no_error, msgs = interface.skill_attack(self.ctx.author.name, skill.name)
-            await continue_battle(no_error, msgs, self.ctx)
+            await discord_logic.continue_battle(no_error, msgs, self.ctx, ActionMenu(self.ctx))
             await interaction.response.defer()
             print(f"Skill took {time.time() - start_time} seconds")
 
@@ -214,7 +281,7 @@ class JobSelect(discord.ui.Select):
             job = data_management.search_cache_job_by_name(self.values[0])
             no_error, msgs = interface.change_player_job(self.ctx.author.name, job.name)
             if no_error:
-                await interaction.response.send_message(msgs_to_msg_str(msgs))
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
@@ -223,34 +290,6 @@ class JobSelectView(discord.ui.View):
     def __init__(self, ctx, job_list):
         super().__init__(timeout=None)
         self.add_item(JobSelect(ctx, job_list))
-
-
-def msgs_to_msg_str(msgs: list) -> str:
-    """
-    Converts a list of messages to a string
-
-    :param msgs: List of messages
-    :return: String containing all messages.
-    """
-    return '\n'.join(msgs)
-
-
-async def manage_battle(no_error: bool, ctx, msgs: list):
-    """
-    Manages a battle after starting it.
-    :param no_error: Whether there was an error or not
-    :param ctx: Discord CTX
-    :param msgs: List of info messages.
-    :return: None.
-    """
-    if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
-        await ctx.send(
-            embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
-            view=ActionMenu(ctx))
-    else:
-        await ctx.send(
-            f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 async def check_button_pressed(ctx, interaction) -> bool:
@@ -266,49 +305,3 @@ async def check_button_pressed(ctx, interaction) -> bool:
     else:
         await interaction.response.send_message(f"That button is not for you, {interaction.user.mention}!")
         return False
-
-
-async def continue_battle(no_error: bool, msgs: list, ctx) -> None:
-    if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
-        msg_str = msgs_to_msg_str(msgs)
-        if battle.is_over:
-            msg_str = msgs_to_msg_str(msgs)
-            await ctx.send(msg_str)
-            if battle.player.alive:
-                battle.win_battle()
-                await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(
-                    messager.empty_queue(ctx.author.name))))
-                if battle.player.in_dungeon:
-                    await traverse_dungeon(battle, ctx)
-            else:
-                battle.lose_battle()
-                await ctx.send('', embed=discord_embeds.embed_death_msg(ctx))
-        else:
-            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
-                                    view=ActionMenu(ctx))
-    else:
-        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
-
-
-async def traverse_dungeon(battle, ctx):
-    dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle.player.name)
-    if dungeon_inst.boss_defeated:
-        # Receive rewards
-        no_error, msgs = interface.receive_treasure(ctx.author.name, random.randint(2, 3))
-        battle.player.in_dungeon = False
-        if no_error:
-            await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
-        else:
-            await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
-        data_management.delete_cache_dungeon_inst(battle.player.name)
-        data_management.update_player_info(battle.player.name)
-    else:
-        if dungeon_inst.current_enemies_defeated != dungeon_inst.enemy_count:
-            no_error, msgs = interface.begin_battle(ctx.author.name, False,
-                                                    enemy=random.choice(dungeon_inst.enemy_list))
-            await manage_battle(no_error, ctx, msgs)
-        else:
-            no_error, msgs = interface.begin_battle(ctx.author.name, False,
-                                                    enemy=dungeon_inst.boss)
-            await manage_battle(no_error, ctx, msgs)

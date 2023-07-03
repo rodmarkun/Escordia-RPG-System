@@ -127,7 +127,7 @@ def show_player_profile(name: str) -> (bool, list):
 
     if player_inst is None:
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
-    return True, [player_inst.show_player_info()]
+    return True, [player_inst.show_player_info(), player_inst.show_player_stats(), player_inst.money, player_inst.show_player_info_job(False), player_inst.current_job]
 
 
 def player_rest(name: str) -> (bool, list):
@@ -226,7 +226,7 @@ def equip_item(name: str, item_name: str) -> (bool, list):
     return True, messager.empty_queue(name)
 
 
-def show_player_job(name: str) -> (bool, list):
+def show_player_job(name: str, show_skills = True) -> (bool, list):
     """
     Shows player's job.
 
@@ -241,7 +241,7 @@ def show_player_job(name: str) -> (bool, list):
     if data_management.search_cache_battle_by_player(name) is not None:
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
-    return True, [player_inst.show_player_info_job()]
+    return True, [player_inst.show_player_info_job(show_skills)]
 
 
 def receive_treasure(name: str, item_amount: int) -> (bool, list):

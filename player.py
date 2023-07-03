@@ -130,14 +130,14 @@ class Player(Battler):
 
         return f'**Player Name**: {self.name.capitalize()}\n' \
                f'**Player Level**: {self.lvl}\n' \
-               f'**XP**: {self.xp}/{self.xp_to_next_lvl} {player_xp_bar}\n' \
-               f'\n**---STATS---**\n' \
-               f'{stat_string}' \
-               f'**----------------**\n' \
-               f'**Money**: {self.money}\n' \
-               f'**Bosses Defeated**: {self._defeated_bosses}\n'
+               f'**XP**: {self.xp}/{self.xp_to_next_lvl} {player_xp_bar}\n'
 
-    def show_player_info_job(self) -> str:
+
+    def show_player_stats(self) -> str:
+        return ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STATKEYS])
+
+
+    def show_player_info_job(self, show_skills = True) -> str:
         """
         Shows all the current info (profile) about the player's job.
 
@@ -149,9 +149,12 @@ class Player(Battler):
         for lvl in job.skill_dict:
             skills_to_learn_str += f'- Level {lvl}: {job.skill_dict[lvl]}\n'
 
-        return f'**Level**: {self.current_job_dict["lvl"]}\n' \
-               f'**XP**: {self.current_job_dict["xp"]}/{self.current_job_dict["xp_to_next_lvl"]} {job_xp_bar}\n\n' \
-               f'**Skills to learn:** {skills_to_learn_str}'
+        return_str = f'**Level**: {self.current_job_dict["lvl"]}\n' \
+                     f'**XP**: {self.current_job_dict["xp"]}/{self.current_job_dict["xp_to_next_lvl"]} {job_xp_bar}\n\n'
+        if show_skills:
+            return_str += f'**Skills to learn:** {skills_to_learn_str}'
+
+        return return_str
 
     def equip_item(self, equipment: str) -> (bool, list):
         """

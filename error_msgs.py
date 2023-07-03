@@ -1,5 +1,5 @@
 ERROR_CHARACTER_ALREADY_CREATED = "You already have a character."
-ERROR_CHARACTER_DOES_NOT_EXIST = "Character does not exist."
+ERROR_CHARACTER_DOES_NOT_EXIST = "Character does not exist. Create one with `!start`."
 ERROR_CHARACTER_DOES_NOT_HAVE_THAT_ITEM = "You do not have that item."
 ERROR_CHARACTER_ALREADY_IN_FIGHT = "Character is already in a fight."
 ERROR_CHARACTER_NOT_IN_FIGHT = "Character is not currently in a fight."

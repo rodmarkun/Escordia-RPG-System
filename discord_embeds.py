@@ -123,7 +123,7 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     return embed
 
 
-def embed_player_profile(ctx, player_name: str, msgs: str) -> discord.Embed:
+def embed_player_profile(ctx, player_name: str, msgs: str, stats: str, money: int, job_str: str, job_inst) -> discord.Embed:
     """
     Embed for whenever the player checks their profile.
 
@@ -137,7 +137,11 @@ def embed_player_profile(ctx, player_name: str, msgs: str) -> discord.Embed:
         description=msgs,
         color=discord.Colour.red()
     )
-    embed.set_image(url=ctx.author.avatar.url)
+    embed.add_field(name='Stats', value=stats, inline=True)
+    embed.add_field(name='Job', value=f"{job_inst.name} {emojis.job_to_emoji[job_inst.name]}\n" + job_str, inline=True)
+    embed.add_field(name='Money', value=f'{money}G', inline=False)
+    embed.set_thumbnail(url=ctx.author.avatar.url)
+
     return embed
 
 

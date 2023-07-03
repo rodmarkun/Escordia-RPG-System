@@ -5,6 +5,12 @@ Normal Icons/Emojis
 SPARKLER_EMOJI = '\U0001F387'
 SKULL_EMOJI = '\U0001F480'
 CHARACTER_EMOJI = '\U0001F9D9'
+CROSSED_SWORDS_EMOJI = '\U00002694'
+CASTLE_EMOJI = '\U0001F3F0'
+MAGE_EMOJI = '\U0001F9D9'
+CRYSTAL_BALL_EMOJI = '\U0001F52E'
+BED_EMOJI = '\U0001F6CF'
+SHOP_EMOJI = '\U0001F6D2'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////
