@@ -102,10 +102,15 @@ class Player(Battler):
             messager.add_message(self.name,
                                  f"Your job has leveled up! You are now a level {self.current_job_dict['lvl']} {self.current_job}")
             if new_level_str in curr_job.skill_dict:
-                # TODO - Check if passive
-                self.skills.append(curr_job.skill_dict[new_level_str])
-                messager.add_message(self.name,
-                                     f"- You learnt {curr_job.skill_dict[new_level_str]}!")
+                splitted_str = curr_job.skill_dict[new_level_str].split(' ')
+                if len(splitted_str) == 2 and splitted_str[1] in constants.STATKEYS:
+                    self.stats[splitted_str[1]] += int(splitted_str[0].replace('+', ''))
+                    messager.add_message(self.name,
+                                         f"- Due to leveling up {self.current_job}, you obtained {splitted_str[0]} {splitted_str[1]} permanently!")
+                else:
+                    self.skills.append(curr_job.skill_dict[new_level_str])
+                    messager.add_message(self.name,
+                                         f"- You learnt {curr_job.skill_dict[new_level_str]}!")
         return leveled_up
 
     def add_money(self, money: int) -> None:
@@ -134,7 +139,11 @@ class Player(Battler):
 
 
     def show_player_stats(self) -> str:
-        return ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STATKEYS])
+        player_hp_bar = progressBar.filledBar(int(self.stats[constants.MAXHP_STATKEY]), int(self.stats[constants.HP_STATKEY]), size=10)[0]
+        player_mp_bar = progressBar.filledBar(int(self.stats[constants.MAXMP_STATKEY]), int(self.stats[constants.MP_STATKEY]), size=10)[0]
+        return f'**HP**: {self.stats[constants.HP_STATKEY]}/{self.stats[constants.MAXHP_STATKEY]} {player_hp_bar}        \n' \
+                f'**MP**: {self.stats[constants.MP_STATKEY]}/{self.stats[constants.MAXMP_STATKEY]} {player_mp_bar}\n\n' \
+                + ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in constants.STATKEYS_NO_HP_MP])
 
 
     def show_player_info_job(self, show_skills = True) -> str:

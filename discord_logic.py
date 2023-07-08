@@ -175,9 +175,12 @@ async def continue_battle(no_error: bool, msgs: list, ctx, action_menu_ui) -> No
                     messager.empty_queue(ctx.author.name))))
                 if battle.player.in_dungeon:
                     await traverse_dungeon(battle, ctx)
+                else:
+                    await profile(ctx, discord_ui.PlayerMenu(ctx))
             else:
                 battle.lose_battle()
                 await ctx.send('', embed=discord_embeds.embed_death_msg(ctx))
+                await profile(ctx, discord_ui.PlayerMenu(ctx))
         else:
             await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
                                     view=action_menu_ui)
@@ -210,6 +213,7 @@ async def traverse_dungeon(battle, ctx):
         battle.player.in_dungeon = False
         if no_error:
             await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
+            await profile(ctx, discord_ui.PlayerMenu(ctx))
         else:
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
         data_management.delete_cache_dungeon_inst(battle.player.name)
@@ -218,11 +222,11 @@ async def traverse_dungeon(battle, ctx):
         if dungeon_inst.current_enemies_defeated != dungeon_inst.enemy_count:
             no_error, msgs = interface.begin_battle(ctx.author.name, False,
                                                     enemy=random.choice(dungeon_inst.enemy_list))
-            await manage_battle(no_error, ctx, msgs)
+            await manage_battle(no_error, ctx, msgs, discord_ui.ActionMenu(ctx))
         else:
             no_error, msgs = interface.begin_battle(ctx.author.name, False,
                                                     enemy=dungeon_inst.boss)
-            await manage_battle(no_error, ctx, msgs)
+            await manage_battle(no_error, ctx, msgs, discord_ui.ActionMenu(ctx))
 
 
 def msgs_to_msg_str(msgs: list) -> str:

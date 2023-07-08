@@ -5,7 +5,9 @@
     "SKILL_DICT": {
       "1": "First Aid",
       "2": "Small Fireball",
-      "3": "Rushed Strike"
+      "3": "+1 ATK",
+      "4": "Rushed Strike",
+      "5": "+4 MAXHP"
     },
     "REQUISITES": {},
     "XP_FACTOR": 2

@@ -73,7 +73,7 @@ class PlayerMenu(discord.ui.View):
     @discord.ui.button(label=emojis.CASTLE_EMOJI + " Dungeon", style=discord.ButtonStyle.red)
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
-            await discord_logic.begin_fight(self.ctx, ActionMenu(self.ctx))
+            await discord_logic.dungeon(self.ctx)
             await interaction.response.defer()
 
     # Boss
