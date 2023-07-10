@@ -1,6 +1,7 @@
 import constants
 import data_management
 import emojis
+import messager
 
 
 class Inventory:
@@ -25,6 +26,20 @@ class Inventory:
         else:
             if self.has_space_available():
                 self.items.update({item: quantity})
+
+    def destroy_item_for_essence(self, item: str):
+        """
+        Destroys an item for essence.
+
+        :param item:
+        :return: Essence amount and quantity of items destroyed
+        """
+        i = data_management.search_cache_item_by_name(item)
+        quantity = self.items[item]
+        self.remove_item(item, quantity)
+        messager.add_message(self.player_name, f"You destroyed {quantity} {i.name} for {int(i.individual_value // 2 * quantity)} {emojis.ESC_ESSENCE_ICON}")
+        return int(i.individual_value // 2 * quantity), quantity
+
 
     def has_space_available(self) -> bool:
         """

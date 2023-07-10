@@ -137,7 +137,7 @@ class Player(Battler):
 
         return f'**Player Name**: {self.name.capitalize()}\n' \
                f'**Player Level**: {self.lvl}\n' \
-               f'**XP**: {self.xp}/{self.xp_to_next_lvl} {player_xp_bar}\n'
+               f'**XP**: {int(self.xp)}/{self.xp_to_next_lvl} {player_xp_bar}\n'
 
 
     def show_player_stats(self) -> str:

@@ -205,6 +205,28 @@ def buy_item(name: str, item_name: str) -> (bool, list):
     return True, messager.empty_queue(name)
 
 
+def destroy_item_for_essence(name: str, item_name: str) -> (bool, list):
+    """
+    Player destroys an item for essence.
+
+    :param name: Player's name.
+    :param item_name: Item's name.
+    :return: Bool and list. True if item was destroyed. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    essence, quantity_destroyed = player_inst.inventory.destroy_item_for_essence(item_name)
+    player_inst.essence += essence
+    data_management.update_player_info(player_inst.name)
+    return True, messager.empty_queue(name)
+
+
 def equip_item(name: str, item_name: str) -> (bool, list):
     """
     Player equips an item from their inventory.
@@ -242,6 +264,24 @@ def show_player_job(name: str, show_skills = True) -> (bool, list):
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
     return True, [player_inst.show_player_info_job(show_skills)]
+
+
+def essence_crafting(name: str) -> (bool, list):
+    """
+    Player crafts essence.
+
+    :param name: Player's name.
+    :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    return True, []
 
 
 def receive_treasure(name: str, item_amount: int) -> (bool, list):

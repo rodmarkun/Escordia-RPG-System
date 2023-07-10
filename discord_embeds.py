@@ -150,6 +150,25 @@ def embed_player_profile(ctx, player_name: str, player_inst: 'Player', job_inst:
     return embed
 
 
+def embed_skills_info(ctx, player_name: str, skills_str: str) -> discord.Embed:
+    """
+    Embed for whenever the player checks their profile.
+
+    :param player_name: Player's name
+    :param msgs: Message to be displayed containing the player's profile info
+    :param ctx: Discord's CTX
+    :return: Embed
+    """
+    embed = discord.Embed(
+        title=f'{emojis.SPARKLER_EMOJI} Skills - {player_name.capitalize()}',
+        description=skills_str,
+        color=discord.Colour.red()
+    )
+    embed.set_thumbnail(url=ctx.author.avatar.url)
+
+    return embed
+
+
 def embed_treasure_found(ctx, item_list: list) -> discord.Embed:
     """
     Embed for whenever the player finds treasure.

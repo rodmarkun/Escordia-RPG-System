@@ -4,6 +4,7 @@ import random
 import discord_embeds
 import discord_ui
 import emojis
+import info_msgs
 import interface
 import data_management
 import messager
@@ -92,7 +93,7 @@ async def shop(ctx):
         item_list = data_management.search_cache_shop_by_area(
             data_management.search_cache_player(ctx.author.name).current_area).item_list
         await ctx.send(
-            f"Please select an item to buy, {ctx.author.mention}. You currently have **{data_management.search_cache_player(ctx.author.name).money}G**",
+            f"Please select an item to buy, {ctx.author.mention}. You currently have **{data_management.search_cache_player(ctx.author.name).money}** {emojis.ESC_GOLD_ICON}",
             view=discord_ui.ItemBuySelectView(ctx, item_list))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
@@ -108,7 +109,7 @@ async def equipment(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CANNOT_DO_WHILE_IN_FIGHT}')
         return
 
-    await ctx.send(f"This is your current equipment, {ctx.author.mention}:")
+    await ctx.send(f"{emojis.MAGE_EMOJI} This is your current equipment, {ctx.author.mention}:")
     for e_type in constants.EQUIPMENT_TYPES:
         item_list = player_inst.inventory.get_equipment_from_type(e_type)
         if len(item_list) == 0 and player_inst.equipment[e_type] is None:
@@ -116,6 +117,17 @@ async def equipment(ctx):
         else:
             await ctx.send(f"**{e_type}**",
                            view=discord_ui.EquipmentSelectView(ctx, item_list, player_inst.equipment[e_type]))
+
+
+async def essence(ctx):
+    no_error, msgs = interface.essence_crafting(ctx.author.name)
+    if no_error:
+        player_inst = data_management.search_cache_player(ctx.author.name)
+        await ctx.send(
+            f"{info_msgs.ESSENCE_MSG}",
+            view=discord_ui.ItemDestroySelectView(ctx, player_inst.inventory.items))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 async def profile(ctx, player_menu_ui):
@@ -150,7 +162,7 @@ async def show_skills(ctx):
         skill_inst = data_management.search_cache_skill_by_name(s)
         skill_str += f"**{s}** - {emojis.skill_emoji(skill_inst, player_inst.current_job)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost} | Cooldown: {skill_inst.cooldown}\n\n"
 
-    await ctx.send(f"These are your current skills, {ctx.author.mention}:\n\n{skill_str}")
+    await ctx.send(embed=discord_embeds.embed_skills_info(ctx, player_inst.name, skill_str))
 
 
 async def dungeon(ctx):

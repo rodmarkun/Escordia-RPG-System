@@ -124,6 +124,14 @@ class PlayerMenu(discord.ui.View):
             await interaction.response.defer()
 
 
+    # Extract Essence
+    @discord.ui.button(label=emojis.EXTRACT_ESSENCE_EMOJI + " Essence", style=discord.ButtonStyle.green)
+    async def menu9(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.essence(self.ctx)
+            await interaction.response.defer()
+
+
 class ItemBuySelect(discord.ui.Select):
     """
     Class that handles the item selection for the shop.
@@ -154,6 +162,35 @@ class ItemBuySelectView(discord.ui.View):
     def __init__(self, ctx, item_list):
         super().__init__(timeout=None)
         self.add_item(ItemBuySelect(ctx, item_list))
+
+
+class ItemDestroySelect(discord.ui.Select):
+    """
+    Class that handles the item destruction for essence.
+    """
+    def __init__(self, ctx, item_list):
+        items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
+        options = [discord.SelectOption(label=i.name,
+                                        description=f"{i.description if i.object_type != 'EQUIPMENT' else ''}"
+                                                    f"{i.stat_list_formatted()}",
+                                        emoji=emojis.obj_emoji(i)) for i in items_in_options]
+        super().__init__(placeholder="Select an item to destroy", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    # Destroys an item
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            item = data_management.search_cache_item_by_name(self.values[0])
+            no_error, msgs = interface.destroy_item_for_essence(self.ctx.author.name, item.name)
+            if no_error:
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+class ItemDestroySelectView(discord.ui.View):
+    def __init__(self, ctx, item_list):
+        super().__init__(timeout=None)
+        self.add_item(ItemDestroySelect(ctx, item_list))
 
 
 class EquipmentSelect(discord.ui.Select):
