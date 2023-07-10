@@ -123,7 +123,7 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     return embed
 
 
-def embed_player_profile(ctx, player_name: str, msgs: str, stats: str, money: int, job_str: str, job_inst) -> discord.Embed:
+def embed_player_profile(ctx, player_name: str, player_inst: 'Player', job_inst: 'Job') -> discord.Embed:
     """
     Embed for whenever the player checks their profile.
 
@@ -134,12 +134,17 @@ def embed_player_profile(ctx, player_name: str, msgs: str, stats: str, money: in
     """
     embed = discord.Embed(
         title=f'Profile - {player_name.capitalize()}',
-        description=msgs,
+        description=player_inst.show_player_info(),
         color=discord.Colour.red()
     )
-    embed.add_field(name='Stats', value=stats, inline=True)
-    embed.add_field(name='Job', value=f"{job_inst.name} {emojis.job_to_emoji[job_inst.name]}\n" + job_str, inline=True)
-    embed.add_field(name='Money', value=f'{money}G', inline=False)
+    embed.add_field(name='Job',
+                    value=f"{job_inst.name} {emojis.job_to_emoji[job_inst.name]}\n" + player_inst.show_player_info_job(
+                        False) + player_inst.show_current_skills_as_list(), inline=True)
+    embed.add_field(name='Stats', value=player_inst.show_player_stats(), inline=True)
+    embed.add_field(name='Inventory', value=f'{player_inst.inventory.show_inventory()}', inline=True)
+    embed.add_field(name='Currencies',
+                    value=f'{player_inst.money} {emojis.ESC_GOLD_ICON}  {player_inst.essence} {emojis.ESC_ESSENCE_ICON}',
+                    inline=True)
     embed.set_thumbnail(url=ctx.author.avatar.url)
 
     return embed

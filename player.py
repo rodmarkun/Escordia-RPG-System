@@ -1,6 +1,7 @@
 from StringProgressBar import progressBar
 
 import data_management
+import emojis
 import error_msgs
 import formulas
 import inventory as inventory_module
@@ -21,7 +22,7 @@ class Player(Battler):
     """
     
     def __init__(self, name: str, *, stats: dict = constants.INITIAL_STATS.copy(), lvl: int = 1, xp: int = 0, xp_to_next_lvl: int = 15, xp_rate: int = 1,
-                 money: int = 50, inventory: inventory_module.Inventory = None, equipment: dict = None, skills: list = ["First Aid"],
+                 money: int = 50, essence: int = 0, inventory: inventory_module.Inventory = None, equipment: dict = None, skills: list = ["First Aid"],
                  passives: list = [], current_area: int = 1, in_fight: bool = False, in_dungeon: bool = False,
                  defeated_bosses: list = [], job_dict_list: list = [], current_job_dict: dict = {}, current_job: str = 'Novice'):
 
@@ -32,6 +33,7 @@ class Player(Battler):
         self.xp_to_next_lvl = xp_to_next_lvl
         self.xp_rate = xp_rate
         self.money = money
+        self.essence = essence
         self.inventory = inventory
         self.equipment = equipment
         self.skills = skills
@@ -156,7 +158,8 @@ class Player(Battler):
         job_xp_bar = progressBar.filledBar(int(self.current_job_dict["xp_to_next_lvl"]), int(self.current_job_dict["xp"]), size=10)[0]
         skills_to_learn_str = '\n'
         for lvl in job.skill_dict:
-            skills_to_learn_str += f'- Level {lvl}: {job.skill_dict[lvl]}\n'
+            skill_inst = data_management.search_cache_skill_by_name(job.skill_dict[lvl])
+            skills_to_learn_str += f'- Level {lvl}: {job.skill_dict[lvl]} {emojis.skill_emoji(skill_inst, self.current_job)}\n'
 
         return_str = f'**Level**: {self.current_job_dict["lvl"]}\n' \
                      f'**XP**: {self.current_job_dict["xp"]}/{self.current_job_dict["xp_to_next_lvl"]} {job_xp_bar}\n\n'
@@ -164,6 +167,21 @@ class Player(Battler):
             return_str += f'**Skills to learn:** {skills_to_learn_str}'
 
         return return_str
+
+
+    def show_current_skills_as_list(self):
+        """
+        Shows the current skills of the player as a list.
+
+        :return: String containing the player's skills.
+        """
+        str = "**Skills**\n"
+        for skill in self.skills:
+            skill_inst = data_management.search_cache_skill_by_name(skill)
+            if skill_inst is not None:
+                str += f"- {skill} {emojis.skill_emoji(skill_inst, self.current_job)}\n"
+        return str
+
 
     def equip_item(self, equipment: str) -> (bool, list):
         """

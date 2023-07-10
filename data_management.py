@@ -58,7 +58,7 @@ def create_new_player(player_name: str) -> None:
                                              current_job_dict=constants.INITIAL_JOB_DICT.copy())
     PLAYER_CACHE.update({player_name: player_inst})
     peewee_models.PlayerModel.create(name=player_name, stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
-                              xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money,
+                              xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money, essence=player_inst.essence,
                               inventory=str(player_inst.inventory.items), equipment=str(player_inst.equipment), skills=str(player_inst.skills),
                               passives=str(player_inst.passives), current_area=player_inst.current_area, in_fight=player_inst.in_fight,
                               in_dungeon=player_inst.in_dungeon, defeated_bosses=str(player_inst.defeated_bosses), job_dict_list=str(player_inst.job_dict_list),
@@ -472,7 +472,7 @@ def load_players_from_db() -> None:
         print(f"Loading player {player_model.name} into cache...")
         player_inst = player.Player(player_model.name, stats=eval(player_model.stats), lvl=player_model.lvl, xp=player_model.xp,
                                     xp_to_next_lvl=player_model.xp_to_next_lvl,
-                                    xp_rate=player_model.xp_rate, money=player_model.money,
+                                    xp_rate=player_model.xp_rate, money=player_model.money, essence=player_model.essence,
                                     inventory=inventory.Inventory(player_model.name,
                                                                   items=eval(player_model.inventory)),
                                     equipment=eval(player_model.equipment), skills=eval(player_model.skills),

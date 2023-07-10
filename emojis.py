@@ -21,7 +21,8 @@ ESC_GRIMOIRE_ICON = "<:GrimoireIcon:1011284500875059260>"
 ESC_MATERIAL_ICON = "<:MaterialIcon:1011284503177736332>"
 ESC_CHEST_ICON = "<:ChestIcon:1011289459918131211>"
 ESC_BAG_ICON = "<:BagIcon:1012287527123685426>"
-ESC_MONEY_ICON = "<:MoneyIcon:1012287531070525480>"
+ESC_GOLD_ICON = "<:GoldIcon:1127957365925367909>"
+ESC_ESSENCE_ICON = "<:EssenceIcon:1127956174034194503>"
 ESC_SHOP_ICON = "<:ShopIcon:1016637098528362528>"
 ESC_DUNGEON_ICON = "<:DungeonIcon:1115934734023929946>"
 
@@ -110,6 +111,6 @@ def skill_emoji(skill: 'Skill', skill_job) -> str:
     """
     try:
         return element_to_emoji[skill.element]
-    except KeyError:
+    except Exception:
         # If skill has no element, it has the same emoji as the job.
         return job_to_emoji[skill_job]

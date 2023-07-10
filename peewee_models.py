@@ -16,6 +16,7 @@ class PlayerModel(BaseModel):
     xp_to_next_lvl = IntegerField()
     xp_rate = FloatField()
     money = IntegerField()
+    essence = IntegerField()
     inventory = CharField()  # Inventory dict converted to string
     equipment = CharField()  # Equipment dict converted to string
     skills = CharField()  # Skills list converted to string

@@ -1,5 +1,6 @@
 import constants
 import data_management
+import emojis
 
 
 class Inventory:
@@ -22,7 +23,16 @@ class Inventory:
         if item in self.items:
             self.items.update({item: self.items[item] + quantity})
         else:
-            self.items.update({item: quantity})
+            if self.has_space_available():
+                self.items.update({item: quantity})
+
+    def has_space_available(self) -> bool:
+        """
+        Checks if the inventory has space available.
+
+        :return: Boolean, True if has space available. False if it does not.
+        """
+        return len(self.items) < constants.MAX_INVENTORY_SLOTS
 
     def remove_item(self, item, quantity) -> bool:
         """
@@ -58,12 +68,12 @@ class Inventory:
 
         :return: Str containing all item's info
         """
-        inventory_str = ""
+        inventory_str = f"[{len(self.items)}/{constants.MAX_INVENTORY_SLOTS}]\n\n"
         if len(self.items) == 0:
             return "You have no items in your inventory."
         for item in self.items:
             i = data_management.search_cache_item_by_name(item)
-            inventory_str += f"[x{self.items[item]}] **{i.name}** ({i.object_type})\n"
+            inventory_str += f"x{self.items[item]} **{i.name}** {emojis.obj_emoji(i)}\n"
         return inventory_str
 
     def get_equipment_from_type(self, item_type: str) -> list:

@@ -153,9 +153,6 @@ class Battle:
 
         self.actions_when_battle_is_over()
 
-        # Player loses money and respawns
-        self.player.money //= 2
-
         # Delete enemy instance
         del self.enemy
 

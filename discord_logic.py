@@ -120,9 +120,10 @@ async def equipment(ctx):
 
 async def profile(ctx, player_menu_ui):
     no_error, msgs = interface.show_player_profile(ctx.author.name)
-    job_inst = data_management.search_cache_job_by_name(msgs[4])
+    player_inst = data_management.search_cache_player(ctx.author.name)
+    job_inst = data_management.search_cache_job_by_name(player_inst.current_job)
     if no_error:
-        await ctx.send(embed=discord_embeds.embed_player_profile(ctx, ctx.author.name, msgs[0], msgs[1], msgs[2], msgs[3], job_inst), view=player_menu_ui)
+        await ctx.send(embed=discord_embeds.embed_player_profile(ctx, ctx.author.name, player_inst, job_inst), view=player_menu_ui)
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 

@@ -127,7 +127,7 @@ def show_player_profile(name: str) -> (bool, list):
 
     if player_inst is None:
         return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
-    return True, [player_inst.show_player_info(), player_inst.show_player_stats(), player_inst.money, player_inst.show_player_info_job(False), player_inst.current_job]
+    return True, [player_inst.show_player_info()]
 
 
 def player_rest(name: str) -> (bool, list):
