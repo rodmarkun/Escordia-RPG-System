@@ -4,6 +4,7 @@ import os
 
 import area
 import battle
+import blessing
 import constants
 import dungeon
 import enemy
@@ -38,6 +39,7 @@ ENEMIES_CACHE = {}
 BATTLE_CACHE = {}
 SHOP_CACHE = {}
 SKILLS_CACHE = {}
+BLESSINGS_CACHE = {}
 
 """
 ///////////////
@@ -62,7 +64,7 @@ def create_new_player(player_name: str) -> None:
                               inventory=str(player_inst.inventory.items), equipment=str(player_inst.equipment), skills=str(player_inst.skills),
                               passives=str(player_inst.passives), current_area=player_inst.current_area, in_fight=player_inst.in_fight,
                               in_dungeon=player_inst.in_dungeon, defeated_bosses=str(player_inst.defeated_bosses), job_dict_list=str(player_inst.job_dict_list),
-                              current_job_dict=str(player_inst.current_job_dict), current_job=player_inst.current_job)
+                              current_job_dict=str(player_inst.current_job_dict), current_job=player_inst.current_job, blessings=str(player_inst.blessings))
     messager.messager_add_player(player_name)
 
 
@@ -117,11 +119,11 @@ def update_player_info(player_name: str) -> None:
     """
     player_inst = PLAYER_CACHE[player_name]
     peewee_models.PlayerModel.update(stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
-                              xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money,
+                              xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money, essence=player_inst.essence,
                               inventory=str(player_inst.inventory.items), equipment=str(player_inst.equipment), skills=str(player_inst.skills),
                               passives=str(player_inst.passives), current_area=player_inst.current_area, in_fight=player_inst.in_fight,
                               in_dungeon=player_inst.in_dungeon, defeated_bosses=str(player_inst.defeated_bosses), job_dict_list=str(player_inst.job_dict_list),
-                              current_job_dict=str(player_inst.current_job_dict), current_job=player_inst.current_job).where(
+                              current_job_dict=str(player_inst.current_job_dict), current_job=player_inst.current_job, blessings=str(player_inst.blessings)).where(
         peewee_models.PlayerModel.name == player_name).execute()
     print(f"Updated player: {player_name} info in database.")
 
@@ -182,6 +184,19 @@ def search_cache_dungeon_by_player(player_name: str) -> 'Dungeon':
     area = search_cache_player(player_name).current_area
     try:
         return AREAS_CACHE[area].dungeons
+    except KeyError:
+        return None
+
+
+def search_cache_blessing(blessing_name: str) -> 'Blessing':
+    """
+    Searches for a blessing in the blessing cache.
+
+    :param blessing_name: Blessing's name.
+    :return: Blessing instance. None if not found.
+    """
+    try:
+        return BLESSINGS_CACHE[blessing_name]
     except KeyError:
         return None
 
@@ -462,6 +477,20 @@ def load_skills_from_json() -> None:
                 SKILLS_CACHE.update({s["NAME"]: skill.Skill(*param_list)})
 
 
+def load_blessings_from_json() -> None:
+    """
+    Loads blessings from JSON file.
+
+    :return: None
+    """
+    with open("data/blessings.json", 'r', encoding='utf-8') as f:
+        json_file = json.load(f)
+
+        for b in json_file:
+            param_list = [b[key] for key in constants.BLESSING_KEYS]
+            BLESSINGS_CACHE.update({b["NAME"]: blessing.Blessing(*param_list)})
+
+
 def load_players_from_db() -> None:
     """
     Loads players from database.
@@ -482,7 +511,7 @@ def load_players_from_db() -> None:
                                     defeated_bosses=eval(player_model.defeated_bosses),
                                     job_dict_list=eval(player_model.job_dict_list),
                                     current_job_dict=eval(player_model.current_job_dict),
-                                    current_job=player_model.current_job)
+                                    current_job=player_model.current_job, blessings=eval(player_model.blessings))
         messager.messager_add_player(player_inst.name)
         PLAYER_CACHE.update({player_model.name: player_inst})
 
@@ -498,4 +527,5 @@ def load_everything():
     load_jobs_from_json()
     load_shops_from_json()
     load_skills_from_json()
+    load_blessings_from_json()
     load_players_from_db()

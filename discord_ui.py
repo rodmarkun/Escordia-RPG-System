@@ -193,6 +193,38 @@ class ItemDestroySelectView(discord.ui.View):
         self.add_item(ItemDestroySelect(ctx, item_list))
 
 
+class BlessingBuySelect(discord.ui.Select):
+    """
+    Class that handles the blessing selection.
+    """
+    def __init__(self, ctx, player_blessing_list):
+        items_in_options = []
+        for b in data_management.BLESSINGS_CACHE:
+            if b not in player_blessing_list:
+                items_in_options.append(data_management.search_cache_blessing(b))
+        options = [discord.SelectOption(label=b.name,
+                                        description=f"{' '.join(b.stat_change_list)}" \
+                                                    f"  - COST: {b.essence_cost} Essence",
+                                        emoji=emojis.ESC_ESSENCE_ICON) for b in items_in_options]
+        super().__init__(placeholder="Select a blessing to buy", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    # Purchases a blessing
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            no_error, msgs = interface.purchase_blessing(self.ctx.author.name, self.values[0])
+            if no_error:
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+
+class BlessingBuySelectView(discord.ui.View):
+    def __init__(self, ctx, player_blessing_list):
+        super().__init__(timeout=None)
+        self.add_item(BlessingBuySelect(ctx, player_blessing_list))
+
+
 class EquipmentSelect(discord.ui.Select):
     """
     Class that handles the equipment selection.

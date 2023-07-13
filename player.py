@@ -24,7 +24,7 @@ class Player(Battler):
     def __init__(self, name: str, *, stats: dict = constants.INITIAL_STATS.copy(), lvl: int = 1, xp: int = 0, xp_to_next_lvl: int = 15, xp_rate: int = 1,
                  money: int = 50, essence: int = 0, inventory: inventory_module.Inventory = None, equipment: dict = None, skills: list = ["First Aid"],
                  passives: list = [], current_area: int = 1, in_fight: bool = False, in_dungeon: bool = False,
-                 defeated_bosses: list = [], job_dict_list: list = [], current_job_dict: dict = {}, current_job: str = 'Novice'):
+                 defeated_bosses: list = [], job_dict_list: list = [], current_job_dict: dict = {}, current_job: str = 'Novice', blessings: list = []):
 
         super().__init__(name, stats)
 
@@ -45,6 +45,7 @@ class Player(Battler):
         self.job_dict_list = job_dict_list
         self.current_job_dict = current_job_dict
         self.current_job = current_job
+        self.blessings = blessings
 
     """
     ///////////////

@@ -1,0 +1,22 @@
+[
+  {
+    "NAME": "Blessing of Apprentice",
+    "STAT_CHANGE_LIST": ["+3 ATK", "+3 DEF", "+3 MATK", "+3 MDEF"],
+    "ESSENCE_COST":  250
+  },
+  {
+    "NAME": "Blessing of Fiercity",
+    "STAT_CHANGE_LIST": ["+15 ATK", "+10 SPEED"],
+    "ESSENCE_COST":  3000
+  },
+  {
+    "NAME": "Blessing of Wisdom",
+    "STAT_CHANGE_LIST": ["+15 MATK", "+10 MAXMP"],
+    "ESSENCE_COST":  3000
+  },
+  {
+    "NAME": "Blessing of Fortitude",
+    "STAT_CHANGE_LIST": ["+10 MAXHP", "+15 DEF", "+15 MDEF"],
+    "ESSENCE_COST":  3000
+  }
+]

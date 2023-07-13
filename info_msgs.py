@@ -20,4 +20,4 @@ TUTORIAL_MSG = f"Hello traveller! Welcome to Escordia RPG. Here, you can fight d
                 "As you gain XP, you will advance in your current job, adquiring new skills. You can unlock new jobs by completing their requirements! Check them out! Once you really feel strong, head for the boss in order to go to the next area!\n\n" \
                 "You can play the whole game just by entering the command `!menu` :)"
 
-ESSENCE_MSG = f"You can destroy items for essence {emojis.ESC_ESSENCE_ICON}. When destroying an item, you destroy all copies of that item in your inventory. The amount of essence you get depends on the item's rarity and quantity destroyed."
+ESSENCE_MSG = f"You can destroy items for essence {emojis.ESC_ESSENCE_ICON}. You can spend your essence on permanent blessings. When destroying an item, you destroy all copies of that item in your inventory. The amount of essence you get depends on the item's rarity and quantity destroyed."

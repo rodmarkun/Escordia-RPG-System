@@ -1,6 +1,7 @@
 import copy
 import random
 
+import blessing
 import messager
 import player
 import data_management
@@ -205,6 +206,27 @@ def buy_item(name: str, item_name: str) -> (bool, list):
     return True, messager.empty_queue(name)
 
 
+def purchase_blessing(name: str, blessing_name: str) -> (bool, list):
+    """
+    Player purchases a blessing from the shop.
+
+    :param name: Player's name.
+    :param blessing_name: Blessing's name.
+    :return: Bool and list. True if blessing was purchased. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    blessing.purchase_blessing(player_inst, blessing_name)
+    data_management.update_player_info(player_inst.name)
+    return True, messager.empty_queue(name)
+
+
 def destroy_item_for_essence(name: str, item_name: str) -> (bool, list):
     """
     Player destroys an item for essence.
@@ -221,6 +243,8 @@ def destroy_item_for_essence(name: str, item_name: str) -> (bool, list):
     if data_management.search_cache_battle_by_player(name) is not None:
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
+    if item_name not in player_inst.inventory.items.keys():
+        return False, [ERROR_ITEM_ALREADY_DESTROYED]
     essence, quantity_destroyed = player_inst.inventory.destroy_item_for_essence(item_name)
     player_inst.essence += essence
     data_management.update_player_info(player_inst.name)

@@ -28,3 +28,4 @@ class PlayerModel(BaseModel):
     job_dict_list = CharField()  # Job dict list converted to string
     current_job_dict = CharField()  # Current job dict converted to string
     current_job = CharField()
+    blessings = CharField()  # Blessings list converted to string

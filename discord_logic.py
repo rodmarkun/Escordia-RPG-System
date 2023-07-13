@@ -123,18 +123,22 @@ async def essence(ctx):
     no_error, msgs = interface.essence_crafting(ctx.author.name)
     if no_error:
         player_inst = data_management.search_cache_player(ctx.author.name)
-        await ctx.send(
-            f"{info_msgs.ESSENCE_MSG}",
+        if len(player_inst.inventory.items) == 0:
+            await ctx.send(f"{ctx.author.mention} {info_msgs.ESSENCE_MSG}\nYou currently have no items to destroy.")
+        else:
+            await ctx.send(
+            f"{ctx.author.mention} {info_msgs.ESSENCE_MSG}",
             view=discord_ui.ItemDestroySelectView(ctx, player_inst.inventory.items))
+        await ctx.send(f"{ctx.author.mention} You currently have **{player_inst.essence}** {emojis.ESC_ESSENCE_ICON}.", view=discord_ui.BlessingBuySelectView(ctx, player_inst.blessings))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
 async def profile(ctx, player_menu_ui):
     no_error, msgs = interface.show_player_profile(ctx.author.name)
-    player_inst = data_management.search_cache_player(ctx.author.name)
-    job_inst = data_management.search_cache_job_by_name(player_inst.current_job)
     if no_error:
+        player_inst = data_management.search_cache_player(ctx.author.name)
+        job_inst = data_management.search_cache_job_by_name(player_inst.current_job)
         await ctx.send(embed=discord_embeds.embed_player_profile(ctx, ctx.author.name, player_inst, job_inst), view=player_menu_ui)
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
