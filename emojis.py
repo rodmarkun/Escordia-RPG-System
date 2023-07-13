@@ -12,6 +12,7 @@ CRYSTAL_BALL_EMOJI = '\U0001F52E'
 BED_EMOJI = '\U0001F6CF'
 SHOP_EMOJI = '\U0001F6D2'
 EXTRACT_ESSENCE_EMOJI = '\U0001F48E'
+MAP_EMOJI = '\U0001F4CD'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////

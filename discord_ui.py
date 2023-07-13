@@ -84,9 +84,17 @@ class PlayerMenu(discord.ui.View):
             await interaction.response.defer()
 
 
+    # Map
+    @discord.ui.button(label=emojis.MAP_EMOJI + " Map", style=discord.ButtonStyle.primary)
+    async def menu4(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.area(self.ctx)
+            await interaction.response.defer()
+
+
     # Equipment
     @discord.ui.button(label=emojis.MAGE_EMOJI + " Equipment", style=discord.ButtonStyle.primary)
-    async def menu4(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu5(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.equipment(self.ctx)
             await interaction.response.defer()
@@ -94,7 +102,7 @@ class PlayerMenu(discord.ui.View):
 
     # Skill Info
     @discord.ui.button(label=emojis.SPARKLER_EMOJI + " Skills", style=discord.ButtonStyle.primary)
-    async def menu5(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu6(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.show_skills(self.ctx)
             await interaction.response.defer()
@@ -102,7 +110,7 @@ class PlayerMenu(discord.ui.View):
 
     # Job
     @discord.ui.button(label=emojis.CRYSTAL_BALL_EMOJI + " Job", style=discord.ButtonStyle.primary)
-    async def menu6(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu7(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.job(self.ctx)
             await interaction.response.defer()
@@ -110,7 +118,7 @@ class PlayerMenu(discord.ui.View):
 
     # Rest
     @discord.ui.button(label=emojis.BED_EMOJI + " Rest", style=discord.ButtonStyle.green)
-    async def menu7(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu8(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.rest(self.ctx)
             await interaction.response.defer()
@@ -118,7 +126,7 @@ class PlayerMenu(discord.ui.View):
 
     # Shop
     @discord.ui.button(label=emojis.SHOP_EMOJI + " Shop", style=discord.ButtonStyle.green)
-    async def menu8(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu9(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.shop(self.ctx)
             await interaction.response.defer()
@@ -126,7 +134,7 @@ class PlayerMenu(discord.ui.View):
 
     # Extract Essence
     @discord.ui.button(label=emojis.EXTRACT_ESSENCE_EMOJI + " Essence", style=discord.ButtonStyle.green)
-    async def menu9(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def menu10(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.essence(self.ctx)
             await interaction.response.defer()
@@ -268,6 +276,49 @@ class EquipmentSelectView(discord.ui.View):
     def __init__(self, ctx, item_list, player_equipment):
         super().__init__(timeout=None)
         self.add_item(EquipmentSelect(ctx, item_list, player_equipment))
+
+
+class AreaSelect(discord.ui.Select):
+    """
+    Class that handles the equipment selection.
+    """
+    def __init__(self, ctx, player_inst):
+        current_area = data_management.search_cache_area_by_number(player_inst.current_area)
+        default_option = discord.SelectOption(label=current_area.name,
+                                                description=f"Area {current_area.number}",
+                                              emoji=emojis.MAP_EMOJI,
+                                              default=True)
+
+        areas_in_options = [data_management.search_cache_area_by_number(a) for a in data_management.AREAS_CACHE if int(a) <= len(player_inst.defeated_bosses) + 1]
+
+        if current_area in areas_in_options:
+            areas_in_options.remove(current_area)
+
+        options = [discord.SelectOption(label=a.name,
+                                        description=f"Area {a.number}",
+                                        emoji=emojis.MAP_EMOJI) for a in areas_in_options]
+
+        if default_option is not None:
+            options.append(default_option)
+
+        super().__init__(placeholder="Select an area to travel to", max_values=1, min_values=1, options=options)
+        self.ctx = ctx
+
+    # Equips an item
+    async def callback(self, interaction: discord.Interaction):
+        if await check_button_pressed(self.ctx, interaction):
+            area = data_management.search_cache_area_by_name(self.values[0])
+            no_error, msgs = interface.travel_to_area(self.ctx.author.name, area.number)
+            if no_error:
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
+
+
+class AreaSelectView(discord.ui.View):
+    def __init__(self, ctx, player_inst):
+        super().__init__(timeout=None)
+        self.add_item(AreaSelect(ctx, player_inst))
 
 
 class DungeonSelect(discord.ui.Select):

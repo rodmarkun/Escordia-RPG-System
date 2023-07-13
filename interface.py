@@ -227,6 +227,47 @@ def purchase_blessing(name: str, blessing_name: str) -> (bool, list):
     return True, messager.empty_queue(name)
 
 
+def show_area(name: str) -> (bool, list):
+    """
+    Shows the current area.
+
+    :param name: Player's name.
+    :return: Bool and list. True if area was shown. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    area_inst = data_management.search_cache_area_by_number(player_inst.current_area)
+
+    return True, [f"You are currently in {area_inst.name}. To unlock the next area you need to defeat {area_inst.boss}."]
+
+
+def travel_to_area(name: str, area_number: int) -> (bool, list):
+    """
+    Player travels to an area.
+
+    :param name: Player's name.
+    :param area_number: Area to travel to.
+    :return:
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    if area_number == player_inst.current_area:
+        return False, [ERROR_ALREADY_IN_AREA]
+
+    player_inst.current_area = area_number
+    data_management.update_player_info(player_inst.name)
+    return True, [f"You have traveled to {data_management.search_cache_area_by_number(area_number).name}."]
+
+
 def destroy_item_for_essence(name: str, item_name: str) -> (bool, list):
     """
     Player destroys an item for essence.

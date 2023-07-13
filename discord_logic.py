@@ -134,6 +134,15 @@ async def essence(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
+async def area(ctx):
+    no_error, msgs = interface.show_area(ctx.author.name)
+    if no_error:
+        player_inst = data_management.search_cache_player(ctx.author.name)
+        await ctx.send(msgs_to_msg_str(msgs), view=discord_ui.AreaSelectView(ctx, player_inst))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+
+
 async def profile(ctx, player_menu_ui):
     no_error, msgs = interface.show_player_profile(ctx.author.name)
     if no_error:

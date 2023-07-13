@@ -130,6 +130,10 @@ class Battle:
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
 
+        if self.enemy.is_boss:
+            if self.enemy.name not in self.player.defeated_bosses:
+                self.player.defeated_bosses.append(self.enemy.name)
+
         if self.player.in_dungeon:
             dungeon_inst = data_management.search_cache_dungeon_inst_by_player(self.player.name)
             dungeon_inst.current_enemies_defeated += 1

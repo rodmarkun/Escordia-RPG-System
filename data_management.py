@@ -238,6 +238,23 @@ def search_cache_area_by_number(number: int) -> 'Area':
         return None
 
 
+def search_cache_area_by_name(name: str) -> 'Area':
+    """
+    Searches for an area in the area cache.
+
+    :param name: Area's name.
+    :return: Area instance. None if not found.
+    """
+    try:
+        for i in AREAS_CACHE.keys():
+            print(AREAS_CACHE[i].name)
+            if AREAS_CACHE[i].name == name:
+                return AREAS_CACHE[i]
+        return None
+    except KeyError:
+        return None
+
+
 def search_cache_item_by_name(item_name: str) -> 'Item':
     """
     Searches for an item in the item and equipment cache.

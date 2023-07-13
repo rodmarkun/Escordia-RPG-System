@@ -6,5 +6,13 @@
       "BOSS": "Daidarabotchi, Forest Guardian",
       "DUNGEONS": ["Goblins' Den"],
       "TREASURES": ["Bronze Armor", "Cloth Armor", "Student Robes", "Crystal Ring"]
+    },
+    {
+      "NAME": "Dangerous Crossroads",
+      "NUMBER": 2,
+      "ENEMY_LIST": ["Rogue Monk","Rogue Assassin","Rogue Swordsman","Earth Worm","Mountain Harpy"],
+      "BOSS": "Daidarabotchi, Forest Guardian",
+      "DUNGEONS": ["Goblins' Den"],
+      "TREASURES": ["Bronze Armor", "Cloth Armor", "Student Robes", "Crystal Ring"]
     }
 ]
