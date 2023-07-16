@@ -1,29 +1,32 @@
 [
   {
     "NAME": "First Aid",
-    "DESCRIPTION": "Perform an improvised healing on yourself.",
-    "MP_COST": 5,
+    "DESCRIPTION": "Perform an improvised small healing on yourself.",
+    "MP_COST": 3,
     "POWER": 14,
     "ELEMENT": "HOLY",
     "COOLDOWN": 4,
-    "TAGS": ["HEALING"]
+    "TAGS": ["HEALING"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Small Fireball",
     "DESCRIPTION": "Deal a small amount of fire damage to an enemy.",
     "MP_COST": 4,
-    "POWER": 11,
+    "POWER": 10,
     "ELEMENT": "FIRE",
     "COOLDOWN": 2,
-    "TAGS": ["MAGICAL"]
+    "TAGS": ["MAGICAL"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Rushed Strike",
-    "DESCRIPTION": "Perform a rushed attack on an enemy, lowers your attack.",
-    "MP_COST": 3,
-    "POWER": 14,
+    "DESCRIPTION": "Performs a rushed attack on an enemy, lowering your attack.",
+    "MP_COST": 4,
+    "POWER": 15,
     "ELEMENT": null,
     "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
+    "PERCENTAGE_COST": false
   }
 ]

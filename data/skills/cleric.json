@@ -1,0 +1,52 @@
+[
+  {
+    "NAME": "Holy Smite",
+    "DESCRIPTION": "Inflict moderate holy magical damage.",
+    "MP_COST": 6,
+    "POWER": 18,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Divine Heal",
+    "DESCRIPTION": "Perform a moderate heal on yourself. Remove all your debuffs.",
+    "MP_COST": 5,
+    "POWER": 20,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 4,
+    "TAGS": ["HEALING", "SELF_REMOVE_DEBUFFS"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Glorious Shield",
+    "DESCRIPTION": "Spend 30% of your mana to create a shield for 30% of your max health. Increases your physical and magical defense.",
+    "MP_COST": 30,
+    "POWER": 30,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 5,
+    "TAGS": ["SHIELD", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"],
+    "PERCENTAGE_COST": true
+  },
+  {
+    "NAME": "Read Prayer",
+    "DESCRIPTION": "Recover a moderate amount of MP. Increases your magical attack.",
+    "MP_COST": 0,
+    "POWER": 15,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["RECOVER_MP", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "MATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "God's Wrath",
+    "DESCRIPTION": "Deal high physical dark damage to an enemy",
+    "MP_COST": 8,
+    "POWER": 25,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
+  }
+]

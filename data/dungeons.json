@@ -1,10 +1,26 @@
 [
   {
     "DUNGEON_NAME": "Goblins' Den",
-    "RECOMMENDED_LVL": 3,
+    "RECOMMENDED_LVL": 4,
     "ENEMY_LIST": ["Goblin Raider", "Goblin Archer", "Goblin Mage"],
     "BOSS": "Goblin Elite",
     "ENEMY_COUNT": 2,
     "LOOT_POOL": ["Longsword", "Steel Dagger", "Student Staff", "Bronze Armor", "Cloth Armor", "Student Robes"]
+  },
+  {
+    "DUNGEON_NAME": "Old Cemetery",
+    "RECOMMENDED_LVL": 6,
+    "ENEMY_LIST": ["Skeleton Guard", "Skeleton Hero", "Skeleton Knight", "Skeleton Mage"],
+    "BOSS": "Bone Dragon",
+    "ENEMY_COUNT": 3,
+    "LOOT_POOL": ["Ancient Warhammer", "Necromancer Robes", "Ceremonial Dagger", "Priest Scepter", "Bloody Necronomicon", "Commander Helmet", "Dragon's Ring", "Summoner's Hood"]
+  },
+  {
+    "DUNGEON_NAME": "Black Ant Nest",
+    "RECOMMENDED_LVL": 8,
+    "ENEMY_LIST": ["Black Ant Knight", "Black Ant Berserker", "Black Ant Protector", "Black Ant Archer"],
+    "BOSS": "Black Ant Queen",
+    "ENEMY_COUNT": 3,
+    "LOOT_POOL": ["Ant Protector Breastplate", "Black Ant Bow", "Ant Queen Mantle", "Summoner's Hood", "Hunter's Armor", "Black Uchigatana"]
   }
 ]

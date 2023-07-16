@@ -6,42 +6,47 @@
     "POWER": 7,
     "ELEMENT": "FIRE",
     "COOLDOWN": 3,
-    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"]
+    "TAGS": ["MAGICAL", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Ice Bolt",
-    "DESCRIPTION": "Deal ice damage to an enemy.",
+    "DESCRIPTION": "Deal some ice damage to an enemy.",
     "MP_COST": 3,
     "POWER": 15,
     "ELEMENT": "ICE",
     "COOLDOWN": 2,
-    "TAGS": ["MAGICAL"]
+    "TAGS": ["MAGICAL"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Mana Barrier",
-    "DESCRIPTION": "Spend your mana to buff your physical and magical defense.",
-    "MP_COST": 3,
-    "POWER": 0,
+    "DESCRIPTION": "Spend 30% of your mana to gain a shield equivalent to 30% of your MAXHP.",
+    "MP_COST": 30,
+    "POWER": 30,
     "ELEMENT": null,
     "COOLDOWN": 4,
-    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"]
+    "TAGS": ["SHIELD"],
+    "PERCENTAGE_COST": true
   },
   {
     "NAME": "Meditate",
-    "DESCRIPTION": "Recover some amount of MP.",
+    "DESCRIPTION": "Meditate, recovering some amount of MP.",
     "MP_COST": 0,
     "POWER": 10,
     "ELEMENT": null,
     "COOLDOWN": 2,
-    "TAGS": ["RECOVER_MP"]
+    "TAGS": ["RECOVER_MP"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Thunder Spear",
     "DESCRIPTION": "Deal both physical and magical thunder damage to an enemy.",
     "MP_COST": 8,
-    "POWER": 11,
+    "POWER": 9,
     "ELEMENT": "THUNDER",
     "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL", "MAGICAL"]
+    "TAGS": ["PHYSICAL", "MAGICAL"],
+    "PERCENTAGE_COST": false
   }
 ]

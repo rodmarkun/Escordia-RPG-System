@@ -159,7 +159,7 @@ async def job(ctx):
         player_inst = data_management.search_cache_player(ctx.author.name)
         await ctx.send(embed=discord_embeds.embed_current_job(ctx, player_inst.current_job, msgs_to_msg_str(msgs)),
                        view=discord_ui.JobSelectView(ctx,
-                                                     data_management.search_available_jobs_by_player(player_inst.name)))
+                                                     data_management.search_available_jobs_by_player(player_inst.name), player_inst))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
@@ -173,7 +173,8 @@ async def show_skills(ctx):
     skill_str = ""
     for s in player_inst.skills:
         skill_inst = data_management.search_cache_skill_by_name(s)
-        skill_str += f"**{s}** - {emojis.skill_emoji(skill_inst, player_inst.current_job)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost} | Cooldown: {skill_inst.cooldown}\n\n"
+        if skill_inst is not None:
+            skill_str += f"**{s}** - {emojis.skill_emoji(skill_inst, player_inst.current_job)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost}{'%' if skill_inst.percentage_cost else ''} | Cooldown: {skill_inst.cooldown}\n\n"
 
     await ctx.send(embed=discord_embeds.embed_skills_info(ctx, player_inst.name, skill_str))
 
@@ -196,9 +197,11 @@ async def continue_battle(no_error: bool, msgs: list, ctx, action_menu_ui) -> No
             msg_str = msgs_to_msg_str(msgs)
             await ctx.send(msg_str)
             if battle.player.alive:
-                battle.win_battle()
+                loot = battle.win_battle()
                 await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(
                     messager.empty_queue(ctx.author.name))))
+                if loot != '':
+                    await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, [loot]))
                 if battle.player.in_dungeon:
                     await traverse_dungeon(battle, ctx)
                 else:
@@ -263,3 +266,18 @@ def msgs_to_msg_str(msgs: list) -> str:
     :return: String containing all messages.
     """
     return "\n".join(msgs)
+
+
+def return_jobs_curr_lvl_dict(job_dictionary, job_name):
+    """
+    Returns the current level of a job from a dictionary.
+    This is not clean, but whatever.
+
+    :param job_dictionary:
+    :param job_name:
+    :return:
+    """
+    try:
+        return job_dictionary[job_name]
+    except KeyError:
+        return 1

@@ -6,7 +6,8 @@
     "POWER": 12,
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
-    "TAGS": ["MAGICAL", "LEECH"]
+    "TAGS": ["MAGICAL", "LEECH"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Fortify",
@@ -15,16 +16,18 @@
     "POWER": 0,
     "ELEMENT": "HOLY",
     "COOLDOWN": 3,
-    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Whirlwind",
-    "DESCRIPTION": "Deal a small amount of wind damage to an enemy.",
+    "DESCRIPTION": "Deal a small amount of wind damage to an enemy. Increase your attack.",
     "MP_COST": 3,
     "POWER": 10,
     "ELEMENT": "WIND",
     "COOLDOWN": 2,
-    "TAGS": ["MAGICAL"]
+    "TAGS": ["MAGICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Intimidate",
@@ -33,7 +36,8 @@
     "POWER": 0,
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
-    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "TAGS": ["ALTERATION", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Forest Blessing",
@@ -42,7 +46,18 @@
     "POWER": 15,
     "ELEMENT": "WIND",
     "COOLDOWN": 3,
-    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"]
+    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Hyper Beam",
+    "DESCRIPTION": "Deal a moderate amount of light damage to an enemy.",
+    "MP_COST": 5,
+    "POWER": 18,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Berserk",
@@ -50,18 +65,41 @@
     "MP_COST": 5,
     "POWER": 0,
     "ELEMENT": "DARK",
-    "COOLDOWN": 3,
-    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "DEF_UP"]
+    "COOLDOWN": 4,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "DEF_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Dragonslayer Slash",
+    "DESCRIPTION": "Deal moderate physical damage to an enemy.",
+    "MP_COST": 5,
+    "POWER": 17,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Cursed Light",
     "DESCRIPTION": "Deal some light damage and reduce the enemy's magic defense.",
     "MP_COST": 5,
-    "POWER": 12,
-    "ELEMENT": "LIGHT",
-    "COOLDOWN": 3,
-    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"]
+    "POWER": 14,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 2,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"],
+    "PERCENTAGE_COST": false
   },
+  {
+    "NAME": "Dark Restoration",
+    "DESCRIPTION": "Restore some health but decrease your physical defense.",
+    "MP_COST": 5,
+    "POWER": 17,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+
   {
     "NAME": "Ice Blades",
     "DESCRIPTION": "Deal physical ice damage and increase your attack.",
@@ -69,6 +107,157 @@
     "POWER": 11,
     "ELEMENT": "ICE",
     "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"]
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Devour",
+    "DESCRIPTION": "Deal some physical dark damage and heal yourself an amount based on the damage dealt. Raises your attack.",
+    "MP_COST": 6,
+    "POWER": 16,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL", "LEECH", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "To Arms!",
+    "DESCRIPTION": "Increase your attack and raise a shield for 20% of your max health.",
+    "MP_COST": 6,
+    "POWER": 20,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 5,
+    "TAGS": ["SHIELD", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Abyssal Blade",
+    "DESCRIPTION": "Deal physical and magical dark damage to an enemy. Lowers their defense.",
+    "MP_COST": 6,
+    "POWER": 7,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Life Syphon",
+    "DESCRIPTION": "Steal some HP dealing some dark magical damage and buff your magical attack.",
+    "MP_COST": 6,
+    "POWER": 14,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "LEECH", "SELF_INFLICT_BUFF_DEBUFF", "MATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Frost Armor",
+    "DESCRIPTION": "Raise your physical defense and get a shield for 15% of your max health.",
+    "MP_COST": 6,
+    "POWER": 15,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 4,
+    "TAGS": ["SHIELD", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Fire Nova",
+    "DESCRIPTION": "Deal some fire damage and lower the enemy's defense.",
+    "MP_COST": 6,
+    "POWER": 13,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Necromantic Regeneration",
+    "DESCRIPTION": "Regenerate some health and increase your magical defense. Generates a shield for 15% of your max health. Removes all debuffs.",
+    "MP_COST": 6,
+    "POWER": 15,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["HEALING", "SHIELD", "SELF_REMOVE_DEBUFFS", "SELF_INFLICT_BUFF_DEBUFF", "MDEF_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Decaying Breath",
+    "DESCRIPTION": "Inflicts a moderate amount of ice magical damage and lowers enemy's physical and magical attack.",
+    "MP_COST": 6,
+    "POWER": 17,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN", "MATK_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Bolt Shock",
+    "DESCRIPTION": "Deals a moderate amount of lightning physical damage.",
+    "MP_COST": 6,
+    "POWER": 17,
+    "ELEMENT": "THUNDER",
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Leaf Shield",
+    "DESCRIPTION": "Raise your physical and magical defense and get a shield for 20% of your max health.",
+    "MP_COST": 6,
+    "POWER": 20,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 5,
+    "TAGS": ["SHIELD", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Wind Arrow",
+    "DESCRIPTION": "Deal moderate physical wind damage to an enemy.",
+    "MP_COST": 6,
+    "POWER": 18,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 2,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Blinding Shot",
+    "DESCRIPTION": "Deal some physical holy damage to an enemy and lower their physical and magical attack.",
+    "MP_COST": 6,
+    "POWER": 15,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN", "MATK_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Weakening Sting",
+    "DESCRIPTION": "Deal a moderate amount of wind physical damage and lower the enemy's physical and magical attack.",
+    "MP_COST": 6,
+    "POWER": 19,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN", "MATK_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Flammable Acid",
+    "DESCRIPTION": "Deal a moderate amount of fire magical damage and lower the enemy's physical and magical defense.",
+    "MP_COST": 6,
+    "POWER": 19,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Feast on the Weak",
+    "DESCRIPTION": "Deal physical dark damage to an enemy and heal for the damage done. This skill deals more damage as more debuffs the target has.",
+    "MP_COST": 6,
+    "POWER": 10,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "LEECH", "DEBUFF_EXPLOIT"],
+    "PERCENTAGE_COST": false
   }
 ]

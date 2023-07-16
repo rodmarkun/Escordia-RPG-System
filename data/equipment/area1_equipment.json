@@ -68,6 +68,29 @@
       }
     },
     {
+      "NAME": "Goblin Tome",
+      "DESCRIPTION": "An old goblin tome.",
+      "INDIV_VALUE": 40,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "BOOK",
+      "STAT_CHANGE_LIST": {
+        "MATK": 5,
+        "MAXMP": 4
+      }
+    },
+    {
+      "NAME": "Goblin Bow",
+      "DESCRIPTION": "An old goblin bow.",
+      "INDIV_VALUE": 38,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "BOW",
+      "STAT_CHANGE_LIST": {
+        "ATK": 4,
+        "CRITCH": 20,
+        "SPEED": -3
+      }
+    },
+    {
       "NAME": "Novice Armor",
       "DESCRIPTION": "A standard armor from the Guild.",
       "INDIV_VALUE": 30,

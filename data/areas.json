@@ -11,8 +11,8 @@
       "NAME": "Dangerous Crossroads",
       "NUMBER": 2,
       "ENEMY_LIST": ["Rogue Monk","Rogue Assassin","Rogue Swordsman","Earth Worm","Mountain Harpy"],
-      "BOSS": "Daidarabotchi, Forest Guardian",
-      "DUNGEONS": ["Goblins' Den"],
-      "TREASURES": ["Bronze Armor", "Cloth Armor", "Student Robes", "Crystal Ring"]
+      "BOSS": "Rogue Master Garland",
+      "DUNGEONS": ["Old Cemetery", "Black Ant Nest"],
+      "TREASURES": ["Dragon Fanatic Hood", "Executioner's Axe", "Necromancer's Ring", "Hunter's Armor"]
     }
 ]

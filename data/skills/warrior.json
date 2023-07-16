@@ -6,33 +6,37 @@
     "POWER": 10,
     "ELEMENT": null,
     "COOLDOWN": 4,
-    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"]
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Flame Blade",
-    "DESCRIPTION": "Deal physical fire damage to an enemy.",
-    "MP_COST": 3,
+    "DESCRIPTION": "Embodies your sword with fire, dealing some physical fire damage to an enemy.",
+    "MP_COST": 4,
     "POWER": 14,
     "ELEMENT": "FIRE",
-    "COOLDOWN": 4,
-    "TAGS": ["PHYSICAL"]
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
   },
   {
-    "NAME": "Vitalizing Ward",
-    "DESCRIPTION": "Heal yourself and raise your magical defense.",
-    "MP_COST": 3,
-    "POWER": 17,
+    "NAME": "Bulwark",
+    "DESCRIPTION": "Spend half your mana to gain a shield equivalent to 30% of your MAXHP and raise both your physical and magical defense.",
+    "MP_COST": 50,
+    "POWER": 30,
     "ELEMENT": "HOLY",
-    "COOLDOWN": 5,
-    "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "MDEF_UP"]
+    "COOLDOWN": 6,
+    "TAGS": ["SHIELD", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"],
+    "PERCENTAGE_COST": true
   },
   {
     "NAME": "Great Charge",
-    "DESCRIPTION": "Charge against an enemy, dealing high damage but reducing your attack.",
+    "DESCRIPTION": "Charge against an enemy, dealing moderate damage but reducing your attack.",
     "MP_COST": 3,
     "POWER": 18,
     "ELEMENT": null,
-    "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "SELF_INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
+    "PERCENTAGE_COST": false
   }
 ]

@@ -1,0 +1,282 @@
+[
+  {
+    "NAME": "Old Hero's Sword",
+    "DESCRIPTION": "A sword who belonged to a hero of old.",
+    "INDIV_VALUE": 90,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "SWORD",
+    "STAT_CHANGE_LIST": {
+      "ATK": 10,
+      "MATK": 3,
+      "CRITCH": 5
+    }
+  },
+  {
+    "NAME": "Leaf Blade",
+    "DESCRIPTION": "Blade made by the Black Ants.",
+    "INDIV_VALUE": 160,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "SWORD",
+    "STAT_CHANGE_LIST": {
+      "ATK": 14,
+      "DEF": 4,
+      "SPEED": 6
+    }
+  },
+  {
+    "NAME": "Necromancer's Staff",
+    "DESCRIPTION": "Staff used by a necromancer.",
+    "INDIV_VALUE": 90,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "STAFF",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": -2,
+      "ATK": 6,
+      "MATK": 6,
+      "MAXMP": 3
+    }
+  },
+  {
+    "NAME": "Ancient Warhammer",
+    "DESCRIPTION": "Hammer used in a war forgotten long ago.",
+    "INDIV_VALUE": 140,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "HAMMER",
+    "STAT_CHANGE_LIST": {
+      "ATK": 9,
+      "DEF": 3,
+      "MDEF": 3,
+      "SPEED": -2
+    }
+  },
+  {
+    "NAME": "Executioner's Axe",
+    "DESCRIPTION": "Axe commonly used by executioners.",
+    "INDIV_VALUE": 120,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "AXE",
+    "STAT_CHANGE_LIST": {
+      "ATK": 11,
+      "DEF": 4
+    }
+  },
+  {
+    "NAME": "Leaf Axe",
+    "DESCRIPTION": "Axe commonly used by the Black Ant Berserkers.",
+    "INDIV_VALUE": 180,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "AXE",
+    "STAT_CHANGE_LIST": {
+      "ATK": 13,
+      "DEF": 4,
+      "MDEF": 3,
+      "SPEED": 2
+    }
+  },
+  {
+    "NAME": "Ceremonial Dagger",
+    "DESCRIPTION": "Dagger used in some sort of ritual.",
+    "INDIV_VALUE": 150,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "DAGGER",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": -3,
+      "ATK": 7,
+      "MATK": 5,
+      "CRITCH": 10
+    }
+  },
+  {
+    "NAME": "Priest Scepter",
+    "DESCRIPTION": "Scepter used by some local priest.",
+    "INDIV_VALUE": 150,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "SCEPTER",
+    "STAT_CHANGE_LIST": {
+      "ATK": 4,
+      "MATK": 7,
+      "DEF": 3,
+      "MDEF": 3
+    }
+  },
+  {
+    "NAME": "Black Ant Bow",
+    "DESCRIPTION": "Bow used by the Black Ant Archers.",
+    "INDIV_VALUE": 200,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "BOW",
+    "STAT_CHANGE_LIST": {
+      "ATK": 9,
+      "CRITCH": 22,
+      "SPEED": 3
+    }
+  },
+  {
+    "NAME": "Black Uchigatana",
+    "DESCRIPTION": "Katana used by some errant samurai.",
+    "INDIV_VALUE": 220,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "KATANA",
+    "STAT_CHANGE_LIST": {
+      "ATK": 13,
+      "DEF": -5,
+      "CRITCH": 15,
+      "SPEED": 5
+    }
+  },
+  {
+    "NAME": "Bloody Necronomicon",
+    "DESCRIPTION": "An old, dark book stained with blood.",
+    "INDIV_VALUE": 200,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "BOOK",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": -6,
+      "DEF": -3,
+      "MATK": 12,
+      "MAXMP": 8,
+      "MDEF": 3
+    }
+  },
+  {
+    "NAME": "Skeleton Knight Armor",
+    "DESCRIPTION": "Armor obtained by defeating a skeleton knight.",
+    "INDIV_VALUE": 100,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "HEAVY_ARMOR",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 6,
+      "DEF": 8,
+      "MDEF": 7,
+      "SPEED": -4
+    }
+  },
+  {
+    "NAME": "Ant Protector Breastplate",
+    "DESCRIPTION": "Armor made with Ant Protector's Parts.",
+    "INDIV_VALUE": 200,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "HEAVY_ARMOR",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 10,
+      "MAXMP": 4,
+      "DEF": 12,
+      "MDEF": 8,
+      "SPEED": -4
+    }
+  },
+  {
+      "NAME": "Hunter's Armor",
+      "DESCRIPTION": "A lightweight armor made for hunters.",
+      "INDIV_VALUE": 190,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "LIGHT_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MAXHP": 7,
+        "MAXMP": 4,
+        "DEF": 8,
+        "MDEF": 4,
+        "SPEED": 4
+      }
+    },
+  {
+    "NAME": "Necromancer Robes",
+    "DESCRIPTION": "Robes from an old necromancer.",
+    "INDIV_VALUE": 150,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "MAGIC_ARMOR",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 6,
+      "MAXMP": 6,
+      "DEF": 5,
+      "MDEF": 5
+    }
+  },
+  {
+    "NAME": "Ant Queen Mantle",
+    "DESCRIPTION": "Mantle made with the essence of the Black Ant Queen.",
+    "INDIV_VALUE": 250,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "MAGIC_ARMOR",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 8,
+      "MAXMP": 10,
+      "DEF": 7,
+      "MDEF": 8,
+      "SPEED": 2
+    }
+  },
+  {
+    "NAME": "Commander Helmet",
+    "DESCRIPTION": "A commander's helmet.",
+    "INDIV_VALUE": 90,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "PHYS_HELM",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 4,
+      "DEF": 6,
+      "MDEF": 4
+    }
+  },
+  {
+    "NAME": "Dragon Fanatic Hood",
+    "DESCRIPTION": "A hood coming from someone who loved dragons.",
+    "INDIV_VALUE": 100,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "MAG_HELM",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 2,
+      "MAXMP": 5,
+      "DEF": 3,
+      "MDEF": 3
+    }
+  },
+  {
+    "NAME": "Summoner's Hood",
+    "DESCRIPTION": "A hood used by a summoner.",
+    "INDIV_VALUE": 160,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "MAG_HELM",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 3,
+      "MAXMP": 8,
+      "DEF": 1,
+      "MDEF": 5
+    }
+  },
+  {
+    "NAME": "Dragon's Ring",
+    "DESCRIPTION": "A ring containing the essence of a dragon.",
+    "INDIV_VALUE": 130,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "ACCESSORY",
+    "STAT_CHANGE_LIST": {
+      "DEF": 4,
+      "MDEF": 4,
+      "SPEED": 2
+    }
+  },
+  {
+    "NAME": "Necromancer's Ring",
+    "DESCRIPTION": "A ring with necromantic powers",
+    "INDIV_VALUE": 120,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "ACCESSORY",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": -2,
+      "MATK": 4,
+      "MDEF": 4
+    }
+  },
+  {
+    "NAME": "Harpy's Feather",
+    "DESCRIPTION": "Feather from a harpy. It's sharp and light.",
+    "INDIV_VALUE": 100,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "ACCESSORY",
+    "STAT_CHANGE_LIST": {
+      "ATK": 2,
+      "SPEED": 5
+    }
+  }
+]

@@ -360,8 +360,8 @@ class SkillSelect(discord.ui.Select):
     def __init__(self, ctx, skill_list, curr_job):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
-                                        description=f"Power: {s.power} | MP Cost: {s.mp_cost} | Cooldown: {s.cooldown}",
-                                        emoji=emojis.skill_emoji(s, curr_job)) for s in skills_in_options]
+                                        description=f"Power: {s.power} | MP Cost: {s.mp_cost}{'%' if s.percentage_cost else ''} | Cooldown: {s.cooldown}",
+                                        emoji=emojis.skill_emoji(s, curr_job)) for s in skills_in_options if s is not None]
         super().__init__(placeholder=f"Select a skill to perform", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
@@ -387,10 +387,17 @@ class JobSelect(discord.ui.Select):
     """
     Class that handles the job selection.
     """
-    def __init__(self, ctx, job_list):
+    def __init__(self, ctx, job_list, player_inst):
         jobs_in_options = [data_management.search_cache_job_by_name(i) for i in job_list]
+
+        jobs_curr_lvl_dict = {}
+        print(player_inst.job_dict_list)
+        for job_dict in player_inst.job_dict_list:
+            jobs_curr_lvl_dict[job_dict["Name"]] = job_dict["lvl"]
+        jobs_curr_lvl_dict[player_inst.current_job_dict["Name"]] = player_inst.current_job_dict["lvl"]
+
         options = [discord.SelectOption(label=j.name,
-                                        description=f"{j.description}",
+                                        description=f"Current level: {discord_logic.return_jobs_curr_lvl_dict(jobs_curr_lvl_dict, j.name)}",
                                         emoji=emojis.job_to_emoji[j.name]) for j in jobs_in_options]
         super().__init__(placeholder=f"Select a job to change to", max_values=1, min_values=1, options=options)
         self.ctx = ctx
@@ -407,9 +414,9 @@ class JobSelect(discord.ui.Select):
 
 
 class JobSelectView(discord.ui.View):
-    def __init__(self, ctx, job_list):
+    def __init__(self, ctx, job_list, player_inst):
         super().__init__(timeout=None)
-        self.add_item(JobSelect(ctx, job_list))
+        self.add_item(JobSelect(ctx, job_list, player_inst))
 
 
 async def check_button_pressed(ctx, interaction) -> bool:

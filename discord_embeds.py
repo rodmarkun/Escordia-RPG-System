@@ -36,12 +36,14 @@ def embed_fight_msg(ctx, player_obj, enemy):
     hp_bar = progressBar.filledBar(enemy.stats['MAXHP'], enemy.stats['HP'], size=10)
     player_hp_bar = progressBar.filledBar(player_obj.stats['MAXHP'], player_obj.stats['HP'], size=10)
     player_mp_bar = progressBar.filledBar(player_obj.stats['MAXMP'], player_obj.stats['MP'], size=10)
+    player_shield = f"SHIELD: {player_obj.shield}{emojis.SHIELD_EMOJI}\n"
+    enemy_shield = f"SHIELD: {enemy.shield}{emojis.SHIELD_EMOJI}\n"
 
     embed = discord.Embed(
         # General info
         title=f'Fight - {ctx.author.name.capitalize()}',
         description=f'You are fighting a **{enemy.name}**.\n'
-                    f'HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}',
+                    f'{enemy_shield if enemy.shield > 0 else ""}HP: {hp_bar[0]} - {enemy.stats["HP"]}/{enemy.stats["MAXHP"]}',
         color=discord.Colour.red()
     )
     # Images
@@ -61,7 +63,7 @@ def embed_fight_msg(ctx, player_obj, enemy):
 
     # Player stats
     embed.set_footer(
-        text=f'{player_obj.name}\nHP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
+        text=f'{player_obj.name}\n{player_shield if player_obj.shield > 0 else ""}HP: {player_obj.stats["HP"]}/{player_obj.stats["MAXHP"]} | {player_hp_bar[0]}\nMP: '
              f'{player_obj.stats["MP"]}/{player_obj.stats["MAXMP"]} | {player_mp_bar[0]}\nHit chance: '
              f'{100 - formulas.miss_formula(player_obj.stats["SPEED"], enemy.stats["SPEED"])}% | Critical chance: '
              f'{player_obj.stats["CRITCH"]}%')
@@ -110,7 +112,12 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     bd_str = ''
     if len(enemy.buffs_and_debuffs) > 0:
         bd_str = f"\n**Alterations**\n{' '.join([emojis.buff_debuff_to_emoji[bd] for bd in enemy.buffs_and_debuffs])}\n\n"
-    enemy_skills_str = '\n'.join([f'- **{s}** {emojis.element_to_emoji[data_management.search_cache_skill_by_name(s).element]}' for s in enemy.skills])
+
+    enemy_skills_str = "\n"
+    for s in enemy.skills:
+        skill_inst = data_management.search_cache_skill_by_name(s)
+        if skill_inst is not None:
+            enemy_skills_str += f"**{s}** - {emojis.skill_emoji(skill_inst, None)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost}{'%' if skill_inst.percentage_cost else ''} | Cooldown: {skill_inst.cooldown}\n\n"
     embed = discord.Embed(
         title=f'Enemy - {enemy.name}',
         description=f'_{enemy.description}_\n\n{enemy.show_enemy_info()}\n{bd_str}'

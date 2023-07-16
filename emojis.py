@@ -13,6 +13,7 @@ BED_EMOJI = '\U0001F6CF'
 SHOP_EMOJI = '\U0001F6D2'
 EXTRACT_ESSENCE_EMOJI = '\U0001F48E'
 MAP_EMOJI = '\U0001F4CD'
+SHIELD_EMOJI = '\U0001F6E1'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////
@@ -72,6 +73,10 @@ ESC_NOVICE_ICON = "<:NoviceIcon:1098328110316916737>"
 ESC_WARRIOR_ICON = "<:WarriorIcon:1098328108551131186>"
 ESC_ROGUE_ICON = "<:RogueIcon:1098328107284439170>"
 ESC_MAGE_ICON = "<:MageIcon:1098328105199865916>"
+ESC_HUNTER_ICON = "<:HunterIcon:1129078010457358477>"
+ESC_WARLOCK_ICON = "<:WarlockIcon:1129080095408128121>"
+ESC_GLADIATOR_ICON = "<:GladiatorIcon:1129079886171099328>"
+ESC_CLERIC_ICON = "<:ClericIcon:1129080665032372244>"
 
 '''
 ///////////////////////////////// Transforming Dictionaries ////////////////////////////////////
@@ -83,11 +88,12 @@ equipment_to_emoji = {"PHYS_HELM": ESC_PHYS_HELMET_ICON, "MAG_HELM": ESC_MAGIC_H
                       "STAFF": ESC_STAFF_ICON, "BOW": ESC_BOW_ICON, "HAMMER": ESC_HAMMER_ICON, "BOOK": ESC_BOOK_ICON,
                       "SCEPTER": ESC_SCEPTER_ICON, "KATANA": ESC_KATANA_ICON}
 obj_to_emoji = {"POTION": ESC_POTION_ICON, "LOOT": ESC_MATERIAL_ICON}
-job_to_emoji = {"Novice": ESC_NOVICE_ICON, "Warrior": ESC_WARRIOR_ICON, "Rogue": ESC_ROGUE_ICON, "Mage": ESC_MAGE_ICON}
+job_to_emoji = {"Novice": ESC_NOVICE_ICON, "Warrior": ESC_WARRIOR_ICON, "Rogue": ESC_ROGUE_ICON, "Mage": ESC_MAGE_ICON,
+                "Hunter": ESC_HUNTER_ICON, "Warlock": ESC_WARLOCK_ICON, "Gladiator": ESC_GLADIATOR_ICON, "Cleric": ESC_CLERIC_ICON}
 element_to_emoji = {"FIRE": ESC_FIRE_ICON, "ICE": ESC_ICE_ICON, "THUNDER": ESC_THUNDER_ICON, "WIND": ESC_WIND_ICON,
                     "HOLY": ESC_HOLY_ICON, "DARK": ESC_DARK_ICON}
 buff_debuff_to_emoji = {"ATK_UP": ESC_ATK_UP_ICON, "ATK_DOWN": ESC_ATK_DOWN_ICON, "DEF_UP": ESC_DEF_UP_ICON,
-                        "DEF_DOWN": ESC_DEF_DOWN_ICON, "MAT_UP": ESC_MAT_UP_ICON, "MAT_DOWN": ESC_MAT_DOWN_ICON,
+                        "DEF_DOWN": ESC_DEF_DOWN_ICON, "MATK_UP": ESC_MAT_UP_ICON, "MATK_DOWN": ESC_MAT_DOWN_ICON,
                         "MDEF_UP": ESC_MDEF_UP_ICON, "MDEF_DOWN": ESC_MDEF_DOWN_ICON, "LUK_UP": ESC_LUK_UP_ICON,
                         "LUK_DOWN": ESC_LUK_DOWN_ICON}
 
@@ -99,9 +105,12 @@ def obj_emoji(item: 'Item') -> str:
     :param item: Item instance.
     :return: String with the emoji.
     """
-    if item.object_type == "EQUIPMENT":
-        return equipment_to_emoji[item.equipment_type]
-    return obj_to_emoji[item.object_type]
+    try:
+        if item.object_type == "EQUIPMENT":
+            return equipment_to_emoji[item.equipment_type]
+        return obj_to_emoji[item.object_type]
+    except Exception:
+        return ""
 
 
 def skill_emoji(skill: 'Skill', skill_job) -> str:

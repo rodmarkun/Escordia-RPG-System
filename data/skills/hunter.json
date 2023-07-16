@@ -1,0 +1,52 @@
+[
+  {
+    "NAME": "Frost Fang",
+    "DESCRIPTION": "Inflict moderate ice physical damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 18,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Nature Inspiration",
+    "DESCRIPTION": "Heal yourself for some amount and increase your attack.",
+    "MP_COST": 4,
+    "POWER": 17,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 4,
+    "TAGS": ["HEALING", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Penetrate Defenses",
+    "DESCRIPTION": "Deal some physical damage to an enemy. Reduces their physical and magical defense.",
+    "MP_COST": 4,
+    "POWER": 15,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Arrow Rain",
+    "DESCRIPTION": "Deal physical and magical wind damage to enemies.",
+    "MP_COST": 6,
+    "POWER": 10,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "MAGICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Rainbow Arrow",
+    "DESCRIPTION": "Shoot a high physical damage arrow containing the power of all elements, always striking the enemy weakness.",
+    "MP_COST": 7,
+    "POWER": 20,
+    "ELEMENT": null,
+    "COOLDOWN": 5,
+    "TAGS": ["PHYSICAL", "RAINBOW"],
+    "PERCENTAGE_COST": false
+  }
+]

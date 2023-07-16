@@ -7,7 +7,7 @@
       "2": "Small Fireball",
       "3": "+1 ATK",
       "4": "Rushed Strike",
-      "5": "+4 MAXHP"
+      "5": "+3 MAXHP"
     },
     "REQUISITES": {},
     "XP_FACTOR": 2
@@ -18,8 +18,11 @@
     "SKILL_DICT": {
       "1": "Shielded Strike",
       "2": "Flame Blade",
-      "3": "Vitalizing Ward",
-      "4": "Great Charge"
+      "3": "+3 MAXHP",
+      "4": "Bulwark",
+      "5": "+3 DEF",
+      "6": "Great Charge",
+      "7": "+3 MDEF"
     },
     "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
@@ -30,8 +33,11 @@
     "SKILL_DICT": {
       "1": "Disarm",
       "2": "Shadow Strike",
-      "3": "Sharpen Knives",
-      "4": "Hurricane Blades"
+      "3": "+3 ATK",
+      "4": "Sharpen Knives",
+      "5": "+5 CRITCH",
+      "6": "Hurricane Blades",
+      "7": "+3 SPEED"
     },
     "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
@@ -42,11 +48,78 @@
     "SKILL_DICT": {
       "1": "Ice Bolt",
       "2": "Quickflame",
-      "3": "Mana Barrier",
-      "4": "Meditate",
-      "5": "Thunder Spear"
+      "3": "+3 MAXMP",
+      "4": "Mana Barrier",
+      "5": "Meditate",
+      "6": "Thunder Spear",
+      "7": "+3 MATK"
     },
     "REQUISITES": {"Novice" :  3},
     "XP_FACTOR": 1
+  },
+  {
+    "NAME": "Gladiator",
+    "DESCRIPTION": "Gladiator job",
+    "SKILL_DICT": {
+      "1": "Bolt Sword",
+      "2": "Aggressive Stance",
+      "3": "+3 DEF",
+      "4": "Ice Shield Strike",
+      "5": "Defensive Stance",
+      "6": "+3 ATK",
+      "7": "Pyroclasm",
+      "8": "+3 MDEF",
+      "9": "+4 MAXHP"
+    },
+    "REQUISITES": {"Warrior" :  5},
+    "XP_FACTOR": 0.8
+  },
+  {
+    "NAME": "Cleric",
+    "DESCRIPTION": "Cleric job",
+    "SKILL_DICT": {
+      "1": "Holy Smite",
+      "2": "Divine Heal",
+      "3": "+3 MDEF",
+      "4": "Glorious Shield",
+      "5": "Read Prayer",
+      "6": "+3 MATK",
+      "7": "God's Wrath",
+      "8": "+4 MAXMP"
+    },
+    "REQUISITES": {"Mage" :  5},
+    "XP_FACTOR": 0.8
+  },
+  {
+    "NAME": "Hunter",
+    "DESCRIPTION": "Hunter job",
+    "SKILL_DICT": {
+      "1": "Frost Fang",
+      "2": "Nature Inspiration",
+      "3": "+3 SPEED",
+      "4": "Penetrate Defenses",
+      "5": "Arrow Rain",
+      "6": "+3 ATK",
+      "7": "Rainbow Arrow",
+      "8": "+4 CRITCH"
+    },
+    "REQUISITES": {"Rogue" :  5, "Warrior" :  5},
+    "XP_FACTOR": 0.8
+  },
+  {
+    "NAME": "Warlock",
+    "DESCRIPTION": "Warlock job",
+    "SKILL_DICT": {
+      "1": "Bio",
+      "2": "Blood Transfusion",
+      "3": "+3 MAXMP",
+      "4": "Dark Pact",
+      "5": "Freeze Veins",
+      "6": "+3 MAXHP",
+      "7": "Immolate",
+      "8": "+4 MATK"
+    },
+    "REQUISITES": {"Rogue" :  5, "Mage" :  5},
+    "XP_FACTOR": 0.8
   }
 ]

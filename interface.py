@@ -241,7 +241,7 @@ def show_area(name: str) -> (bool, list):
 
     area_inst = data_management.search_cache_area_by_number(player_inst.current_area)
 
-    return True, [f"You are currently in {area_inst.name}. To unlock the next area you need to defeat {area_inst.boss}."]
+    return True, [f"You are currently in **{area_inst.name}** (Area {area_inst.number}). To unlock the next area you need to this area's boss: **{area_inst.boss}**."]
 
 
 def travel_to_area(name: str, area_number: int) -> (bool, list):

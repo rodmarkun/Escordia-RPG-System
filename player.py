@@ -46,6 +46,7 @@ class Player(Battler):
         self.current_job_dict = current_job_dict
         self.current_job = current_job
         self.blessings = blessings
+        self.dungeon_cooldowns = {}
 
     """
     ///////////////
@@ -93,7 +94,7 @@ class Player(Battler):
         curr_job = data_management.search_cache_job_by_name(self.current_job)
         print(self.current_job)
         exp *= curr_job.xp_factor
-        self.current_job_dict['xp'] += exp
+        self.current_job_dict['xp'] += int(exp)
         leveled_up = False
 
         while self.current_job_dict['xp'] >= self.current_job_dict['xp_to_next_lvl']:
@@ -232,8 +233,16 @@ class Player(Battler):
         if data_management.search_cache_job_by_name(job_name) is not None:
             self.current_job = job_name
             # Append current job to job_dict_list if not in there
-            if self.current_job_dict not in self.job_dict_list:
+            need_to_append = True
+
+            for entry in self.job_dict_list:
+                if entry["Name"] == self.current_job_dict["Name"]:
+                    need_to_append = False
+                    break
+
+            if need_to_append:
                 self.job_dict_list.append(self.current_job_dict)
+
             # Set current job dict
             new_job = True
             for job_dict in self.job_dict_list:
@@ -245,6 +254,7 @@ class Player(Battler):
             if new_job:
                 self.current_job_dict = {"Name": job_name, "lvl": 1, "xp": 0, "xp_to_next_lvl": 30}
 
+            self.dungeon_cooldowns = {}
             self.assign_skills_based_on_job()
 
             messager.add_message(self.name, f'Your job is now {job_name}!')
@@ -261,7 +271,8 @@ class Player(Battler):
         job = data_management.search_cache_job_by_name(self.current_job)
         for skill in job.skill_dict:
             if self.current_job_dict["lvl"] >= int(skill):
-                self.skills.append(job.skill_dict[skill])
+                if data_management.search_cache_skill_by_name(job.skill_dict[skill]) is not None:
+                    self.skills.append(job.skill_dict[skill])
 
     def return_job_dict(self, job_name: str) -> dict:
         """

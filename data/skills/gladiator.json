@@ -1,0 +1,52 @@
+[
+  {
+    "NAME": "Bolt Sword",
+    "DESCRIPTION": "Inflict moderate lightning physical damage with your sword.",
+    "MP_COST": 4,
+    "POWER": 18,
+    "ELEMENT": "THUNDER",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Aggressive Stance",
+    "DESCRIPTION": "Increases your attack and luck, but reduces your defense. Does not skip your turn.",
+    "MP_COST": 2,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "LUCK_UP", "DEF_DOWN", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Ice Shield Strike",
+    "DESCRIPTION": "Deal some physical ice damage to an enemy and get a shield for 20% your MAXHP.",
+    "MP_COST": 4,
+    "POWER": 20,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "SHIELD"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Defensive Stance",
+    "DESCRIPTION": "Increases your physical and magical defense, but reduces your attack. Does not skip your turn.",
+    "MP_COST": 2,
+    "POWER": 0,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP", "ATK_DOWN", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Pyroclasm",
+    "DESCRIPTION": "Deal physical and magical fire damage to an enemy, while healing for half of the damage done.",
+    "MP_COST": 8,
+    "POWER": 13,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "LEECH"],
+    "PERCENTAGE_COST": false
+  }
+]

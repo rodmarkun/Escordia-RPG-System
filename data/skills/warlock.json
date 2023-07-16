@@ -1,0 +1,52 @@
+[
+  {
+    "NAME": "Bio",
+    "DESCRIPTION": "Inflict moderate dark magical damage to an enemy. Lowers their magical defense.",
+    "MP_COST": 4,
+    "POWER": 17,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Blood Transfusion",
+    "DESCRIPTION": "Deal some dark magical damage to an enemy. Heals the user for a percentage of the damage dealt. Lowers their physical defense.",
+    "MP_COST": 6,
+    "POWER": 15,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "LEECH", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Dark Pact",
+    "DESCRIPTION": "Lower your physical and magical defense in exchange for a shield equivalent to 30% of your maximum HP and a boost to your physical and magical attack.",
+    "MP_COST": 5,
+    "POWER": 30,
+    "ELEMENT": null,
+    "COOLDOWN": 4,
+    "TAGS": ["SHIELD", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN", "ATK_UP", "MATK_UP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Freeze Veins",
+    "DESCRIPTION": "Deal moderate ice magical damage to an enemy. Lowers their physical attack.",
+    "MP_COST": 4,
+    "POWER": 15,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "MAGICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Immolate",
+    "DESCRIPTION": "This spell has +6 power for each debuff the enemy currently has. Removes all enemy debuffs.",
+    "MP_COST": 8,
+    "POWER": 12,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "DEBUFF_EXPLOIT", "REMOVE_DEBUFFS"],
+    "PERCENTAGE_COST": false
+  }
+]

@@ -6,33 +6,37 @@
     "POWER": 12,
     "ELEMENT": null,
     "COOLDOWN": 2,
-    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"]
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Shadow Strike",
-    "DESCRIPTION": "Deal some physical dark damage to an enemy. Does not skip your turn but lowers your defense.",
+    "DESCRIPTION": "Deal small physical dark damage to an enemy. Does not skip your turn.",
     "MP_COST": 2,
-    "POWER": 8,
+    "POWER": 6,
     "ELEMENT": "DARK",
     "COOLDOWN": 2,
-    "TAGS": ["PHYSICAL", "DOES_NOT_SKIP_TURN", "SELF_INFLICT_BUFF_DEBUFF", "DEF_DOWN"]
+    "TAGS": ["PHYSICAL", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": false
   },
   {
     "NAME": "Sharpen Knives",
-    "DESCRIPTION": "Sharpen your knives, raising your attack, critical hit chance and critical damage.",
-    "MP_COST": 3,
+    "DESCRIPTION": "Spend half your mana to sharpen your knives, raising your attack, critical hit chance and critical damage. However, lowers your physical defense. Does not skip your turn.",
+    "MP_COST": 50,
     "POWER": 0,
     "ELEMENT": null,
     "COOLDOWN": 4,
-    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "LUK_UP"]
+    "TAGS": ["ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP", "LUK_UP", "DEF_DOWN", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": true
   },
   {
     "NAME": "Hurricane Blades",
-    "DESCRIPTION": "Deal great physical wind damage to an enemy",
-    "MP_COST": 6,
+    "DESCRIPTION": "Deal moderate physical wind damage to an enemy",
+    "MP_COST": 7,
     "POWER": 19,
     "ELEMENT": "WIND",
     "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL"]
+    "TAGS": ["PHYSICAL"],
+    "PERCENTAGE_COST": false
   }
 ]

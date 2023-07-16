@@ -16,8 +16,8 @@ HELP_MSG = f"{emojis.SPARKLER_EMOJI} **--- GENERAL ---** {emojis.SPARKLER_EMOJI}
             "`!job` - See details about your current job or change it\n" \
             "`!boss` - Fight against the boss of this area\n" \
 
-TUTORIAL_MSG = f"Hello traveller! Welcome to Escordia RPG. Here, you can fight diverse enemies in your area, earning **money** and **XP**. You can acquire new equipment in the shop or in challenging dungeons. If you are pretty wounded, take care of yourself with rest. Also remember to check for enemy **weaknesses** and exploit them!\n\n" \
-                "As you gain XP, you will advance in your current job, adquiring new skills. You can unlock new jobs by completing their requirements! Check them out! Once you really feel strong, head for the boss in order to go to the next area!\n\n" \
-                "You can play the whole game just by entering the command `!menu` :)"
+TUTORIAL_MSG = f"Hello traveller! Welcome to __Escordia RPG__!\n\nHere, you can **fight** diverse enemies in your current **area**, earning gold and XP. You can acquire new **equipment** in the **shop** or in challenging **dungeons**. If you are pretty wounded, take care of yourself **resting**. While fighting, remember to check for enemy **weaknesses** and exploit them!\n\n" \
+                "As you gain XP, you will advance in your current **job**, adquiring new **skills**. You can unlock new jobs by completing their requirements! Check them out! Once you really feel strong, head for the **boss** of the area in order to go to the next one!\n\n" \
+                "--> __You can play the whole game just by entering the command__ `!menu` :) <--"
 
 ESSENCE_MSG = f"You can destroy items for essence {emojis.ESC_ESSENCE_ICON}. You can spend your essence on permanent blessings. When destroying an item, you destroy all copies of that item in your inventory. The amount of essence you get depends on the item's rarity and quantity destroyed."

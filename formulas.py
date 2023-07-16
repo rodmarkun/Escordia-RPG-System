@@ -86,7 +86,7 @@ def healing_spell_power(spell_power: int, matk_value: int) -> int:
     :return:
     """
 
-    return int(spell_power * (100 / (100 + matk_value * 1.5)))
+    return int(spell_power * (100 + matk_value * 1.5)/ 100)
 
 
 def damage_spell_power(spell_power: int, matk_value: int, mdef_value: int) -> int:

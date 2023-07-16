@@ -42,7 +42,8 @@ class Battle:
         self.player = player
         self.enemy = enemy
         self.is_over = False  # Flag to indicate if the battle is over
-        self.skills_in_cooldown = {}  # Dictionary with player's skills in cooldown
+        self.skills_in_cooldown = self.player.dungeon_cooldowns  # Dictionary with player's skills in cooldown
+        self.enemy_skills_in_cooldown = {}  # Dictionary with enemy's skills in cooldown
         self.player_stats_before_battle = self.player.stats.copy()  # Player's stats before the battle. This is mainly
         # used for not messing up the stats with buffs when the battle is over.
 
@@ -78,16 +79,19 @@ class Battle:
         # Enemy turn
         if self.enemy.alive:
             if not no_enemy_turn:
-                if self.enemy.stats[constants.MATK_STATKEY] > self.enemy.stats[constants.ATK_STATKEY]:
-                    weights = [1, 3]
-                else:
-                    weights = [2, 1]
-                enemy_action = random.choices(constants.POSSIBLE_ENEMY_ACTIONS, weights=weights)[0]
+                #if self.enemy.stats[constants.MATK_STATKEY] > self.enemy.stats[constants.ATK_STATKEY]:
+                #    weights = [1, 3]
+                #else:
+                #    weights = [2, 1]
+                enemy_action = random.choices(constants.POSSIBLE_ENEMY_ACTIONS, weights=[1,3])[0]
 
-                if enemy_action == constants.SKILL_OPTION and len(self.enemy.skills) > 0:
-                    skill = data_management.search_cache_skill_by_name(random.choice(self.enemy.skills))
+                possible_enemy_skills = [skill for skill in self.enemy.skills if skill not in self.enemy_skills_in_cooldown]
+
+                if enemy_action == constants.SKILL_OPTION and len(possible_enemy_skills) > 0:
+                    skill = data_management.search_cache_skill_by_name(random.choice(possible_enemy_skills))
                     target = self.skill_based_target_selection(skill, self.enemy)
                     perform_skill(self.enemy, target, skill, self.player.name)
+                    self.enemy_skills_in_cooldown.update({skill.name: skill.cooldown})
                 else:
                     normal_attack(attacker=self.enemy, target=self.player, player_name=self.player.name)
 
@@ -104,11 +108,11 @@ class Battle:
         self.decrease_buff_debuff_duration()
         return messager.empty_queue(self.player.name)
 
-    def win_battle(self) -> None:
+    def win_battle(self) -> str:
         """
         Player wins the battle.
 
-        :return: None
+        :return: Item looted from the enemy.
         """
 
         # Delete battle from cache
@@ -122,10 +126,10 @@ class Battle:
         # Combat rewards
         self.player.add_exp(self.enemy.xp_reward)
         self.player.add_money(self.enemy.gold_reward)
+        self.player.shield = 0
 
         loot = self.enemy.loot()
         if loot:
-            messager.add_message(self.player.name, f"- You looted a {loot}")
             self.player.inventory.add_item(loot, 1)
         else:
             messager.add_message(self.player.name, f"You find nothing to loot")
@@ -135,15 +139,23 @@ class Battle:
                 self.player.defeated_bosses.append(self.enemy.name)
 
         if self.player.in_dungeon:
+            self.decrease_cooldowns()
+            self.player.dungeon_cooldowns = self.skills_in_cooldown
             dungeon_inst = data_management.search_cache_dungeon_inst_by_player(self.player.name)
             dungeon_inst.current_enemies_defeated += 1
             if dungeon_inst.enemy_count < dungeon_inst.current_enemies_defeated:
                 dungeon_inst.boss_defeated = True
+                self.player.dungeon_cooldowns = {}
+                self.remove_all_buffs_and_debuffs()
+        else:
+            self.player.dungeon_cooldowns = {}
 
         data_management.update_player_info(self.player.name)
 
         # Delete enemy instance
         del self.enemy
+
+        return loot
 
     def lose_battle(self) -> None:
         """
@@ -210,7 +222,8 @@ class Battle:
         Resets the player's stats and buffs and debuffs.
         :return: None.
         """
-        self.remove_all_buffs_and_debuffs()
+        if not self.player.in_dungeon:
+            self.remove_all_buffs_and_debuffs()
         # TODO - There's probably a better way to do this. We need to copy all stats except HP,MP,MAXHP,MAXMP.
         self.player.stats.update({key: self.player_stats_before_battle[key] for key in self.player_stats_before_battle
                                   if key not in constants.STATS_NOT_COPYING_AFTER_BATTLE})
@@ -245,6 +258,11 @@ class Battle:
                 self.skills_in_cooldown.pop(skill)
             else:
                 self.skills_in_cooldown[skill] -= 1
+        for skill in list(self.enemy_skills_in_cooldown):
+            if self.enemy_skills_in_cooldown[skill] == 0:
+                self.enemy_skills_in_cooldown.pop(skill)
+            else:
+                self.enemy_skills_in_cooldown[skill] -= 1
 
     """
     //////////////////
@@ -344,7 +362,7 @@ def perform_skill(attacker: 'Battler', target: 'Battler', skill: 'Skill', player
     :return: None.
     """
     # Enemies do not pay mana cost.
-    if type(attacker) == Enemy or attacker.pay_mana_cost(skill.mp_cost):
+    if type(attacker) == Enemy or attacker.pay_mana_cost(skill.mp_cost, skill.percentage_cost):
         skill.effect(player_name, attacker, target)
     else:
         messager.add_message(player_name, f"{attacker.name} doesn't have enough mana to use {skill.name}!")
