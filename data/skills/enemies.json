@@ -43,17 +43,17 @@
     "NAME": "Forest Blessing",
     "DESCRIPTION": "Heal yourself and raise your defenses.",
     "MP_COST": 3,
-    "POWER": 15,
+    "POWER": 14,
     "ELEMENT": "WIND",
-    "COOLDOWN": 3,
+    "COOLDOWN": 4,
     "TAGS": ["HEALING", "SELF_INFLICT_BUFF_DEBUFF", "DEF_UP", "MDEF_UP"],
     "PERCENTAGE_COST": false
   },
   {
     "NAME": "Hyper Beam",
-    "DESCRIPTION": "Deal a moderate amount of light damage to an enemy.",
+    "DESCRIPTION": "Deal a moderate amount of magic light damage to an enemy.",
     "MP_COST": 5,
-    "POWER": 18,
+    "POWER": 16,
     "ELEMENT": "HOLY",
     "COOLDOWN": 3,
     "TAGS": ["MAGICAL"],
@@ -244,7 +244,7 @@
     "NAME": "Flammable Acid",
     "DESCRIPTION": "Deal a moderate amount of fire magical damage and lower the enemy's physical and magical defense.",
     "MP_COST": 6,
-    "POWER": 19,
+    "POWER": 18,
     "ELEMENT": "FIRE",
     "COOLDOWN": 4,
     "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN"],
@@ -258,6 +258,36 @@
     "ELEMENT": "DARK",
     "COOLDOWN": 3,
     "TAGS": ["PHYSICAL", "LEECH", "DEBUFF_EXPLOIT"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Steal HP",
+    "DESCRIPTION": "Deal physical dark damage to an enemy and heal for the damage done.",
+    "MP_COST": 6,
+    "POWER": 19,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 3,
+    "TAGS": ["PHYSICAL", "LEECH"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Fragmentation Explosion",
+    "DESCRIPTION": "Deal magical fire damage to an enemy and lower their defenses.",
+    "MP_COST": 6,
+    "POWER": 19,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Smoke Bomb",
+    "DESCRIPTION": "Deal a moderate amount of wind physical damage and lower the enemy's physical and magical attack.",
+    "MP_COST": 6,
+    "POWER": 18,
+    "ELEMENT": "WIND",
+    "COOLDOWN": 4,
+    "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN", "MATK_DOWN"],
     "PERCENTAGE_COST": false
   }
 ]

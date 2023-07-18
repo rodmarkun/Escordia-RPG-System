@@ -48,5 +48,15 @@
     "COOLDOWN": 4,
     "TAGS": ["PHYSICAL"],
     "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Lord's Intervention",
+    "DESCRIPTION": "Remove all enemy buffs. Does not skip your turn.",
+    "MP_COST": 5,
+    "POWER": 0,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 4,
+    "TAGS": ["REMOVE_BUFFS", "DOES_NOT_SKIP_TURN"],
+    "PERCENTAGE_COST": false
   }
 ]

@@ -10,7 +10,8 @@
       "5": "+3 MAXHP"
     },
     "REQUISITES": {},
-    "XP_FACTOR": 2
+    "XP_FACTOR": 2,
+    "PREFERRED_WEAPONS": null
   },
   {
     "NAME": "Warrior",
@@ -25,7 +26,8 @@
       "7": "+3 MDEF"
     },
     "REQUISITES": {"Novice" :  3},
-    "XP_FACTOR": 1
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["SWORD", "AXE"]
   },
   {
     "NAME": "Rogue",
@@ -40,7 +42,8 @@
       "7": "+3 SPEED"
     },
     "REQUISITES": {"Novice" :  3},
-    "XP_FACTOR": 1
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["SWORD","DAGGER"]
   },
   {
     "NAME": "Mage",
@@ -55,7 +58,8 @@
       "7": "+3 MATK"
     },
     "REQUISITES": {"Novice" :  3},
-    "XP_FACTOR": 1
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["STAFF", "BOOK"]
   },
   {
     "NAME": "Gladiator",
@@ -68,11 +72,13 @@
       "5": "Defensive Stance",
       "6": "+3 ATK",
       "7": "Pyroclasm",
-      "8": "+3 MDEF",
-      "9": "+4 MAXHP"
+      "8": "+2 MDEF",
+      "9": "Champion's Roar",
+      "10": "+4 MAXHP"
     },
     "REQUISITES": {"Warrior" :  5},
-    "XP_FACTOR": 0.8
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["SWORD", "AXE", "HAMMER"]
   },
   {
     "NAME": "Cleric",
@@ -85,10 +91,13 @@
       "5": "Read Prayer",
       "6": "+3 MATK",
       "7": "God's Wrath",
-      "8": "+4 MAXMP"
+      "8": "+2 DEF",
+      "9": "Lord's Intervention",
+      "10": "+4 MAXMP"
     },
     "REQUISITES": {"Mage" :  5},
-    "XP_FACTOR": 0.8
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["BOOK", "SCEPTER"]
   },
   {
     "NAME": "Hunter",
@@ -101,10 +110,13 @@
       "5": "Arrow Rain",
       "6": "+3 ATK",
       "7": "Rainbow Arrow",
-      "8": "+4 CRITCH"
+      "8": "+3 CRITCH",
+      "9": "Enchant Weapons",
+      "10": "+4 MAXHP"
     },
     "REQUISITES": {"Rogue" :  5, "Warrior" :  5},
-    "XP_FACTOR": 0.8
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["DAGGER", "BOW"]
   },
   {
     "NAME": "Warlock",
@@ -117,9 +129,12 @@
       "5": "Freeze Veins",
       "6": "+3 MAXHP",
       "7": "Immolate",
-      "8": "+4 MATK"
+      "8": "+2 ATK",
+      "9": "Absorb Strength",
+      "10": "+4 MATK"
     },
     "REQUISITES": {"Rogue" :  5, "Mage" :  5},
-    "XP_FACTOR": 0.8
+    "XP_FACTOR": 1,
+    "PREFERRED_WEAPONS": ["DAGGER", "STAFF", "BOOK"]
   }
 ]

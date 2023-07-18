@@ -11,12 +11,12 @@
   },
   {
     "NAME": "Blood Transfusion",
-    "DESCRIPTION": "Deal some dark magical damage to an enemy. Heals the user for a percentage of the damage dealt. Lowers their physical defense.",
-    "MP_COST": 6,
+    "DESCRIPTION": "Deal some dark physical damage to an enemy. Heals the user for a percentage of the damage dealt. Lowers their physical defense.",
+    "MP_COST": 5,
     "POWER": 15,
     "ELEMENT": "DARK",
-    "COOLDOWN": 4,
-    "TAGS": ["MAGICAL", "LEECH", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
+    "COOLDOWN": 5,
+    "TAGS": ["PHYSICAL", "LEECH", "INFLICT_BUFF_DEBUFF", "DEF_DOWN"],
     "PERCENTAGE_COST": false
   },
   {
@@ -47,6 +47,16 @@
     "ELEMENT": "FIRE",
     "COOLDOWN": 3,
     "TAGS": ["MAGICAL", "DEBUFF_EXPLOIT", "REMOVE_DEBUFFS"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Absorb Strength",
+    "DESCRIPTION": "Remove all enemy buffs. Recover some MP.",
+    "MP_COST": 0,
+    "POWER": 15,
+    "ELEMENT": null,
+    "COOLDOWN": 3,
+    "TAGS": ["RECOVER_MP", "REMOVE_BUFFS"],
     "PERCENTAGE_COST": false
   }
 ]

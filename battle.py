@@ -4,6 +4,7 @@ import data_management
 import emojis
 import formulas
 import messager
+from battler import Battler
 from player import Player
 from enemy import Enemy
 
@@ -31,7 +32,7 @@ class Battle:
     ///////////////////
     """
 
-    def __init__(self, player: Player, enemy: Enemy):
+    def __init__(self, player: Player, enemy: Battler):
         """
         Battle constructor.
 
@@ -76,7 +77,14 @@ class Battle:
             if constants.SKILL_TAG_DOES_NOT_SKIP_TURN in skill.tags:
                 no_enemy_turn = True
 
-        # Enemy turn
+        self.enemy_turn(no_enemy_turn)
+
+        self.decrease_cooldowns()
+        self.decrease_buff_debuff_duration()
+        return messager.empty_queue(self.player.name)
+
+
+    def enemy_turn(self, no_enemy_turn: bool) -> None:
         if self.enemy.alive:
             if not no_enemy_turn:
                 #if self.enemy.stats[constants.MATK_STATKEY] > self.enemy.stats[constants.ATK_STATKEY]:
@@ -98,15 +106,11 @@ class Battle:
                 # Player dies
                 if not self.player.alive:
                     self.is_over = True
-
         # Player wins
         else:
             messager.add_message(self.player.name, f"{self.enemy.name} has been slain.")
             self.is_over = True
 
-        self.decrease_cooldowns()
-        self.decrease_buff_debuff_duration()
-        return messager.empty_queue(self.player.name)
 
     def win_battle(self) -> str:
         """
@@ -146,9 +150,10 @@ class Battle:
             if dungeon_inst.enemy_count < dungeon_inst.current_enemies_defeated:
                 dungeon_inst.boss_defeated = True
                 self.player.dungeon_cooldowns = {}
-                self.remove_all_buffs_and_debuffs()
+                self.player.recover()
         else:
             self.player.dungeon_cooldowns = {}
+            self.player.recover()
 
         data_management.update_player_info(self.player.name)
 
@@ -168,6 +173,7 @@ class Battle:
         data_management.delete_cache_battle_by_player(self.player.name)
 
         self.actions_when_battle_is_over()
+        self.player.dungeon_cooldowns = {}
 
         # Delete enemy instance
         del self.enemy
@@ -222,8 +228,7 @@ class Battle:
         Resets the player's stats and buffs and debuffs.
         :return: None.
         """
-        if not self.player.in_dungeon:
-            self.remove_all_buffs_and_debuffs()
+        self.remove_all_buffs_and_debuffs()
         # TODO - There's probably a better way to do this. We need to copy all stats except HP,MP,MAXHP,MAXMP.
         self.player.stats.update({key: self.player_stats_before_battle[key] for key in self.player_stats_before_battle
                                   if key not in constants.STATS_NOT_COPYING_AFTER_BATTLE})
@@ -339,6 +344,12 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
     # Check if attack hits
     if not check_miss(attacker.stats[constants.SPEED_STATKEY], target.stats[constants.SPEED_STATKEY]):
         dmg = formulas.normal_attack_dmg(attacker.stats[constants.ATK_STATKEY], target.stats[constants.DEF_STATKEY])
+
+        # Check if the attacker is using a preferred weapon for its job
+        if type(attacker) == Player:
+            if data_management.search_cache_item_by_name(attacker.equipment["WEAPON"]).equipment_type in data_management.search_cache_job_by_name(attacker.current_job).preferred_weapons:
+                dmg = int(dmg * constants.PREFERRED_WEAPON_DAMAGE_BONUS)
+
         # Check for critical damage
         dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)
         if is_crit:

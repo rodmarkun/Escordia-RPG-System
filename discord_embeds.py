@@ -101,6 +101,22 @@ def embed_death_msg(ctx):
     return embed
 
 
+def embed_duel_msg(ctx, enemy_name: str):
+    """
+    Sends an embed when player is dueled by another
+
+    :param ctx: Discord CTX
+    :return:
+    """
+    embed = discord.Embed(
+        title=f'{emojis.CROSSED_SWORDS_EMOJI} Duel {emojis.CROSSED_SWORDS_EMOJI}',
+        description=f'@{enemy_name}, {ctx.author.name.capitalize()} has challenged you to a duel! To decide who goes first, a coin will be flipped. Choose **heads** or **tails**.',
+        color=discord.Colour.red()
+    )
+    embed.set_thumbnail(url=ctx.author.avatar.url)
+    return embed
+
+
 def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     """
     Sends an embed with enemy info
@@ -117,13 +133,20 @@ def embed_enemy_info(ctx, enemy: 'Enemy') -> discord.Embed:
     for s in enemy.skills:
         skill_inst = data_management.search_cache_skill_by_name(s)
         if skill_inst is not None:
-            enemy_skills_str += f"**{s}** - {emojis.skill_emoji(skill_inst, None)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost}{'%' if skill_inst.percentage_cost else ''} | Cooldown: {skill_inst.cooldown}\n\n"
+            enemy_skills_str += f"- **{s}** - {emojis.skill_emoji(skill_inst, None)}\n_{skill_inst.description}_\nPower: {skill_inst.power} | MP Cost: {skill_inst.mp_cost}{'%' if skill_inst.percentage_cost else ''} | Cooldown: {skill_inst.cooldown}\n\n"
+
+    if enemy.possible_loot is None:
+        loot_str = 'None'
+    else:
+        loot_str = f'{enemy.possible_loot} {emojis.obj_emoji(data_management.search_cache_item_by_name(enemy.possible_loot))} - {enemy.loot_chance}%'
+
     embed = discord.Embed(
         title=f'Enemy - {enemy.name}',
         description=f'_{enemy.description}_\n\n{enemy.show_enemy_info()}\n{bd_str}'
                     f'**Weaknesses**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.weaknesses])}\n'
                     f'**Resistances**\n{" ".join([emojis.element_to_emoji[e] for e in enemy.resistances])}\n'
-                    f'**Skills**\n{enemy_skills_str}',
+                    f'**Possible Loot**\n{loot_str}\n'
+                    f'**\nSkills**{enemy_skills_str}',
         color=discord.Colour.red()
     )
     embed.set_image(url=enemy.image_url)

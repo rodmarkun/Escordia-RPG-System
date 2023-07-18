@@ -96,6 +96,9 @@ class Skill:
         if constants.SKILL_TAG_REMOVE_DEBUFFS in self.tags:
             target.remove_all_debuffs()
             messager.add_message(player_name, f"{target.name} has its debuffs removed!")
+        if constants.SKILL_TAG_REMOVE_BUFFS in self.tags:
+            target.remove_all_buffs()
+            messager.add_message(player_name, f"{target.name} has its buffs removed!")
 
     def buff_debuff_logic(self, player_name: str, who: Battler):
         buffs_and_debuffs = list(set(constants.BUFFS) & set(self.tags) | set(constants.DEBUFFS) & set(self.tags))

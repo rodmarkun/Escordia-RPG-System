@@ -2,6 +2,7 @@ import random
 import discord
 import discord_logic
 import emojis
+import info_msgs
 import interface
 import data_management
 import discord_embeds
@@ -117,11 +118,11 @@ class PlayerMenu(discord.ui.View):
 
 
     # Rest
-    @discord.ui.button(label=emojis.BED_EMOJI + " Rest", style=discord.ButtonStyle.green)
-    async def menu8(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if await check_button_pressed(self.ctx, interaction):
-            await discord_logic.rest(self.ctx)
-            await interaction.response.defer()
+    #@discord.ui.button(label=emojis.BED_EMOJI + " Rest", style=discord.ButtonStyle.green)
+    #async def menu8(self, interaction: discord.Interaction, button: discord.ui.Button):
+    #    if await check_button_pressed(self.ctx, interaction):
+    #        await discord_logic.rest(self.ctx)
+    #        await interaction.response.defer()
 
 
     # Shop
@@ -137,6 +138,38 @@ class PlayerMenu(discord.ui.View):
     async def menu10(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
             await discord_logic.essence(self.ctx)
+            await interaction.response.defer()
+
+    # PVP
+    #@discord.ui.button(label=emojis.DAGGER_EMOJI + " PVP", style=discord.ButtonStyle.green)
+    #async def menu11(self, interaction: discord.Interaction, button: discord.ui.Button):
+    #    if await check_button_pressed(self.ctx, interaction):
+    #        await interaction.response.send_message(info_msgs.PVP_MSG)
+
+
+class ToinCossMenu(discord.ui.View):
+    """
+    Class that handles general menu.
+    """
+
+    def __init__(self, ctx, dueled_player: str):
+        super().__init__(timeout=None)
+        self.dueled_player = dueled_player
+        self.option_chosen = None
+        self.ctx = ctx
+
+    # Fight
+    @discord.ui.button(label="Heads", style=discord.ButtonStyle.red)
+    async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed_by_certain_name(self.ctx, interaction, self.dueled_player):
+            await discord_logic.begin_pvp_fight(self.ctx, ActionMenu(self.ctx), self.ctx.author, self.dueled_player, "HEADS")
+            await interaction.response.defer()
+
+    # Fight
+    @discord.ui.button(label="Tails", style=discord.ButtonStyle.red)
+    async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed_by_certain_name(self.ctx, interaction, self.dueled_player):
+            await discord_logic.begin_pvp_fight(self.ctx, ActionMenu(self.ctx), self.ctx.author, self.dueled_player, "TAILS")
             await interaction.response.defer()
 
 
@@ -199,6 +232,17 @@ class ItemDestroySelectView(discord.ui.View):
     def __init__(self, ctx, item_list):
         super().__init__(timeout=None)
         self.add_item(ItemDestroySelect(ctx, item_list))
+        self.ctx = ctx
+
+    # Destroy all items
+    @discord.ui.button(label="Destroy all items", style=discord.ButtonStyle.red)
+    async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            no_error, msgs = interface.destroy_all_items_for_essence(self.ctx.author.name)
+            if no_error:
+                await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
+            else:
+                await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')
 
 
 class BlessingBuySelect(discord.ui.Select):
@@ -428,6 +472,21 @@ async def check_button_pressed(ctx, interaction) -> bool:
     :return: True if button pressed by correspondent user, False if not. Also spits a message.
     """
     if interaction.user.name == ctx.author.name:
+        return True
+    else:
+        await interaction.response.send_message(f"That button is not for you, {interaction.user.mention}!")
+        return False
+
+
+async def check_button_pressed_by_certain_name(ctx, interaction, certain_name: str) -> bool:
+    """
+    Checks if button has been pressed by same user that initiated the interaction.
+
+    :param ctx: Discord's CTX
+    :param interaction: Discord's interaction
+    :return: True if button pressed by correspondent user, False if not. Also spits a message.
+    """
+    if interaction.user.name == certain_name:
         return True
     else:
         await interaction.response.send_message(f"That button is not for you, {interaction.user.mention}!")

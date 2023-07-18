@@ -157,6 +157,18 @@ class Battler:
                 del self.buffs_and_debuffs[debuff]
 
 
+    def remove_all_buffs(self) -> None:
+        """
+        Removes all buffs from the battler.
+
+        :return: None.
+        """
+        for buff in constants.BUFFS:
+            if buff in self.buffs_and_debuffs:
+                self.stat_change_on_buff_debuff(buff, expires=True)
+                del self.buffs_and_debuffs[buff]
+
+
     def get_number_of_debbufs(self):
         """
         Returns the number of debuffs the battler has.

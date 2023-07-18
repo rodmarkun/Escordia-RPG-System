@@ -6,8 +6,8 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "SWORD",
     "STAT_CHANGE_LIST": {
-      "ATK": 10,
-      "MATK": 3,
+      "ATK": 11,
+      "MATK": 4,
       "CRITCH": 5
     }
   },
@@ -18,9 +18,9 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "SWORD",
     "STAT_CHANGE_LIST": {
-      "ATK": 14,
+      "ATK": 13,
       "DEF": 4,
-      "SPEED": 6
+      "SPEED": 4
     }
   },
   {
@@ -32,8 +32,8 @@
     "STAT_CHANGE_LIST": {
       "MAXHP": -2,
       "ATK": 6,
-      "MATK": 6,
-      "MAXMP": 3
+      "MATK": 7,
+      "MAXMP": 5
     }
   },
   {
@@ -44,7 +44,7 @@
     "EQUIPMENT_TYPE": "HAMMER",
     "STAT_CHANGE_LIST": {
       "ATK": 9,
-      "DEF": 3,
+      "DEF": 4,
       "MDEF": 3,
       "SPEED": -2
     }
@@ -67,10 +67,10 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "AXE",
     "STAT_CHANGE_LIST": {
-      "ATK": 13,
+      "ATK": 12,
       "DEF": 4,
-      "MDEF": 3,
-      "SPEED": 2
+      "MDEF": 4,
+      "SPEED": -2
     }
   },
   {
@@ -81,9 +81,23 @@
     "EQUIPMENT_TYPE": "DAGGER",
     "STAT_CHANGE_LIST": {
       "MAXHP": -3,
-      "ATK": 7,
+      "MAXMP": 3,
+      "ATK": 8,
       "MATK": 5,
       "CRITCH": 10
+    }
+  },
+  {
+    "NAME": "Garland's Dagger",
+    "DESCRIPTION": "Dagger used by the legendary rogue master.",
+    "INDIV_VALUE": 400,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "DAGGER",
+    "STAT_CHANGE_LIST": {
+      "ATK": 14,
+      "MATK": 5,
+      "CRITCH": 15,
+      "SPEED": 7
     }
   },
   {
@@ -93,10 +107,10 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "SCEPTER",
     "STAT_CHANGE_LIST": {
-      "ATK": 4,
-      "MATK": 7,
-      "DEF": 3,
-      "MDEF": 3
+      "ATK": 5,
+      "MATK": 8,
+      "DEF": 4,
+      "MDEF": 4
     }
   },
   {
@@ -107,7 +121,7 @@
     "EQUIPMENT_TYPE": "BOW",
     "STAT_CHANGE_LIST": {
       "ATK": 9,
-      "CRITCH": 22,
+      "CRITCH": 20,
       "SPEED": 3
     }
   },
@@ -131,23 +145,24 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "BOOK",
     "STAT_CHANGE_LIST": {
-      "MAXHP": -6,
+      "MAXHP": -5,
       "DEF": -3,
-      "MATK": 12,
+      "MATK": 13,
       "MAXMP": 8,
-      "MDEF": 3
+      "MDEF": 5
     }
   },
   {
     "NAME": "Skeleton Knight Armor",
     "DESCRIPTION": "Armor obtained by defeating a skeleton knight.",
-    "INDIV_VALUE": 100,
+    "INDIV_VALUE": 120,
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "HEAVY_ARMOR",
     "STAT_CHANGE_LIST": {
-      "MAXHP": 6,
+      "MAXHP": 7,
+      "MAXMP": 2,
       "DEF": 8,
-      "MDEF": 7,
+      "MDEF": 6,
       "SPEED": -4
     }
   },
@@ -160,25 +175,25 @@
     "STAT_CHANGE_LIST": {
       "MAXHP": 10,
       "MAXMP": 4,
-      "DEF": 12,
-      "MDEF": 8,
-      "SPEED": -4
+      "DEF": 10,
+      "MDEF": 9,
+      "SPEED": -3
     }
   },
   {
-      "NAME": "Hunter's Armor",
-      "DESCRIPTION": "A lightweight armor made for hunters.",
-      "INDIV_VALUE": 190,
-      "OBJECT_TYPE": "EQUIPMENT",
-      "EQUIPMENT_TYPE": "LIGHT_ARMOR",
-      "STAT_CHANGE_LIST": {
-        "MAXHP": 7,
-        "MAXMP": 4,
-        "DEF": 8,
-        "MDEF": 4,
-        "SPEED": 4
-      }
-    },
+    "NAME": "Hunter's Armor",
+    "DESCRIPTION": "A lightweight armor made for hunters.",
+    "INDIV_VALUE": 190,
+    "OBJECT_TYPE": "EQUIPMENT",
+    "EQUIPMENT_TYPE": "LIGHT_ARMOR",
+    "STAT_CHANGE_LIST": {
+      "MAXHP": 7,
+      "MAXMP": 4,
+      "DEF": 6,
+      "MDEF": 4,
+      "SPEED": 4
+    }
+  },
   {
     "NAME": "Necromancer Robes",
     "DESCRIPTION": "Robes from an old necromancer.",
@@ -189,7 +204,7 @@
       "MAXHP": 6,
       "MAXMP": 6,
       "DEF": 5,
-      "MDEF": 5
+      "MDEF": 8
     }
   },
   {
@@ -201,7 +216,7 @@
     "STAT_CHANGE_LIST": {
       "MAXHP": 8,
       "MAXMP": 10,
-      "DEF": 7,
+      "DEF": 8,
       "MDEF": 8,
       "SPEED": 2
     }
@@ -214,7 +229,8 @@
     "EQUIPMENT_TYPE": "PHYS_HELM",
     "STAT_CHANGE_LIST": {
       "MAXHP": 4,
-      "DEF": 6,
+      "MAXMP": 1,
+      "DEF": 5,
       "MDEF": 4
     }
   },
@@ -225,8 +241,8 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "MAG_HELM",
     "STAT_CHANGE_LIST": {
-      "MAXHP": 2,
-      "MAXMP": 5,
+      "MAXHP": 4,
+      "MAXMP": 4,
       "DEF": 3,
       "MDEF": 3
     }
@@ -251,8 +267,9 @@
     "OBJECT_TYPE": "EQUIPMENT",
     "EQUIPMENT_TYPE": "ACCESSORY",
     "STAT_CHANGE_LIST": {
-      "DEF": 4,
-      "MDEF": 4,
+      "MAXMP": 2,
+      "DEF": 3,
+      "MDEF": 3,
       "SPEED": 2
     }
   },
@@ -264,6 +281,7 @@
     "EQUIPMENT_TYPE": "ACCESSORY",
     "STAT_CHANGE_LIST": {
       "MAXHP": -2,
+      "MAXMP": 4,
       "MATK": 4,
       "MDEF": 4
     }
@@ -276,6 +294,7 @@
     "EQUIPMENT_TYPE": "ACCESSORY",
     "STAT_CHANGE_LIST": {
       "ATK": 2,
+      "DEF": 2,
       "SPEED": 5
     }
   }

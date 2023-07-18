@@ -10,12 +10,13 @@ class Job:
     """
 
     def __init__(self, name: str, description: str, skill_dict: dict, requisites: list,
-                 xp_factor: int = 1):
+                 xp_factor: int = 1, preferred_weapons: list = None):
         self.name = name
         self.description = description
         self.skill_dict = skill_dict
         self.requisites = requisites
         self.xp_factor = xp_factor
+        self.preferred_weapons = preferred_weapons
 
     """
     //////////////////

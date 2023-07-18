@@ -152,6 +152,15 @@ async def dungeon(ctx):
     await discord_logic.dungeon(ctx)
 
 
+@bot.command()
+async def duel(ctx, enemy_name: str):
+    """
+    !duel command
+    Makes the player fight another player
+    """
+    await discord_logic.duel(ctx, enemy_name.lower())
+
+
 def msgs_to_msg_str(msgs: list) -> str:
     """
     Converts a list of messages to a string

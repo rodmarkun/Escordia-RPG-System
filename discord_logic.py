@@ -49,6 +49,23 @@ async def begin_fight(ctx, action_menu_ui):
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
+async def begin_pvp_fight(ctx, action_menu_ui, duel_starter_player, dueled_player, coin_choice):
+    """
+    Begins a PvP fight between two players.
+
+    :param ctx: Discord CTX
+    :param action_menu_ui: UI View for the action menu
+    :param duel_starter_player: Player who started the duel
+    :param dueled_player: Player who was dueled
+    :param coin_choice: Coin choice of the player who was dueled
+    :return:
+    """
+    result = random.choice(["HEADS", "TAILS"])
+    if result == coin_choice:
+        pass
+    else:
+        pass
+
 async def begin_boss_fight(ctx, action_menu_ui):
     """
     Begins a boss fight for the player.
@@ -185,6 +202,14 @@ async def dungeon(ctx):
         dungeon_list = [data_management.search_cache_dungeon_by_name(d) for d in msgs]
         await ctx.send(f"Please select a dungeon, {ctx.author.mention}",
                        view=discord_ui.DungeonSelectView(ctx, dungeon_list))
+    else:
+        await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+
+
+async def duel(ctx, enemy_name: str):
+    no_error, msgs = interface.duel_check(ctx.author.name, enemy_name)
+    if no_error:
+        await ctx.send(embed=discord_embeds.embed_duel_msg(ctx, enemy_name), view=discord_ui.DuelSelectView(ctx, battle))
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 

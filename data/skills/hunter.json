@@ -3,7 +3,7 @@
     "NAME": "Frost Fang",
     "DESCRIPTION": "Inflict moderate ice physical damage to an enemy.",
     "MP_COST": 3,
-    "POWER": 18,
+    "POWER": 17,
     "ELEMENT": "ICE",
     "COOLDOWN": 3,
     "TAGS": ["MAGICAL"],
@@ -23,7 +23,7 @@
     "NAME": "Penetrate Defenses",
     "DESCRIPTION": "Deal some physical damage to an enemy. Reduces their physical and magical defense.",
     "MP_COST": 4,
-    "POWER": 15,
+    "POWER": 14,
     "ELEMENT": null,
     "COOLDOWN": 4,
     "TAGS": ["PHYSICAL", "INFLICT_BUFF_DEBUFF", "DEF_DOWN", "MDEF_DOWN"],
@@ -32,7 +32,7 @@
   {
     "NAME": "Arrow Rain",
     "DESCRIPTION": "Deal physical and magical wind damage to enemies.",
-    "MP_COST": 6,
+    "MP_COST": 5,
     "POWER": 10,
     "ELEMENT": "WIND",
     "COOLDOWN": 3,
@@ -47,6 +47,16 @@
     "ELEMENT": null,
     "COOLDOWN": 5,
     "TAGS": ["PHYSICAL", "RAINBOW"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Enchant Weapons",
+    "DESCRIPTION": "Recover some MP and increase your magical attack.",
+    "MP_COST": 0,
+    "POWER": 16,
+    "ELEMENT": null,
+    "COOLDOWN": 5,
+    "TAGS": ["RECOVER_MP", "SELF_INFLICT_BUFF_DEBUFF", "MATK_UP"],
     "PERCENTAGE_COST": false
   }
 ]

@@ -166,6 +166,8 @@ class Player(Battler):
         return_str = f'**Level**: {self.current_job_dict["lvl"]}\n' \
                      f'**XP**: {self.current_job_dict["xp"]}/{self.current_job_dict["xp_to_next_lvl"]} {job_xp_bar}\n\n'
         if show_skills:
+            pref_weapons = [f"{emojis.equipment_to_emoji[weapon]}" for weapon in data_management.search_cache_job_by_name(self.current_job).preferred_weapons]
+            return_str += f'**Preferred Weapons**: {" ".join(pref_weapons)}\n\n'
             return_str += f'**Skills to learn:** {skills_to_learn_str}'
 
         return return_str

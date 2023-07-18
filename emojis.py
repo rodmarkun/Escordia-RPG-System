@@ -14,6 +14,7 @@ SHOP_EMOJI = '\U0001F6D2'
 EXTRACT_ESSENCE_EMOJI = '\U0001F48E'
 MAP_EMOJI = '\U0001F4CD'
 SHIELD_EMOJI = '\U0001F6E1'
+DAGGER_EMOJI = '\U0001F5E1'
 
 '''
 ///////////////////////////////// Escordia Original Icons/Emojis ////////////////////////////////////

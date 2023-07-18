@@ -9,7 +9,7 @@
   },
   {
     "DUNGEON_NAME": "Old Cemetery",
-    "RECOMMENDED_LVL": 6,
+    "RECOMMENDED_LVL": 8,
     "ENEMY_LIST": ["Skeleton Guard", "Skeleton Hero", "Skeleton Knight", "Skeleton Mage"],
     "BOSS": "Bone Dragon",
     "ENEMY_COUNT": 3,
@@ -17,7 +17,7 @@
   },
   {
     "DUNGEON_NAME": "Black Ant Nest",
-    "RECOMMENDED_LVL": 8,
+    "RECOMMENDED_LVL": 10,
     "ENEMY_LIST": ["Black Ant Knight", "Black Ant Berserker", "Black Ant Protector", "Black Ant Archer"],
     "BOSS": "Black Ant Queen",
     "ENEMY_COUNT": 3,

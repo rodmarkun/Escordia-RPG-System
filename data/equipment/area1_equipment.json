@@ -116,6 +116,19 @@
       }
     },
     {
+      "NAME": "Daidarabotchi Armor",
+      "DESCRIPTION": "Armor made from wood coming from the great Daidarabotchi.",
+      "INDIV_VALUE": 180,
+      "OBJECT_TYPE": "EQUIPMENT",
+      "EQUIPMENT_TYPE": "HEAVY_ARMOR",
+      "STAT_CHANGE_LIST": {
+        "MAXHP": 7,
+        "MAXMP": 4,
+        "DEF": 5,
+        "MDEF": 4
+      }
+    },
+    {
       "NAME": "Cloth Armor",
       "DESCRIPTION": "A lightweight armor made from cloth.",
       "INDIV_VALUE": 45,

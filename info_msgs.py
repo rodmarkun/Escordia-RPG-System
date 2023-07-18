@@ -21,3 +21,4 @@ TUTORIAL_MSG = f"Hello traveller! Welcome to __Escordia RPG__!\n\nHere, you can 
                 "--> __You can play the whole game just by entering the command__ `!menu` :) <--"
 
 ESSENCE_MSG = f"You can destroy items for essence {emojis.ESC_ESSENCE_ICON}. You can spend your essence on permanent blessings. When destroying an item, you destroy all copies of that item in your inventory. The amount of essence you get depends on the item's rarity and quantity destroyed."
+PVP_MSG = f"Welcome to the Escordia Arena! Here you can fight other players in a 1v1 battle. There are no prizes other than honor and glory. To duel someone, use `!duel [their character name]`."

@@ -2,7 +2,7 @@
   {
     "NAME": "Bolt Sword",
     "DESCRIPTION": "Inflict moderate lightning physical damage with your sword.",
-    "MP_COST": 4,
+    "MP_COST": 3,
     "POWER": 18,
     "ELEMENT": "THUNDER",
     "COOLDOWN": 3,
@@ -41,12 +41,22 @@
   },
   {
     "NAME": "Pyroclasm",
-    "DESCRIPTION": "Deal physical and magical fire damage to an enemy, while healing for half of the damage done.",
+    "DESCRIPTION": "Deal physical and magical fire damage to an enemy, while healing for half of the damage done. Recover some MP.",
     "MP_COST": 8,
     "POWER": 13,
     "ELEMENT": "FIRE",
     "COOLDOWN": 4,
-    "TAGS": ["MAGICAL", "LEECH"],
+    "TAGS": ["PHYSICAL", "MAGICAL", "LEECH", "RECOVER_MP"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Champion's Roar",
+    "DESCRIPTION": "Remove all your debuffs. Grants a shield for 30% of your MAXHP.",
+    "MP_COST": 5,
+    "POWER": 30,
+    "ELEMENT": "HOLY",
+    "COOLDOWN": 4,
+    "TAGS": ["SHIELD", "SELF_REMOVE_DEBUFFS"],
     "PERCENTAGE_COST": false
   }
 ]

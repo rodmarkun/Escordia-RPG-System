@@ -292,6 +292,32 @@ def destroy_item_for_essence(name: str, item_name: str) -> (bool, list):
     return True, messager.empty_queue(name)
 
 
+def destroy_all_items_for_essence(name: str) -> (bool, list):
+    """
+    Player destroys an item for essence.
+
+    :param name: Player's name.
+    :return: Bool and list. True if item was destroyed. False if there were errors. List contains info messages.
+    """
+    player_inst = data_management.search_cache_player(name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    total_essence, total_quantity_destroyed = 0, 0
+    item_names = [i for i in player_inst.inventory.items.keys()]
+    for item_name in item_names:
+        essence, quantity_destroyed = player_inst.inventory.destroy_item_for_essence(item_name)
+        total_essence += essence
+        total_quantity_destroyed += quantity_destroyed
+    player_inst.essence += total_essence
+    data_management.update_player_info(player_inst.name)
+    return True, messager.empty_queue(name)
+
+
 def equip_item(name: str, item_name: str) -> (bool, list):
     """
     Player equips an item from their inventory.
@@ -309,6 +335,7 @@ def equip_item(name: str, item_name: str) -> (bool, list):
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
     player_inst.equip_item(item_name)
+    player_inst.recover()
     data_management.update_player_info(player_inst.name)
     return True, messager.empty_queue(name)
 
@@ -429,6 +456,36 @@ def start_dungeon(name: str, dungeon_name: str) -> (bool, list):
     data_management.create_new_dungeon_inst(player_inst, dungeon_inst)
 
     return True, messager.empty_queue(name)
+
+
+def duel_check(name: str, enemy_name: str) -> (bool, list):
+    """
+    Checks if two players can duel.
+
+    :param name: Player who started the duel.
+    :param enemy_name: Player who was dueled.
+    :return: Bool and list. True if players can duel. False if there were errors. List contains info messages.
+    """
+    if enemy_name is None:
+        return False, [ERROR_NO_DUELED_SPECIFIED]
+
+    player_inst = data_management.search_cache_player(name)
+    enemy_inst = data_management.search_cache_player(enemy_name)
+
+    if player_inst is None:
+        return False, [ERROR_CHARACTER_DOES_NOT_EXIST]
+
+    if enemy_inst is None:
+        return False, [ERROR_DUELED_DOES_NOT_EXIST]
+
+    if data_management.search_cache_battle_by_player(name) is not None or data_management.search_cache_battle_by_player(enemy_name) is not None:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
+
+    if player_inst.in_dungeon or enemy_inst.in_dungeon:
+        return False, [ERROR_CANNOT_DO_WHILE_IN_DUNGEON]
+
+    return True, []
+
 
 
 def change_player_job(name: str, job_name: str) -> (bool, list):
