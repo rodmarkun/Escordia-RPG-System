@@ -11,7 +11,7 @@
     },
     "REQUISITES": {},
     "XP_FACTOR": 2,
-    "PREFERRED_WEAPONS": null
+    "PREFERRED_WEAPONS": ["SWORD", "DAGGER", "STAFF"]
   },
   {
     "NAME": "Warrior",
@@ -103,15 +103,15 @@
     "NAME": "Hunter",
     "DESCRIPTION": "Hunter job",
     "SKILL_DICT": {
-      "1": "Frost Fang",
+      "1": "Arrow Rain",
       "2": "Nature Inspiration",
       "3": "+3 SPEED",
       "4": "Penetrate Defenses",
-      "5": "Arrow Rain",
+      "5": "Enchant Weapons",
       "6": "+3 ATK",
       "7": "Rainbow Arrow",
       "8": "+3 CRITCH",
-      "9": "Enchant Weapons",
+      "9": "Frost Fang",
       "10": "+4 MAXHP"
     },
     "REQUISITES": {"Rogue" :  5, "Warrior" :  5},
@@ -122,15 +122,15 @@
     "NAME": "Warlock",
     "DESCRIPTION": "Warlock job",
     "SKILL_DICT": {
-      "1": "Bio",
+      "1": "Freeze Veins",
       "2": "Blood Transfusion",
       "3": "+3 MAXMP",
       "4": "Dark Pact",
-      "5": "Freeze Veins",
+      "5": "Absorb Strength",
       "6": "+3 MAXHP",
       "7": "Immolate",
       "8": "+2 ATK",
-      "9": "Absorb Strength",
+      "9": "Bio",
       "10": "+4 MATK"
     },
     "REQUISITES": {"Rogue" :  5, "Mage" :  5},

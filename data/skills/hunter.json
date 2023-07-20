@@ -1,22 +1,22 @@
 [
   {
-    "NAME": "Frost Fang",
-    "DESCRIPTION": "Inflict moderate ice physical damage to an enemy.",
-    "MP_COST": 3,
-    "POWER": 17,
-    "ELEMENT": "ICE",
+    "NAME": "Arrow Rain",
+    "DESCRIPTION": "Deal physical and magical wind damage to enemies.",
+    "MP_COST": 5,
+    "POWER": 10,
+    "ELEMENT": "WIND",
     "COOLDOWN": 3,
-    "TAGS": ["MAGICAL"],
+    "TAGS": ["PHYSICAL", "MAGICAL"],
     "PERCENTAGE_COST": false
   },
   {
     "NAME": "Nature Inspiration",
-    "DESCRIPTION": "Heal yourself for some amount and increase your attack.",
+    "DESCRIPTION": "Heal yourself for some amount and get a shield for 20% of your MAXHP.",
     "MP_COST": 4,
-    "POWER": 17,
+    "POWER": 20,
     "ELEMENT": "WIND",
     "COOLDOWN": 4,
-    "TAGS": ["HEALING", "ALTERATION", "SELF_INFLICT_BUFF_DEBUFF", "ATK_UP"],
+    "TAGS": ["HEALING", "SHIELD"],
     "PERCENTAGE_COST": false
   },
   {
@@ -30,33 +30,33 @@
     "PERCENTAGE_COST": false
   },
   {
-    "NAME": "Arrow Rain",
-    "DESCRIPTION": "Deal physical and magical wind damage to enemies.",
-    "MP_COST": 5,
-    "POWER": 10,
-    "ELEMENT": "WIND",
-    "COOLDOWN": 3,
-    "TAGS": ["PHYSICAL", "MAGICAL"],
+    "NAME": "Enchant Weapons",
+    "DESCRIPTION": "Recover some MP and increase your magical and physical attack.",
+    "MP_COST": 0,
+    "POWER": 16,
+    "ELEMENT": null,
+    "COOLDOWN": 5,
+    "TAGS": ["RECOVER_MP", "SELF_INFLICT_BUFF_DEBUFF", "MATK_UP", "ATK_UP"],
     "PERCENTAGE_COST": false
   },
   {
     "NAME": "Rainbow Arrow",
     "DESCRIPTION": "Shoot a high physical damage arrow containing the power of all elements, always striking the enemy weakness.",
     "MP_COST": 7,
-    "POWER": 20,
+    "POWER": 19,
     "ELEMENT": null,
-    "COOLDOWN": 5,
+    "COOLDOWN": 3,
     "TAGS": ["PHYSICAL", "RAINBOW"],
     "PERCENTAGE_COST": false
   },
   {
-    "NAME": "Enchant Weapons",
-    "DESCRIPTION": "Recover some MP and increase your magical attack.",
-    "MP_COST": 0,
-    "POWER": 16,
-    "ELEMENT": null,
-    "COOLDOWN": 5,
-    "TAGS": ["RECOVER_MP", "SELF_INFLICT_BUFF_DEBUFF", "MATK_UP"],
+    "NAME": "Frost Fang",
+    "DESCRIPTION": "Inflict moderate ice physical damage to an enemy.",
+    "MP_COST": 3,
+    "POWER": 18,
+    "ELEMENT": "ICE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL"],
     "PERCENTAGE_COST": false
   }
 ]

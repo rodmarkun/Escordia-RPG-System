@@ -2,7 +2,7 @@
   {
     "NAME": "Holy Smite",
     "DESCRIPTION": "Inflict moderate holy magical damage.",
-    "MP_COST": 6,
+    "MP_COST": 4,
     "POWER": 18,
     "ELEMENT": "HOLY",
     "COOLDOWN": 3,
@@ -42,7 +42,7 @@
   {
     "NAME": "God's Wrath",
     "DESCRIPTION": "Deal high physical dark damage to an enemy",
-    "MP_COST": 8,
+    "MP_COST": 5,
     "POWER": 25,
     "ELEMENT": "DARK",
     "COOLDOWN": 4,
@@ -52,7 +52,7 @@
   {
     "NAME": "Lord's Intervention",
     "DESCRIPTION": "Remove all enemy buffs. Does not skip your turn.",
-    "MP_COST": 5,
+    "MP_COST": 4,
     "POWER": 0,
     "ELEMENT": "HOLY",
     "COOLDOWN": 4,

@@ -223,6 +223,7 @@ def purchase_blessing(name: str, blessing_name: str) -> (bool, list):
         return False, [ERROR_CANNOT_DO_WHILE_IN_FIGHT]
 
     blessing.purchase_blessing(player_inst, blessing_name)
+    player_inst.recover()
     data_management.update_player_info(player_inst.name)
     return True, messager.empty_queue(name)
 

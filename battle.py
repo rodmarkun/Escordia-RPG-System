@@ -347,8 +347,9 @@ def normal_attack(attacker: 'Battler', target: 'Battler', player_name: str) -> N
 
         # Check if the attacker is using a preferred weapon for its job
         if type(attacker) == Player:
-            if data_management.search_cache_item_by_name(attacker.equipment["WEAPON"]).equipment_type in data_management.search_cache_job_by_name(attacker.current_job).preferred_weapons:
-                dmg = int(dmg * constants.PREFERRED_WEAPON_DAMAGE_BONUS)
+            if attacker.equipment["WEAPON"] is not None:
+                if data_management.search_cache_item_by_name(attacker.equipment["WEAPON"]).equipment_type in data_management.search_cache_job_by_name(attacker.current_job).preferred_weapons:
+                    dmg = int(dmg * constants.PREFERRED_WEAPON_DAMAGE_BONUS)
 
         # Check for critical damage
         dmg, is_crit = formulas.check_for_critical_damage(attacker, dmg)

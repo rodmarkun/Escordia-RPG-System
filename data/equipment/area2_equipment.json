@@ -160,7 +160,7 @@
     "EQUIPMENT_TYPE": "HEAVY_ARMOR",
     "STAT_CHANGE_LIST": {
       "MAXHP": 7,
-      "MAXMP": 2,
+      "MAXMP": 3,
       "DEF": 8,
       "MDEF": 6,
       "SPEED": -4

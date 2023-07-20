@@ -1,18 +1,18 @@
 [
   {
-    "NAME": "Bio",
-    "DESCRIPTION": "Inflict moderate dark magical damage to an enemy. Lowers their magical defense.",
+    "NAME": "Freeze Veins",
+    "DESCRIPTION": "Deal moderate ice magical damage to an enemy. Lowers their physical attack.",
     "MP_COST": 4,
-    "POWER": 17,
-    "ELEMENT": "DARK",
+    "POWER": 15,
+    "ELEMENT": "ICE",
     "COOLDOWN": 4,
-    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"],
+    "TAGS": ["PHYSICAL", "MAGICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
     "PERCENTAGE_COST": false
   },
   {
     "NAME": "Blood Transfusion",
     "DESCRIPTION": "Deal some dark physical damage to an enemy. Heals the user for a percentage of the damage dealt. Lowers their physical defense.",
-    "MP_COST": 5,
+    "MP_COST": 4,
     "POWER": 15,
     "ELEMENT": "DARK",
     "COOLDOWN": 5,
@@ -30,26 +30,6 @@
     "PERCENTAGE_COST": false
   },
   {
-    "NAME": "Freeze Veins",
-    "DESCRIPTION": "Deal moderate ice magical damage to an enemy. Lowers their physical attack.",
-    "MP_COST": 4,
-    "POWER": 15,
-    "ELEMENT": "ICE",
-    "COOLDOWN": 4,
-    "TAGS": ["PHYSICAL", "MAGICAL", "INFLICT_BUFF_DEBUFF", "ATK_DOWN"],
-    "PERCENTAGE_COST": false
-  },
-  {
-    "NAME": "Immolate",
-    "DESCRIPTION": "This spell has +6 power for each debuff the enemy currently has. Removes all enemy debuffs.",
-    "MP_COST": 8,
-    "POWER": 12,
-    "ELEMENT": "FIRE",
-    "COOLDOWN": 3,
-    "TAGS": ["MAGICAL", "DEBUFF_EXPLOIT", "REMOVE_DEBUFFS"],
-    "PERCENTAGE_COST": false
-  },
-  {
     "NAME": "Absorb Strength",
     "DESCRIPTION": "Remove all enemy buffs. Recover some MP.",
     "MP_COST": 0,
@@ -57,6 +37,26 @@
     "ELEMENT": null,
     "COOLDOWN": 3,
     "TAGS": ["RECOVER_MP", "REMOVE_BUFFS"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Immolate",
+    "DESCRIPTION": "This spell has +6 power for each debuff the enemy currently has. Removes all enemy debuffs.",
+    "MP_COST": 7,
+    "POWER": 12,
+    "ELEMENT": "FIRE",
+    "COOLDOWN": 3,
+    "TAGS": ["MAGICAL", "DEBUFF_EXPLOIT", "REMOVE_DEBUFFS"],
+    "PERCENTAGE_COST": false
+  },
+  {
+    "NAME": "Bio",
+    "DESCRIPTION": "Inflict moderate dark magical damage to an enemy. Lowers their magical defense.",
+    "MP_COST": 4,
+    "POWER": 17,
+    "ELEMENT": "DARK",
+    "COOLDOWN": 4,
+    "TAGS": ["MAGICAL", "INFLICT_BUFF_DEBUFF", "MDEF_DOWN"],
     "PERCENTAGE_COST": false
   }
 ]
