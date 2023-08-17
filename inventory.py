@@ -15,12 +15,13 @@ class Inventory:
 
     def add_item(self, item, quantity) -> None:
         """
-        Adds an item to the inventory.
+        Adds X quantity of an item to the inventory.
 
         :param item: Item's name.
         :param quantity: Quantity to add.
         :return: None
         """
+
         if item in self.items:
             self.items.update({item: self.items[item] + quantity})
         else:
@@ -34,6 +35,7 @@ class Inventory:
         :param item:
         :return: Essence amount and quantity of items destroyed
         """
+
         i = data_management.search_cache_item_by_name(item)
         quantity = self.items[item]
         self.remove_item(item, quantity)
@@ -47,6 +49,7 @@ class Inventory:
 
         :return: Boolean, True if has space available. False if it does not.
         """
+
         return len(self.items) < constants.MAX_INVENTORY_SLOTS
 
     def remove_item(self, item, quantity) -> bool:
@@ -57,6 +60,7 @@ class Inventory:
         :param quantity: Quantity to add.
         :return: Boolean, True if was able to remove. False if it was not.
         """
+
         if item in self.items:
             if self.items[item] == quantity:
                 del self.items[item]
@@ -73,6 +77,7 @@ class Inventory:
         :param item: Item to search for.
         :return: Item instance, None if not found.
         """
+
         if item in self.items:
             return data_management.search_cache_item_by_name(item)
         return None
@@ -83,6 +88,7 @@ class Inventory:
 
         :return: Str containing all item's info
         """
+
         inventory_str = f"[{len(self.items)}/{constants.MAX_INVENTORY_SLOTS}]\n\n"
         if len(self.items) == 0:
             return "You have no items in your inventory."
@@ -98,6 +104,7 @@ class Inventory:
         :param item_type: Item type.
         :return: List with items.
         """
+
         items = []
         for item in self.items:
             i = data_management.search_cache_item_by_name(item)
@@ -109,9 +116,11 @@ class Inventory:
 def equipment_equivalences(equipment_type: str, equipment: 'Equipment') -> bool:
     """
     Checks if a certain item has a type equivalent to the specified (ex: ARMOR is equivalent to HEAVY_ARMOR)
+
     :param equipment_type: Equipment to compare
     :return: True if equivalent, False if not
     """
+
     if equipment_type == "ARMOR" and equipment.equipment_type in constants.ARMOR_TYPES:
         return True
     elif equipment_type == "WEAPON" and equipment.equipment_type in constants.WEAPON_TYPES:

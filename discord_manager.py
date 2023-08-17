@@ -5,6 +5,7 @@ import discord_embeds
 import discord_logic
 import discord_ui
 import info_msgs
+
 from discord.ext import commands
 
 # Discord token from VENV
@@ -16,7 +17,7 @@ activity = discord.Activity(type=discord.ActivityType.watching, name="!help")
 bot = commands.Bot(command_prefix='!', intents=intents, activity=activity)
 bot.remove_command('help')
 
-
+# Discord Commands
 @bot.command()
 async def start(ctx):
     '''
@@ -170,6 +171,7 @@ def msgs_to_msg_str(msgs: list) -> str:
     """
     return "\n".join(msgs)
 
-
-data_management.load_everything()
-bot.run(DISCORD_TOKEN)
+# Main program
+if __name__ == "__main__":
+    data_management.load_everything()
+    bot.run(DISCORD_TOKEN)

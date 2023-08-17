@@ -1,13 +1,12 @@
-from StringProgressBar import progressBar
-
 import data_management
 import emojis
 import error_msgs
 import formulas
-import inventory as inventory_module
-import messager
-from battler import Battler
 import constants
+import messager
+import inventory as inventory_module
+from battler import Battler
+from StringProgressBar import progressBar
 
 
 class Player(Battler):
@@ -88,9 +87,11 @@ class Player(Battler):
     def add_exp_job(self, exp: int) -> bool:
         """
         Adds a certain amount of XP to the player's job.
+
         :param exp: Amount of XP to be added.
         :return: True if player levels up, False if it does not.
         """
+
         curr_job = data_management.search_cache_job_by_name(self.current_job)
         print(self.current_job)
         exp *= curr_job.xp_factor
@@ -143,6 +144,12 @@ class Player(Battler):
 
 
     def show_player_stats(self) -> str:
+        """
+        Returns a string containing the player's stats.
+
+        :return: String containing the player's stats.
+        """
+
         player_hp_bar = progressBar.filledBar(int(self.stats[constants.MAXHP_STATKEY]), int(self.stats[constants.HP_STATKEY]), size=10)[0]
         player_mp_bar = progressBar.filledBar(int(self.stats[constants.MAXMP_STATKEY]), int(self.stats[constants.MP_STATKEY]), size=10)[0]
         return f'**HP**: {self.stats[constants.HP_STATKEY]}/{self.stats[constants.MAXHP_STATKEY]} {player_hp_bar}        \n' \
@@ -156,6 +163,7 @@ class Player(Battler):
 
         :return: String containing the player's information.
         """
+
         job = data_management.search_cache_job_by_name(self.current_job)
         job_xp_bar = progressBar.filledBar(int(self.current_job_dict["xp_to_next_lvl"]), int(self.current_job_dict["xp"]), size=10)[0]
         skills_to_learn_str = '\n'
@@ -179,6 +187,7 @@ class Player(Battler):
 
         :return: String containing the player's skills.
         """
+
         str = "**Skills**\n"
         for skill in self.skills:
             skill_inst = data_management.search_cache_skill_by_name(skill)
@@ -219,6 +228,7 @@ class Player(Battler):
         :param equipment: Equipment to unequip.
         :return: None.
         """
+
         self.inventory.add_item(equipment, 1)
         equipment = data_management.search_cache_item_by_name(equipment)
         for stat in equipment.stat_change_list:
@@ -266,8 +276,10 @@ class Player(Battler):
     def assign_skills_based_on_job(self) -> None:
         """
         Assigns skills based on the player's job.
+
         :return: None
         """
+
         self.skills = []
 
         job = data_management.search_cache_job_by_name(self.current_job)

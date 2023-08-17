@@ -1,6 +1,6 @@
 import constants
 import random
-
+import discord
 import discord_embeds
 import discord_ui
 import emojis
@@ -8,15 +8,19 @@ import info_msgs
 import interface
 import data_management
 import messager
+import battle
+
 from error_msgs import *
 
 
-async def create_character(ctx):
+async def create_character(ctx) -> None:
     """
     Creates a new character for the player.
+
     :param ctx: Discord CTX
     :return: None
     """
+
     no_error, msgs = interface.create_player(ctx.author.name)
     if no_error:
         await ctx.send(
@@ -25,13 +29,16 @@ async def create_character(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def begin_fight(ctx, action_menu_ui):
+async def begin_fight(ctx, action_menu_ui: discord.ui.View) -> None:
     """
     Begins a fight for the player.
+
     :param ctx: Discord CTX
     :param action_menu_ui: UI View for the action menu
     :return: None
     """
+
+    # Find treasure
     if constants.TREASURE_CHANCE_WHEN_FIGHTING >= random.randint(0, 100):
         no_error, msgs = interface.receive_treasure(ctx.author.name, constants.NUMBER_OF_ITEMS_IN_TREASURE)
         if no_error:
@@ -39,16 +46,18 @@ async def begin_fight(ctx, action_menu_ui):
             await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
         else:
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
+    # Begin fight
     else:
         no_error, msgs = interface.begin_battle(ctx.author.name, False)
         if no_error:
-            battle = data_management.search_cache_battle_by_player(ctx.author.name)
-            await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+            battle_inst = data_management.search_cache_battle_by_player(ctx.author.name)
+            await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle_inst.player, battle_inst.enemy),
                            view=action_menu_ui)
         else:
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
+# TODO
 async def begin_pvp_fight(ctx, action_menu_ui, duel_starter_player, dueled_player, coin_choice):
     """
     Begins a PvP fight between two players.
@@ -66,28 +75,44 @@ async def begin_pvp_fight(ctx, action_menu_ui, duel_starter_player, dueled_playe
     else:
         pass
 
-async def begin_boss_fight(ctx, action_menu_ui):
+async def begin_boss_fight(ctx, action_menu_ui) -> None:
     """
     Begins a boss fight for the player.
+
     :param ctx: Discord CTX
     :param action_menu_ui: UI View for the action menu
     :return: None
     """
+
     no_error, msgs = interface.begin_battle(ctx.author.name, True)
     if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
-        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+        battle_inst = data_management.search_cache_battle_by_player(ctx.author.name)
+        await ctx.send(embed=discord_embeds.embed_fight_msg(ctx, battle_inst.player, battle_inst.enemy),
                        view=action_menu_ui)
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def attack(ctx):
+async def attack(ctx) -> None:
+    """
+    Attacks the enemy.
+
+    :param ctx: Discord CTX
+    :return: None.
+    """
+
     no_error, msgs = interface.normal_attack(ctx.author.name)
-    await continue_battle(no_error, msgs, ctx, discord_ui.ActionMenu(ctx))
+    await continue_battle(ctx, no_error, msgs, discord_ui.ActionMenu(ctx))
 
 
-async def rest(ctx):
+async def rest(ctx) -> None:
+    """
+    Rests the player (Fully recovers).
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.player_rest(ctx.author.name)
     if no_error:
         msg_str = msgs_to_msg_str(msgs)
@@ -96,7 +121,14 @@ async def rest(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def inventory(ctx):
+async def inventory(ctx) -> None:
+    """
+    Shows the player's inventory.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.show_player_inventory(ctx.author.name)
     if no_error:
         await ctx.send(msgs_to_msg_str(msgs))
@@ -104,7 +136,14 @@ async def inventory(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def shop(ctx):
+async def shop(ctx) -> None:
+    """
+    Shows the area's shop.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.show_shop_inventory(ctx.author.name)
     if no_error:
         item_list = data_management.search_cache_shop_by_area(
@@ -116,7 +155,14 @@ async def shop(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def equipment(ctx):
+async def equipment(ctx) -> None:
+    """
+    Shows the player's equipment.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     player_inst = data_management.search_cache_player(ctx.author.name)
     if player_inst is None:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CHARACTER_DOES_NOT_EXIST}')
@@ -136,7 +182,14 @@ async def equipment(ctx):
                            view=discord_ui.EquipmentSelectView(ctx, item_list, player_inst.equipment[e_type]))
 
 
-async def essence(ctx):
+async def essence(ctx) -> None:
+    """
+    Shows the essence menu.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.essence_crafting(ctx.author.name)
     if no_error:
         player_inst = data_management.search_cache_player(ctx.author.name)
@@ -151,7 +204,14 @@ async def essence(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def area(ctx):
+async def area(ctx) -> None:
+    """
+    Shows the area menu.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.show_area(ctx.author.name)
     if no_error:
         player_inst = data_management.search_cache_player(ctx.author.name)
@@ -160,7 +220,15 @@ async def area(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def profile(ctx, player_menu_ui):
+async def profile(ctx, player_menu_ui: discord.ui.View) -> None:
+    """
+    Shows the player's profile.
+
+    :param ctx: Discord CTX
+    :param player_menu_ui: Player menu UI
+    :return: None
+    """
+
     no_error, msgs = interface.show_player_profile(ctx.author.name)
     if no_error:
         player_inst = data_management.search_cache_player(ctx.author.name)
@@ -170,7 +238,14 @@ async def profile(ctx, player_menu_ui):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def job(ctx):
+async def job(ctx) -> None:
+    """
+    Shows the player's job info.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.show_player_job(ctx.author.name)
     if no_error:
         player_inst = data_management.search_cache_player(ctx.author.name)
@@ -181,7 +256,14 @@ async def job(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def show_skills(ctx):
+async def show_skills(ctx) -> None:
+    """
+    Shows the player's skills and its information.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     player_inst = data_management.search_cache_player(ctx.author.name)
     if player_inst is None:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {ERROR_CHARACTER_DOES_NOT_EXIST}')
@@ -196,7 +278,14 @@ async def show_skills(ctx):
     await ctx.send(embed=discord_embeds.embed_skills_info(ctx, player_inst.name, skill_str))
 
 
-async def dungeon(ctx):
+async def dungeon(ctx) -> None:
+    """
+    Shows the dungeon menu.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
     no_error, msgs = interface.show_dungeons(ctx.author.name)
     if no_error:
         dungeon_list = [data_management.search_cache_dungeon_by_name(d) for d in msgs]
@@ -206,7 +295,16 @@ async def dungeon(ctx):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def duel(ctx, enemy_name: str):
+# WIP
+async def duel(ctx, enemy_name: str) -> None:
+    """
+    Shows the duel menu.
+
+    :param ctx: Discord CTX
+    :param enemy_name: Enemy name
+    :return: None
+    """
+
     no_error, msgs = interface.duel_check(ctx.author.name, enemy_name)
     if no_error:
         await ctx.send(embed=discord_embeds.embed_duel_msg(ctx, enemy_name), view=discord_ui.DuelSelectView(ctx, battle))
@@ -214,64 +312,94 @@ async def duel(ctx, enemy_name: str):
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def continue_battle(no_error: bool, msgs: list, ctx, action_menu_ui) -> None:
+async def continue_battle(ctx, no_error: bool, msgs: list, action_menu_ui: discord.ui.View) -> None:
+    """
+    Handles the logic of the battle after finishing a turn.
+
+    :param ctx: Discord CTX
+    :param no_error: Whether there was an error or not
+    :param msgs: Info msgs of the battle
+    :param action_menu_ui: Action menu UI discord object
+    :return: None
+    """
+
     if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
+        # Search battle
+        battle_inst = data_management.search_cache_battle_by_player(ctx.author.name)
         msg_str = msgs_to_msg_str(msgs)
-        if battle.is_over:
+
+        # Battle is over
+        if battle_inst.is_over:
             msg_str = msgs_to_msg_str(msgs)
             await ctx.send(msg_str)
-            if battle.player.alive:
-                loot = battle.win_battle()
+            # Player wins
+            if battle_inst.player.alive:
+                loot = battle_inst.win_battle()
                 await ctx.send('', embed=discord_embeds.embed_victory_msg(ctx, msgs_to_msg_str(
                     messager.empty_queue(ctx.author.name))))
                 if loot != '':
                     await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, [loot]))
-                if battle.player.in_dungeon:
-                    await traverse_dungeon(battle, ctx)
+                if battle_inst.player.in_dungeon:
+                    await traverse_dungeon(battle_inst, ctx)
                 else:
                     await profile(ctx, discord_ui.PlayerMenu(ctx))
+            # Player loses
             else:
-                battle.lose_battle()
+                battle_inst.lose_battle()
                 await ctx.send('', embed=discord_embeds.embed_death_msg(ctx))
                 await profile(ctx, discord_ui.PlayerMenu(ctx))
+        # Continue battle
         else:
-            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+            await ctx.send(msg_str, embed=discord_embeds.embed_fight_msg(ctx, battle_inst.player, battle_inst.enemy),
                                     view=action_menu_ui)
     else:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs}')
 
-async def manage_battle(no_error: bool, ctx, msgs: list, action_menu_ui):
+async def manage_battle(ctx, no_error: bool, msgs: list, action_menu_ui: discord.ui.View) -> None:
     """
     Manages a battle after starting it.
-    :param no_error: Whether there was an error or not
+
     :param ctx: Discord CTX
+    :param no_error: Whether there was an error or not
     :param msgs: List of info messages.
+    :param action_menu_ui: Action menu UI discord object
     :return: None.
     """
+
     if no_error:
-        battle = data_management.search_cache_battle_by_player(ctx.author.name)
+        battle_inst = data_management.search_cache_battle_by_player(ctx.author.name)
         await ctx.send(
-            embed=discord_embeds.embed_fight_msg(ctx, battle.player, battle.enemy),
+            embed=discord_embeds.embed_fight_msg(ctx, battle_inst.player, battle_inst.enemy),
             view=action_menu_ui)
     else:
         await ctx.send(
             f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
-async def traverse_dungeon(battle, ctx):
-    dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle.player.name)
+async def traverse_dungeon(ctx, battle_inst: battle.Battle) -> None:
+    """
+    Traverses a dungeon after defeating an enemy of that same dungeon.
+
+    :param battle_inst: Battle instance.
+    :param ctx: Discord CTX
+    :return: None
+    """
+
+    dungeon_inst = data_management.search_cache_dungeon_inst_by_player(battle_inst.player.name)
+    # if it was the boss, receive rewards from the dungeon
     if dungeon_inst.boss_defeated:
         # Receive rewards
         no_error, msgs = interface.receive_treasure(ctx.author.name, random.randint(2, 3))
-        battle.player.in_dungeon = False
+        # Remove dungeon
+        battle_inst.player.in_dungeon = False
         if no_error:
             await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, msgs))
             await profile(ctx, discord_ui.PlayerMenu(ctx))
         else:
             await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
-        data_management.delete_cache_dungeon_inst(battle.player.name)
-        data_management.update_player_info(battle.player.name)
+        data_management.delete_cache_dungeon_inst(battle_inst.player.name)
+        data_management.update_player_info(battle_inst.player.name)
+    # Check if next enemy should be a boss or not
     else:
         if dungeon_inst.current_enemies_defeated != dungeon_inst.enemy_count:
             no_error, msgs = interface.begin_battle(ctx.author.name, False,
@@ -290,18 +418,20 @@ def msgs_to_msg_str(msgs: list) -> str:
     :param msgs: List of messages
     :return: String containing all messages.
     """
+
     return "\n".join(msgs)
 
 
-def return_jobs_curr_lvl_dict(job_dictionary, job_name):
+def return_jobs_curr_lvl_dict(job_dictionary, job_name) -> int:
     """
     Returns the current level of a job from a dictionary.
     This is not clean, but whatever.
 
-    :param job_dictionary:
-    :param job_name:
-    :return:
+    :param job_dictionary: Dictionary containing the jobs.
+    :param job_name: Name of the job.
+    :return: Integer with current level of the job.
     """
+
     try:
         return job_dictionary[job_name]
     except KeyError:

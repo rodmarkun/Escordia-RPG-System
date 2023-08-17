@@ -1,6 +1,7 @@
 from battle import Battle
 from player import Player
 
+# TODO - WIP This is for PVP, not implemented yet
 
 class Duel(Battle):
     """

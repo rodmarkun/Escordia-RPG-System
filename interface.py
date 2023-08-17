@@ -1,9 +1,8 @@
 import copy
 import random
-
 import blessing
+import constants
 import messager
-import player
 import data_management
 import battle
 import shop
@@ -23,6 +22,7 @@ def create_player(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and List. True if character was created, False if it was not. String contains info messages.
     """
+
     if data_management.search_cache_player(name) is None:
         data_management.create_new_player(name)
         print(f"Created character with name: {name}")
@@ -32,12 +32,14 @@ def create_player(name: str) -> (bool, list):
 
 def begin_battle(name: str, boss: bool, *, enemy: str = None) -> (bool, list):
     """
-    Creates a new Battle in the system.
+    Creates a new Battle in the system between a player and an enemy.
 
     :param name: Player's name.
     :param boss: True if the player wants to fight a boss, False if he wants to fight a normal enemy.
+    :param enemy: Enemy's name. If None, a random enemy will be chosen.
     :return: Bool and List. True if Battle was created, False if it was not. String contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -65,6 +67,7 @@ def normal_attack(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and List. True if attack was performed. False if there were errors. String contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -72,7 +75,7 @@ def normal_attack(name: str) -> (bool, list):
 
     battle_inst = data_management.search_cache_battle_by_player(name)
     if battle_inst is not None:
-        return True, battle_inst.turn({"ACTION": "NORMAL_ATTACK"})
+        return True, battle_inst.turn({"ACTION": constants.NORMAL_ATTACK_OPTION})
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
 
 
@@ -83,6 +86,7 @@ def check_battle_is_over(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and List. True if battle is over. False if there were errors. String contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -106,6 +110,7 @@ def skill_attack(name: str, skill_name: str) -> (bool, list):
     :param skill_name: Skill's name.
     :return: Bool and List. True if attack was performed. False if there were errors. String contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -113,7 +118,7 @@ def skill_attack(name: str, skill_name: str) -> (bool, list):
 
     battle_inst = data_management.search_cache_battle_by_player(name)
     if battle_inst is not None:
-        return True, battle_inst.turn({"ACTION": "SKILL", "SKILL": skill_name})
+        return True, battle_inst.turn({"ACTION": constants.SKILL_OPTION, "SKILL": skill_name})
     return False, [ERROR_CHARACTER_NOT_IN_FIGHT]
 
 
@@ -124,6 +129,7 @@ def show_player_profile(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. String contains info message.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -138,6 +144,7 @@ def player_rest(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and List. True if rest was performed. False if there were errors. String contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -158,6 +165,7 @@ def show_player_inventory(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -169,9 +177,11 @@ def show_player_inventory(name: str) -> (bool, list):
 def show_shop_inventory(name: str) -> (bool, list):
     """
     Shows shop's inventory.
+
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -191,6 +201,7 @@ def buy_item(name: str, item_name: str) -> (bool, list):
     :param item_name: Item's name.
     :return: Bool and list. True if item was bought. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -214,6 +225,7 @@ def purchase_blessing(name: str, blessing_name: str) -> (bool, list):
     :param blessing_name: Blessing's name.
     :return: Bool and list. True if blessing was purchased. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -235,6 +247,7 @@ def show_area(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if area was shown. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -251,8 +264,9 @@ def travel_to_area(name: str, area_number: int) -> (bool, list):
 
     :param name: Player's name.
     :param area_number: Area to travel to.
-    :return:
+    :return: Bool and list. True if player traveled. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -300,6 +314,7 @@ def destroy_all_items_for_essence(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if item was destroyed. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -327,6 +342,7 @@ def equip_item(name: str, item_name: str) -> (bool, list):
     :param item_name: Item's name.
     :return: Bool and list. True if item was equipped. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -348,6 +364,7 @@ def show_player_job(name: str, show_skills = True) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -366,6 +383,7 @@ def essence_crafting(name: str) -> (bool, list):
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -385,6 +403,7 @@ def receive_treasure(name: str, item_amount: int) -> (bool, list):
     :param item_amount: Amount of items to receive.
     :return: Bool and list. True if player was found. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -409,9 +428,11 @@ def receive_treasure(name: str, item_amount: int) -> (bool, list):
 def show_dungeons(name: str) -> (bool, list):
     """
     Shows dungeons available in player's current area.
+
     :param name: Player's name.
     :return: Bool and list. True if player was found. False if there were errors. List contains dungeon names.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -434,6 +455,7 @@ def start_dungeon(name: str, dungeon_name: str) -> (bool, list):
     :param dungeon_name: Dungeon's name.
     :return: Bool and list. True if dungeon was started. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:
@@ -467,6 +489,7 @@ def duel_check(name: str, enemy_name: str) -> (bool, list):
     :param enemy_name: Player who was dueled.
     :return: Bool and list. True if players can duel. False if there were errors. List contains info messages.
     """
+
     if enemy_name is None:
         return False, [ERROR_NO_DUELED_SPECIFIED]
 
@@ -497,6 +520,7 @@ def change_player_job(name: str, job_name: str) -> (bool, list):
     :param job_name: Job's name.
     :return: Bool and list. True if job was changed. False if there were errors. List contains info messages.
     """
+
     player_inst = data_management.search_cache_player(name)
 
     if player_inst is None:

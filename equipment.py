@@ -12,20 +12,23 @@ class Equipment(Item):
     def translate_equipment_type(self) -> str:
         """
         Translates the sub-equipment types to equipment types
+
         :return: String containing the equipment type
         """
+
         if self.equipment_type in constants.HELM_TYPES:
-            return "HELMET"
+            return constants.HELMET_KEY
         elif self.equipment_type in constants.ARMOR_TYPES:
-            return "ARMOR"
+            return constants.ARMOR_KEY
         elif self.equipment_type in constants.WEAPON_TYPES:
-            return "WEAPON"
+            return constants.WEAPON_KEY
         else:
-            return "ACCESSORY"
+            return constants.ACCESSORY_KEY
 
     def stat_list_formatted(self) -> str:
         """
         Returns a readable, formatted string with the stat changes of this equipment
+
         :return: Formatted string
         """
         stat_list = []

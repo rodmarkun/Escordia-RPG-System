@@ -106,6 +106,7 @@ def obj_emoji(item: 'Item') -> str:
     :param item: Item instance.
     :return: String with the emoji.
     """
+
     try:
         if item.object_type == "EQUIPMENT":
             return equipment_to_emoji[item.equipment_type]
@@ -114,13 +115,15 @@ def obj_emoji(item: 'Item') -> str:
         return ""
 
 
-def skill_emoji(skill: 'Skill', skill_job) -> str:
+def skill_emoji(skill: 'Skill', skill_job: str) -> str:
     """
     Returns the emoji of a skill.
 
     :param skill: Skill instance.
+    :param skill_job: Name of the job the skill belongs to.
     :return: String with the emoji.
     """
+
     try:
         return element_to_emoji[skill.element]
     except Exception:

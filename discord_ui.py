@@ -2,7 +2,6 @@ import random
 import discord
 import discord_logic
 import emojis
-import info_msgs
 import interface
 import data_management
 import discord_embeds
@@ -13,6 +12,7 @@ class ActionMenu(discord.ui.View):
     """
     Class that handles the menu while in combat.
     """
+
     def __init__(self, ctx):
         super().__init__(timeout=None)
         self.value = None
@@ -58,6 +58,7 @@ class PlayerMenu(discord.ui.View):
     """
     Class that handles general menu.
     """
+
     def __init__(self, ctx):
         super().__init__(timeout=None)
         self.value = None
@@ -70,7 +71,7 @@ class PlayerMenu(discord.ui.View):
             await discord_logic.begin_fight(self.ctx, ActionMenu(self.ctx))
             await interaction.response.defer()
 
-    # Fight
+    # Dungeon
     @discord.ui.button(label=emojis.CASTLE_EMOJI + " Dungeon", style=discord.ButtonStyle.red)
     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
@@ -147,6 +148,7 @@ class PlayerMenu(discord.ui.View):
     #        await interaction.response.send_message(info_msgs.PVP_MSG)
 
 
+# TODO
 class ToinCossMenu(discord.ui.View):
     """
     Class that handles general menu.
@@ -177,6 +179,7 @@ class ItemBuySelect(discord.ui.Select):
     """
     Class that handles the item selection for the shop.
     """
+
     def __init__(self, ctx, item_list):
         items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
         stat_str_remove = "'"
@@ -189,9 +192,17 @@ class ItemBuySelect(discord.ui.Select):
         self.ctx = ctx
 
     # Buys an item
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the item selection.
+
+        :param interaction: Discord interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
             item = data_management.search_cache_item_by_name(self.values[0])
+            # Buys the item
             no_error, msgs = interface.buy_item(self.ctx.author.name, item.name)
             if no_error:
                 await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
@@ -209,6 +220,7 @@ class ItemDestroySelect(discord.ui.Select):
     """
     Class that handles the item destruction for essence.
     """
+
     def __init__(self, ctx, item_list):
         items_in_options = [data_management.search_cache_item_by_name(i) for i in item_list]
         options = [discord.SelectOption(label=i.name,
@@ -219,9 +231,16 @@ class ItemDestroySelect(discord.ui.Select):
         self.ctx = ctx
 
     # Destroys an item
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the item selection.
+
+        :param interaction: Discord interaction
+        :return: None
+        """
         if await check_button_pressed(self.ctx, interaction):
             item = data_management.search_cache_item_by_name(self.values[0])
+            # Destroys the item
             no_error, msgs = interface.destroy_item_for_essence(self.ctx.author.name, item.name)
             if no_error:
                 await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
@@ -234,7 +253,7 @@ class ItemDestroySelectView(discord.ui.View):
         self.add_item(ItemDestroySelect(ctx, item_list))
         self.ctx = ctx
 
-    # Destroy all items
+    # Destroy all items button
     @discord.ui.button(label="Destroy all items", style=discord.ButtonStyle.red)
     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
         if await check_button_pressed(self.ctx, interaction):
@@ -249,6 +268,7 @@ class BlessingBuySelect(discord.ui.Select):
     """
     Class that handles the blessing selection.
     """
+
     def __init__(self, ctx, player_blessing_list):
         items_in_options = []
         for b in data_management.BLESSINGS_CACHE:
@@ -262,8 +282,16 @@ class BlessingBuySelect(discord.ui.Select):
         self.ctx = ctx
 
     # Purchases a blessing
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the blessing selection.
+
+        :param interaction: Discord interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
+            # Purchases the blessing
             no_error, msgs = interface.purchase_blessing(self.ctx.author.name, self.values[0])
             if no_error:
                 await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
@@ -306,7 +334,14 @@ class EquipmentSelect(discord.ui.Select):
         self.ctx = ctx
 
     # Equips an item
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the item selection.
+
+        :param interaction: Discord Interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
             item = data_management.search_cache_item_by_name(self.values[0])
             no_error, msgs = interface.equip_item(self.ctx.author.name, item.name)
@@ -326,6 +361,7 @@ class AreaSelect(discord.ui.Select):
     """
     Class that handles the equipment selection.
     """
+
     def __init__(self, ctx, player_inst):
         current_area = data_management.search_cache_area_by_number(player_inst.current_area)
         default_option = discord.SelectOption(label=current_area.name,
@@ -348,10 +384,18 @@ class AreaSelect(discord.ui.Select):
         super().__init__(placeholder="Select an area to travel to", max_values=1, min_values=1, options=options)
         self.ctx = ctx
 
-    # Equips an item
-    async def callback(self, interaction: discord.Interaction):
+    # Travels to another area
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the area selection.
+
+        :param interaction: Discord Interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
             area = data_management.search_cache_area_by_name(self.values[0])
+            # Travel
             no_error, msgs = interface.travel_to_area(self.ctx.author.name, area.number)
             if no_error:
                 await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
@@ -377,7 +421,14 @@ class DungeonSelect(discord.ui.Select):
         self.ctx = ctx
 
     # Starts a dungeon
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the dungeon selection.
+
+        :param interaction: Discord interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
             dungeon = data_management.search_cache_dungeon_by_name(self.values[0])
             no_error, msgs = interface.start_dungeon(self.ctx.author.name, dungeon.dungeon_name)
@@ -401,6 +452,7 @@ class SkillSelect(discord.ui.Select):
     """
     Class that handles the skill selection.
     """
+
     def __init__(self, ctx, skill_list, curr_job):
         skills_in_options = [data_management.search_cache_skill_by_name(i) for i in skill_list]
         options = [discord.SelectOption(label=s.name,
@@ -410,14 +462,19 @@ class SkillSelect(discord.ui.Select):
         self.ctx = ctx
 
     # Uses a skill
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the skill selection.
+
+        :param interaction: Discord Interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
-            start_time = time.time()
-            skill = data_management.search_cache_skill_by_name(self.values[0])
-            no_error, msgs = interface.skill_attack(self.ctx.author.name, skill.name)
-            await discord_logic.continue_battle(no_error, msgs, self.ctx, ActionMenu(self.ctx))
+            skill_inst = data_management.search_cache_skill_by_name(self.values[0])
+            no_error, msgs = interface.skill_attack(self.ctx.author.name, skill_inst.name)
+            await discord_logic.continue_battle(self.ctx, no_error, msgs, ActionMenu(self.ctx))
             await interaction.response.defer()
-            print(f"Skill took {time.time() - start_time} seconds")
 
 
 class SkillSelectView(discord.ui.View):
@@ -431,11 +488,11 @@ class JobSelect(discord.ui.Select):
     """
     Class that handles the job selection.
     """
+
     def __init__(self, ctx, job_list, player_inst):
         jobs_in_options = [data_management.search_cache_job_by_name(i) for i in job_list]
 
         jobs_curr_lvl_dict = {}
-        print(player_inst.job_dict_list)
         for job_dict in player_inst.job_dict_list:
             jobs_curr_lvl_dict[job_dict["Name"]] = job_dict["lvl"]
         jobs_curr_lvl_dict[player_inst.current_job_dict["Name"]] = player_inst.current_job_dict["lvl"]
@@ -447,9 +504,17 @@ class JobSelect(discord.ui.Select):
         self.ctx = ctx
 
     # Changes a player's job
-    async def callback(self, interaction: discord.Interaction):
+    async def callback(self, interaction: discord.Interaction) -> None:
+        """
+        Callback function for the job selection.
+
+        :param interaction: Discord interaction
+        :return: None
+        """
+
         if await check_button_pressed(self.ctx, interaction):
             job = data_management.search_cache_job_by_name(self.values[0])
+            # Changes job
             no_error, msgs = interface.change_player_job(self.ctx.author.name, job.name)
             if no_error:
                 await interaction.response.send_message(discord_logic.msgs_to_msg_str(msgs))
@@ -463,7 +528,7 @@ class JobSelectView(discord.ui.View):
         self.add_item(JobSelect(ctx, job_list, player_inst))
 
 
-async def check_button_pressed(ctx, interaction) -> bool:
+async def check_button_pressed(ctx, interaction: discord.Interaction) -> bool:
     """
     Checks if button has been pressed by same user that initiated the interaction.
 
@@ -471,6 +536,7 @@ async def check_button_pressed(ctx, interaction) -> bool:
     :param interaction: Discord's interaction
     :return: True if button pressed by correspondent user, False if not. Also spits a message.
     """
+
     if interaction.user.name == ctx.author.name:
         return True
     else:
@@ -478,14 +544,16 @@ async def check_button_pressed(ctx, interaction) -> bool:
         return False
 
 
-async def check_button_pressed_by_certain_name(ctx, interaction, certain_name: str) -> bool:
+async def check_button_pressed_by_certain_name(ctx, interaction: discord.Interaction, certain_name: str) -> bool:
     """
-    Checks if button has been pressed by same user that initiated the interaction.
+    Checks if button has been pressed by a certain user.
 
     :param ctx: Discord's CTX
     :param interaction: Discord's interaction
+    :param certain_name: Name of the user that should press the button
     :return: True if button pressed by correspondent user, False if not. Also spits a message.
     """
+
     if interaction.user.name == certain_name:
         return True
     else:

@@ -116,7 +116,9 @@ def damage_physical_spell(spell_power: int, atk_value: int, def_value: int) -> i
 def leech_calculation(damage: int) -> int:
     """
     Formula for calculating the heal amount caused by leeching.
+
     :param damage: Damage dealt.
     :return: Heal amount.
     """
+
     return round(damage * constants.LEECH_AMOUNT)

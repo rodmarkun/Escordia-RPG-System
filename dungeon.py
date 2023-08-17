@@ -20,6 +20,7 @@ class Dungeon:
         :param enemy_count: Amount of enemies that will appear in the dungeon (aside from boss)
         :param loot_pool: Objects that will appear in the dungeon
         """
+
         self.dungeon_name = dungeon_name
         self.recommended_lvl = recommended_lvl
         self.enemy_list = enemy_list

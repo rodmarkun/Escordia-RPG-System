@@ -1,7 +1,6 @@
 import copy
 import json
 import os
-
 import area
 import battle
 import blessing
@@ -18,6 +17,13 @@ import shop
 import skill
 import inventory
 import peewee
+
+
+"""
+////////////////
+/// DATABASE ///
+////////////////
+"""
 
 escordia_db = peewee.SqliteDatabase('escordia_db')
 escordia_db.connect()
@@ -55,6 +61,7 @@ def create_new_player(player_name: str) -> None:
     :param player_name: Player's name.
     :return: None.
     """
+
     player_inst = player.Player(player_name, inventory=inventory.Inventory(player_name),
                                              equipment=constants.INITIAL_EQUIPMENT.copy(),
                                              current_job_dict=constants.INITIAL_JOB_DICT.copy())
@@ -68,7 +75,7 @@ def create_new_player(player_name: str) -> None:
     messager.messager_add_player(player_name)
 
 
-def create_new_battle(player_inst: 'Player', enemy_inst: 'Enemy') -> None:
+def create_new_battle(player_inst: player.Player, enemy_inst: enemy.Enemy) -> None:
     """
     Creates a new battle in the system.
 
@@ -76,11 +83,12 @@ def create_new_battle(player_inst: 'Player', enemy_inst: 'Enemy') -> None:
     :param enemy_inst: Enemy instance.
     :return: None.
     """
+
     BATTLE_CACHE.update({player_inst.name: battle.Battle(player_inst, enemy_inst)})
     print(f"Created battle with player: {player_inst.name} and enemy: {enemy_inst.name}")
 
 
-def create_new_dungeon_inst(player_inst: 'Player', dungeon_inst: 'Dungeon') -> None:
+def create_new_dungeon_inst(player_inst: player.Player, dungeon_inst: dungeon.Dungeon) -> None:
     """
     Creates a new dungeon instance for the player.
 
@@ -88,6 +96,7 @@ def create_new_dungeon_inst(player_inst: 'Player', dungeon_inst: 'Dungeon') -> N
     :param dungeon_inst: Dungeon instance.
     :return: None.
     """
+
     CURRENT_DUNGEONS_CACHE.update({player_inst.name: copy.deepcopy(dungeon_inst)})
 
 
@@ -97,6 +106,7 @@ def create_escordia_tables() -> None:
 
     :return: None.
     """
+
     try:
         escordia_db.create_tables([peewee_models.PlayerModel])
     except peewee.OperationalError:
@@ -117,6 +127,7 @@ def update_player_info(player_name: str) -> None:
     :param player_name: Player's name.
     :return: None.
     """
+
     player_inst = PLAYER_CACHE[player_name]
     peewee_models.PlayerModel.update(stats=str(player_inst.stats), lvl=player_inst.lvl, xp=player_inst.xp,
                               xp_to_next_lvl=player_inst.xp_to_next_lvl, xp_rate=player_inst.xp_rate, money=player_inst.money, essence=player_inst.essence,
@@ -135,119 +146,128 @@ def update_player_info(player_name: str) -> None:
 """
 
 
-def search_cache_player(player_name: str) -> 'Player':
+def search_cache_player(player_name: str) -> player.Player:
     """
     Searches a player by name in the player cache.
 
     :param player_name: Player's name.
     :return: Player if found. Else None.
     """
+
     try:
         return PLAYER_CACHE[player_name]
     except KeyError:
         return None
 
 
-def search_cache_battle_by_player(player_name: str) -> 'Battle':
+def search_cache_battle_by_player(player_name: str) -> battle.Battle:
     """
     Searches a battle by the name of the player currently fighting on it.
 
     :param player_name: Player's name.
     :return: Battle if found. Else None.
     """
+
     try:
         return BATTLE_CACHE[player_name]
     except KeyError:
         return None
 
 
-def search_cache_enemy_by_name(enemy_name: str) -> 'Enemy':
+def search_cache_enemy_by_name(enemy_name: str) -> enemy.Enemy:
     """
     Searches for an enemy in the enemy cache.
 
     :param enemy_name: Enemy's name.
     :return: Enemy instance. None if not found.
     """
+
     try:
         return ENEMIES_CACHE[enemy_name]
     except KeyError:
         return None
 
 
-def search_cache_dungeon_by_player(player_name: str) -> 'Dungeon':
+def search_cache_dungeon_by_player(player_name: str) -> dungeon.Dungeon:
     """
     Searches available dungeons for a player.
 
     :param player_name: Player's name.
     :return: Dungeon instance. None if not found.
     """
-    area = search_cache_player(player_name).current_area
+
+    player_area = search_cache_player(player_name).current_area
     try:
-        return AREAS_CACHE[area].dungeons
+        return AREAS_CACHE[player_area].dungeons
     except KeyError:
         return None
 
 
-def search_cache_blessing(blessing_name: str) -> 'Blessing':
+def search_cache_blessing(blessing_name: str) -> blessing.Blessing:
     """
     Searches for a blessing in the blessing cache.
 
     :param blessing_name: Blessing's name.
     :return: Blessing instance. None if not found.
     """
+
     try:
         return BLESSINGS_CACHE[blessing_name]
     except KeyError:
         return None
 
 
-def search_cache_dungeon_inst_by_player(player_name: str) -> 'Dungeon':
+def search_cache_dungeon_inst_by_player(player_name: str) -> dungeon.Dungeon:
     """
     Searches an ongoing dungeon instance by the player's name.
+
     :param player_name: Player's name.
     :return: Dungeon instance.
     """
+
     try:
         return CURRENT_DUNGEONS_CACHE[player_name]
     except KeyError:
         return None
 
-def search_cache_dungeon_by_name(dungeon_name: str) -> 'Dungeon':
+def search_cache_dungeon_by_name(dungeon_name: str) -> dungeon.Dungeon:
     """
     Searches for a dungeon in the dungeon cache.
 
     :param dungeon_name: Dungeon's name.
     :return: Dungeon instance. None if not found.
     """
+
     try:
         return DUNGEON_CACHE[dungeon_name]
     except KeyError:
         return None
 
 
-def search_cache_area_by_number(number: int) -> 'Area':
+def search_cache_area_by_number(number: int) -> area.Area:
     """
     Searches for an area in the area cache.
 
     :param number: Area's number.
     :return: Area instance. None if not found.
     """
+
     try:
         return AREAS_CACHE[number]
     except KeyError:
         return None
 
 
-def search_cache_area_by_name(name: str) -> 'Area':
+def search_cache_area_by_name(name: str) -> area.Area:
     """
     Searches for an area in the area cache.
 
     :param name: Area's name.
     :return: Area instance. None if not found.
     """
+
     try:
         for i in AREAS_CACHE.keys():
-            print(AREAS_CACHE[i].name)
             if AREAS_CACHE[i].name == name:
                 return AREAS_CACHE[i]
         return None
@@ -255,13 +275,14 @@ def search_cache_area_by_name(name: str) -> 'Area':
         return None
 
 
-def search_cache_item_by_name(item_name: str) -> 'Item':
+def search_cache_item_by_name(item_name: str) -> item.Item:
     """
     Searches for an item in the item and equipment cache.
 
     :param item_name: Item's name.
     :return: Item instance. None if not found.
     """
+
     try:
         return ITEM_CACHE[item_name]
     except KeyError:
@@ -271,39 +292,42 @@ def search_cache_item_by_name(item_name: str) -> 'Item':
             return None
 
 
-def search_cache_shop_by_area(area_index: int) -> 'Shop':
+def search_cache_shop_by_area(area_index: int) -> shop.Shop:
     """
     Searches for a shop in the shop cache.
 
     :param area_index: Area's index.
     :return: Shop instance. None if not found.
     """
+
     try:
         return SHOP_CACHE[area_index]
     except KeyError:
         return None
 
 
-def search_cache_skill_by_name(skill_name: str) -> 'Skill':
+def search_cache_skill_by_name(skill_name: str) -> skill.Skill:
     """
     Searches for a skill in the skill cache.
 
     :param skill_name: Skill's name.
     :return: Skill instance. None if not found.
     """
+
     try:
         return SKILLS_CACHE[skill_name]
     except KeyError:
         return None
 
 
-def search_cache_job_by_name(job_name: str) -> 'Job':
+def search_cache_job_by_name(job_name: str) -> job.Job:
     """
     Searches for a job in the job cache.
 
     :param job_name: Job's name.
     :return: Job instance. None if not found.
     """
+
     try:
         return JOB_CACHE[job_name]
     except KeyError:
@@ -317,6 +341,7 @@ def search_available_jobs_by_player(player_name: str) -> list:
     :param player_name: Player's name.
     :return: List containing available jobs.
     """
+
     player_inst = search_cache_player(player_name)
     available_jobs = []
     for job_inst in JOB_CACHE.values():
@@ -340,6 +365,7 @@ def search_all_jobs() -> list:
 
     :return: List containing all jobs.
     """
+
     return list(JOB_CACHE.values())
 
 
@@ -357,6 +383,7 @@ def delete_cache_battle_by_player(player_name: str) -> None:
     :param player_name: Player's name.
     :return: None.
     """
+
     b = search_cache_battle_by_player(player_name)
     if b is not None:
         BATTLE_CACHE.pop(player_name)
@@ -365,9 +392,11 @@ def delete_cache_battle_by_player(player_name: str) -> None:
 def delete_cache_dungeon_inst(player_name: str) -> None:
     """
     Deletes an ongoing dungeon instance
+
     :param player_name: Player's name
     :return: None
     """
+
     d = search_cache_dungeon_inst_by_player(player_name)
     if d is not None:
         CURRENT_DUNGEONS_CACHE.pop(player_name)
@@ -385,6 +414,7 @@ def load_items_from_json() -> None:
 
     :return: None.
     """
+
     with open("data/items.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -399,6 +429,7 @@ def load_equipment_from_json() -> None:
 
     :return: None.
     """
+
     for file in os.listdir(constants.EQUIPMENT_PATH):
         with open(constants.EQUIPMENT_PATH + file, 'r', encoding='utf-8') as f:
             json_file = json.load(f)
@@ -414,6 +445,7 @@ def load_enemies_from_json() -> None:
 
     :return: None.
     """
+
     for file in os.listdir(constants.ENEMIES_PATH):
         with open(constants.ENEMIES_PATH + file, 'r', encoding='utf-8') as f:
             json_file = json.load(f)
@@ -429,6 +461,7 @@ def load_areas_from_json() -> None:
 
     :return: None.
     """
+
     with open("data/areas.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -443,6 +476,7 @@ def load_dungeons_from_json() -> None:
 
     :return: None.
     """
+
     with open("data/dungeons.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -457,6 +491,7 @@ def load_jobs_from_json() -> None:
 
     :return: None.
     """
+
     with open("data/jobs.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -471,6 +506,7 @@ def load_shops_from_json() -> None:
 
     :return: None.
     """
+
     with open("data/shops.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -485,6 +521,7 @@ def load_skills_from_json() -> None:
 
     :return: None.
     """
+
     for file in os.listdir(constants.SKILLS_PATH):
         with open(constants.SKILLS_PATH + file, 'r', encoding='utf-8') as f:
             json_file = json.load(f)
@@ -500,6 +537,7 @@ def load_blessings_from_json() -> None:
 
     :return: None
     """
+
     with open("data/blessings.json", 'r', encoding='utf-8') as f:
         json_file = json.load(f)
 
@@ -514,6 +552,7 @@ def load_players_from_db() -> None:
 
     :return: None.
     """
+
     for player_model in peewee_models.PlayerModel.select():
         print(f"Loading player {player_model.name} into cache...")
         player_inst = player.Player(player_model.name, stats=eval(player_model.stats), lvl=player_model.lvl, xp=player_model.xp,
@@ -533,7 +572,13 @@ def load_players_from_db() -> None:
         PLAYER_CACHE.update({player_model.name: player_inst})
 
 
-def load_everything():
+def load_everything() -> None:
+    """
+    Loads everything from JSON files and database. Should be called at the start of the program.
+
+    :return: None.
+    """
+
     create_escordia_tables()
     print("Loading data...")
     load_items_from_json()

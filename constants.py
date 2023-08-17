@@ -49,7 +49,12 @@ STATKEYS_NO_HP_MP = [ATK_STATKEY, DEF_STATKEY, MATK_STATKEY, MDEF_STATKEY, SPEED
 /////////////
 """
 
-EQUIPMENT_TYPES = ['HELMET', 'ARMOR', 'WEAPON', 'ACCESSORY']
+HELMET_KEY = 'HELMET'
+ARMOR_KEY = 'ARMOR'
+WEAPON_KEY = 'WEAPON'
+ACCESSORY_KEY = 'ACCESSORY'
+
+EQUIPMENT_TYPES = [HELMET_KEY, ARMOR_KEY, WEAPON_KEY, ACCESSORY_KEY]
 HELM_TYPES = ["PHYS_HELM", "MAG_HELM"]
 ARMOR_TYPES = ["HEAVY_ARMOR", "LIGHT_ARMOR", "MAGIC_ARMOR"]
 WEAPON_TYPES = ["SWORD", "AXE", "DAGGER", "SCYTHE", "STAFF", "BOW", "HAMMER", "BOOK", "SCEPTER", "KATANA"]
@@ -75,6 +80,10 @@ TREASURE_CHANCE_WHEN_FIGHTING = 10  # %
 NUMBER_OF_ITEMS_IN_TREASURE = 1
 MAX_INVENTORY_SLOTS = 25
 PREFERRED_WEAPON_DAMAGE_BONUS = 1.20
+ENEMY_AI_WEIGHTS = [1,3] # Chance weights of enemies using normal attack (25% default) or using skill if possible (75% default).
+RAINBOW_ELEMENTAL_ATTACK = "RAINBOW"
+WEAKNESS_DAMAGE_BONUS = 1.25
+RESISTANCE_DAMAGE_REDUCTION = 0.75
 
 """
 ////////////
@@ -162,9 +171,10 @@ BUFF_DEBUFF_TO_MESSAGE = {BUFF_ATK_UP: "Attack increased",
                           DEBUFF_LUK_DOWN: "Luck decreased"}
 
 """
-///////////
-/// CSV ///
-///////////
+////////////
+/// JSON ///
+////////////
+(These are the keys that are used in the JSON files)
 """
 
 AREAS_KEYS = ["NAME", "NUMBER", "ENEMY_LIST", "BOSS", "DUNGEONS", "TREASURES"]

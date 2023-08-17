@@ -15,6 +15,7 @@ def messager_add_player(player_name: str) -> None:
     :param player_name: Player name to be added.
     :return: None
     """
+
     message_queue.update({player_name: []})
 
 
@@ -26,6 +27,7 @@ def add_message(player_name: str, message: str) -> None:
     :param message: Message to be added.
     :return: None.
     """
+
     global message_queue
     message_queue[player_name].append(message)
 
@@ -37,6 +39,7 @@ def empty_queue(player_name: str) -> list:
     :param player_name: Player's name to dequeue all messages to.
     :return: List with all messages.
     """
+
     global message_queue
     messages = message_queue[player_name]
     message_queue[player_name] = []

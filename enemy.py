@@ -1,6 +1,4 @@
 import random
-
-import constants
 from battler import Battler
 
 
@@ -37,15 +35,33 @@ class Enemy(Battler):
     """
 
     def die(self) -> None:
+        """
+        Enemy dies.
+
+        :return: None
+        """
+
         self.alive = False
 
     def loot(self) -> str:
+        """
+        Rolls for loot, used when enemy dies.
+
+        :return: String with item looted. Empty string if no item was looted.
+        """
+
         if self.possible_loot is not None and random.randint(0, 100) <= self.loot_chance:
             return self.possible_loot
         # Returns an empty string for message convenience
         return ''
 
     def show_enemy_info(self) -> str:
+        """
+        Returns a string with all of this enemy's information.
+
+        :return: Info string
+        """
+
         return ''.join([f'**{stat}**: {self.stats[stat]}\n' for stat in self.stats])
 
     """
