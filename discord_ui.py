@@ -141,6 +141,14 @@ class PlayerMenu(discord.ui.View):
             await discord_logic.essence(self.ctx)
             await interaction.response.defer()
 
+    # About
+    # PLEASE DO NOT REMOVE :)
+    @discord.ui.button(label=f"{emojis.HEART_EMOJI} About Escordia", style=discord.ButtonStyle.green)
+    async def menu11(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if await check_button_pressed(self.ctx, interaction):
+            await discord_logic.about(self.ctx)
+            await interaction.response.defer()
+
     # PVP
     #@discord.ui.button(label=emojis.DAGGER_EMOJI + " PVP", style=discord.ButtonStyle.green)
     #async def menu11(self, interaction: discord.Interaction, button: discord.ui.Button):

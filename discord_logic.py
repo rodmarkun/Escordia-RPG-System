@@ -204,6 +204,18 @@ async def essence(ctx) -> None:
         await ctx.send(f'**Escordia Error** - {ctx.author.mention}: {msgs_to_msg_str(msgs)}')
 
 
+# PLEASE DO NOT REMOVE :)
+async def about(ctx) -> None:
+    """
+    Displays information about Escordia, credits and other information.
+
+    :param ctx: Discord CTX
+    :return: None
+    """
+
+    await ctx.send(f'{ctx.author.mention} {info_msgs.ABOUT_MSG}')
+
+
 async def area(ctx) -> None:
     """
     Shows the area menu.
