@@ -1,14 +1,25 @@
 # Escordia - Open RPG System
 
-Escordia is an open-source RPG system built with Python. The project was originally based on a Discord bot programmed in 2021/2022 and aims to provide an open system to build RPGs with Python.
+Escordia is a free and open RPG system made from scratch and built with Python. The project was originally based on a Discord bot programmed in 2021/2022 and aims to provide an open system to build RPG Discord Bots with Python.
 
 ![rpg_icon](https://user-images.githubusercontent.com/75074498/233842763-3ad5c2fe-106e-41f0-b7a7-cf98d3abc7d1.png)
 
 ## Project Overview
 
-The project consists of a central Python program that handles all logic and data, and an interface that can be called from diverse modules in order to be available on multiple platforms. For example, Escordia can be used as a Discord Bot or a Flask API.
+Escordia is currently capable of:
+- Creating and keeping track of RPG characters made by users. These characters have their own stats, inventory, job, skills, etc.
+- Managing concurrent battles and dungeons.
+- Divide a map in areas, each area having different enemies, items and dungeons.
+- Managing a ton of items with different stat alterations that characters can equip.
+- Managing skills that both player and enemies can use in combat.
+- Having a complex job system in which each job has its own skills, preferred weapons, experience, level and requisites.
+- In-game shops that vary depending on the character's current area.
+- Destroying user's items at choice in order to exchange them for permanent stat upgrades.
+- Managing buffs and debuffs while in combat.
+- Managing an element system in skills in order to strike enemies' weaknesses/resistances. 
+- Define a vast amount of custom data (items, enemies, skills, classes) in a simple JSON.
 
-Escordia stores static data such as enemies, items, and more on CSV files, while dynamic data such as players, inventories, and more is stored in a database using Peewee.
+Escordia stores static data such as enemies, items, and more on JSON files, while dynamic data such as players, inventories, and more is stored in a database using Peewee.
 
 ## Usage
 
