@@ -352,7 +352,7 @@ async def continue_battle(ctx, no_error: bool, msgs: list, action_menu_ui: disco
                 if loot != '':
                     await ctx.send(embed=discord_embeds.embed_treasure_found(ctx, [loot]))
                 if battle_inst.player.in_dungeon:
-                    await traverse_dungeon(battle_inst, ctx)
+                    await traverse_dungeon(ctx, battle_inst)
                 else:
                     await profile(ctx, discord_ui.PlayerMenu(ctx))
             # Player loses
@@ -416,11 +416,11 @@ async def traverse_dungeon(ctx, battle_inst: battle.Battle) -> None:
         if dungeon_inst.current_enemies_defeated != dungeon_inst.enemy_count:
             no_error, msgs = interface.begin_battle(ctx.author.name, False,
                                                     enemy=random.choice(dungeon_inst.enemy_list))
-            await manage_battle(no_error, ctx, msgs, discord_ui.ActionMenu(ctx))
+            await manage_battle(ctx, no_error, msgs, discord_ui.ActionMenu(ctx))
         else:
             no_error, msgs = interface.begin_battle(ctx.author.name, False,
                                                     enemy=dungeon_inst.boss)
-            await manage_battle(no_error, ctx, msgs, discord_ui.ActionMenu(ctx))
+            await manage_battle(ctx, no_error, msgs, discord_ui.ActionMenu(ctx))
 
 
 def msgs_to_msg_str(msgs: list) -> str:

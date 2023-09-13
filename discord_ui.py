@@ -444,7 +444,7 @@ class DungeonSelect(discord.ui.Select):
             if no_error:
                 if data_management.search_cache_player(self.ctx.author.name).in_dungeon:
                     no_error, msgs = interface.begin_battle(self.ctx.author.name, False, enemy=random.choice(dungeon.enemy_list))
-                    await discord_logic.manage_battle(no_error, self.ctx, msgs, ActionMenu(self.ctx))
+                    await discord_logic.manage_battle(self.ctx, no_error, msgs, ActionMenu(self.ctx))
                     await interaction.response.defer()
             else:
                 await self.ctx.send(f'**Escordia Error** - {self.ctx.author.mention}: {msgs}')

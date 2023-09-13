@@ -13,7 +13,7 @@ DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
 
 # Bot initialization
 intents = discord.Intents.all()
-activity = discord.Activity(type=discord.ActivityType.watching, name="!help")
+activity = discord.Activity(type=discord.ActivityType.watching, name="!start")
 bot = commands.Bot(command_prefix='!', intents=intents, activity=activity)
 bot.remove_command('help')
 

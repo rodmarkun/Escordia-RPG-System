@@ -209,7 +209,7 @@ class Battle:
 
         for bd in list(battler.buffs_and_debuffs):
             if battler.buffs_and_debuffs[bd] == 0:
-                remove_buff_debuff(self.player, bd)
+                remove_buff_debuff(battler, bd)
                 messager.add_message(self.player.name, f"{battler.name} {emojis.buff_debuff_to_emoji[bd]} alteration has expired.")
             else:
                 battler.buffs_and_debuffs[bd] -= 1

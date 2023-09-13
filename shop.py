@@ -1,4 +1,5 @@
 import data_management
+import emojis
 import messager
 import player
 
@@ -78,5 +79,5 @@ def buy_item(player: player.Player, item_name: str) -> bool:
         return False
     player.money -= item.individual_value
     player.inventory.add_item(item.name, 1)
-    messager.add_message(player.name, f"You successfully purchased a {item.name}.")
+    messager.add_message(player.name, f"You successfully purchased a {item.name}. You now have {player.money} {emojis.ESC_GOLD_ICON}.")
     return True

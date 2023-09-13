@@ -25,5 +25,5 @@ PVP_MSG = f"Welcome to the Escordia Arena! Here you can fight other players in a
 CREDITS = "**CREDITS**\nThis project uses free assets from **Ækashics** (Ækashics Librarium), **Lorc**, **Delapouite**, and **Viscious Speed**"\
            " (Boxes-Be-Gone Icon Set), **Lorc** -again- (700 RPG Icons). Also I am currently unable to find where I got the item and buff/debuff icons from, if someone knows please contact me so I can give proper credit."
 SUPPORT = f"**SUPPORT**\nIf you want to support the development of Escordia RPG, you can:\n- **Star** {emojis.SPARKLER_EMOJI} in Github! (https://github.com/rodmarkun/Escordia-RPG-System).\n- **Donate** {emojis.ESC_GOLD_ICON} to my Ko-fi page! (https://ko-fi.com/rodmarkun)\n- **Share** {emojis.HEART_EMOJI} the project with your friends!\n\nThank you!"
-ABOUT_MSG = f"\n**ABOUT ESCORDIA RPG**\nEscordia RPG is a Discord RPG Bot originally created by **rodmarkun** in order to provide a free, customizable and fun RPG experience for Discord users. The bot is currently under development and I do not have much free time, so please be patient for updates.\n\n" \
-            f"{CREDITS}\n\n{SUPPORT}" \
+ABOUT_MSG = f"\n**ABOUT ESCORDIA RPG**\nEscordia RPG is a Discord RPG Bot System originally created by **rodmarkun** in order to provide a free, customizable and fun RPG experience for Discord users. The bot is currently under development and I do not have much free time, so please be patient for updates.\n\n" \
+            f"{CREDITS}\n\n{SUPPORT}"

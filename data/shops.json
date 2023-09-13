@@ -10,5 +10,13 @@
       "Magic Hoodie",
       "Bronze Bracelet"
     ]
+  },
+  {
+    "AREA_NUMBER": 2,
+    "ITEM_LIST": [
+      "Executioner's Axe",
+      "Priest Scepter",
+      "Hunter's Armor"
+    ]
   }
 ]
