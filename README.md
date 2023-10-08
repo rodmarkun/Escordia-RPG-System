@@ -1,6 +1,6 @@
 # Escordia - Open RPG System
 
-Escordia is a free and open RPG system made from scratch and built with Python. The project was originally based on a Discord bot programmed in 2021/2022 and aims to provide an open system to build RPG Discord Bots with Python.
+Escordia is a free and open RPG system made from scratch and built with Python. The project was originally based on a Discord bot I programmed in 2021/2022 and aims to provide an open system to build RPG Discord Bots with Python.
 
 ![rpg_icon](https://user-images.githubusercontent.com/75074498/233842763-3ad5c2fe-106e-41f0-b7a7-cf98d3abc7d1.png)
 
@@ -21,9 +21,20 @@ Escordia is currently capable of:
 
 Escordia stores static data such as enemies, items, and more on JSON files, while dynamic data such as players, inventories, and more is stored in a database using Peewee.
 
+### Screenshots
+
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/aed01a79-31ce-4948-8c46-065fab7fc51c)
+
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/94fd0b67-4eb4-4ddc-84a5-968ee8f81435)
+
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/c914b0a1-af7f-4cf9-9a2a-3a3baa8cb291)
+
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/6c675ec7-cff9-4511-94a9-be0f900fdf0a)
+
+
 ## Usage
 
-Please follow the next steps to have your own instance of Escordia running on your machine:
+Please follow the next steps to have your own instance of Escordia running on your machine. It is an easy process though it may take some time specially if you are not used to setting up these kind of projects.
 
 ### Discord Bot Creation
 
@@ -46,12 +57,14 @@ After all of these steps, you can configure the rest of your bot as your liking.
 5. As we have updated a system environment variable, you will have to restart all terminals or IDEs you had open for the changes to take effect.
 6. Finally, to start Escordia just run the "discord_manager.py" file. You can do this in a terminal by running `python .\discord_manager.py`.
 
-Your Escordia bot is now operative! However, if you start playing you will see that there are no icons and thus the game is kinda ugly (bugs may occur because of this). Discord does not allow bots to use emojis from servers where they are not members. Here is a way to provide your bot with the necessary icons:
+Your Escordia bot is now operative, however, there is a problem: **icons**. Escordia RPG uses custom icons and Discord does not allow bots to use emojis from servers where they are not members. Here is an easy way to provide your bot with the necessary icons:
 
 ### Icons
 
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/e5e058d7-35ea-4f79-b183-6b92121a5415)
+
 1. Go to this [link](https://drive.google.com/drive/folders/18oyUzsanpRc2wnVHo3bQ-Y1o2SZZBP9S?usp=sharing) and download the "EscordiaIcons" folder.
-2. Add all the icons to your Discord server. Do it in batches, as Discord can limit your speed when uploading too many icons. You can use any random server you own, the bot will be able to use it on all servers he's on.
+2. Add all the icons to your Discord server. Do it in batches, as Discord can limit your speed when uploading too many icons. You can use any random server you own, the bot will be able to use it on all servers he's a member of.
 3. Copy and paste the following message in any text channel in the Discord server where you uploaded the icons. An eror may pop up, do not worry about it.
 
 ```python
@@ -112,3 +125,12 @@ After that, you will finally have your own Escordia RPG instance in your machine
 Contributions are always welcome! If you're interested in contributing to Escordia, please fork the repository and create a new branch for your changes. When you're done with your changes, submit a pull request to merge your changes into the main branch.
 
 ## Supporting Escordia
+
+If you want to support Escordia RPG, you can:
+- **Star** :star: the project in Github!
+- **Donate** :coin: to my [Ko-fi](https://ko-fi.com/rodmarkun) page!
+- **Share** :heart: the project with your friends!
+
+## Credits
+
+Escordia RPG has been originally created and developed by **rodmarkun** in order to provide a free, customizable and fun RPG experience for Discord users. This project uses free assets from Ækashics (Ækashics Librarium), Lorc, Delapouite, and Viscious Speed (Boxes-Be-Gone Icon Set), Lorc -again- (700 RPG Icons). Also I am currently unable to find where I got the item and buff/debuff icons from, if someone knows please contact me so I can give proper credit.
