@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="escordia_db" uuid="af255044-a315-42f1-81d3-0460f3068554">
-      <driver-ref>67b1128b-c0fc-4950-bb80-9eac4d42d707</driver-ref>
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:D:\GoogleDrive\Programación\Escordia RPG System\escordia_db</jdbc-url>
@@ -14,7 +14,7 @@
       </libraries>
     </data-source>
     <data-source source="LOCAL" name="escordia_db [2]" uuid="3d4bb384-3f66-4553-9948-dc7bcb1eb1c6">
-      <driver-ref>sqlite.xerial</driver-ref>
+      <driver-ref>7bf36122-2d84-4da1-af21-beb97f524f9f</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\pablo\Google Drive\Programación\Escordia RPG System\escordia_db</jdbc-url>
