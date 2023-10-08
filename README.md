@@ -32,6 +32,8 @@ Escordia stores static data such as enemies, items, and more on JSON files, whil
 
 ![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/6c675ec7-cff9-4511-94a9-be0f900fdf0a)
 
+![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/c40c6515-b415-4e87-8d2e-28b45075311d)
+
 
 ## Usage
 
@@ -119,7 +121,7 @@ Your Escordia bot is now operative, however, there is a problem: **icons**. Esco
 4. Copy your message after sending it (see that now every entry has some numbers at the end? Those are the ID of your icons in your server).
 5. Paste the whole result in the `.\emojis.py` file, replacing the empty brackets in the `ICON_DICT = ...` definition.
 
-After that, you will finally have your own Escordia RPG instance in your machine. You can begin your journey by typing `!start` Have fun!
+After that, you will finally have your own Escordia RPG instance in your machine. You can begin your journey by typing `!start`. Have fun!
 
 ## Contributing
 
