@@ -16,7 +16,8 @@ Escordia is currently capable of:
 - In-game shops that vary depending on the character's current area.
 - Destroying user's items at choice in order to exchange them for permanent stat upgrades.
 - Managing buffs and debuffs while in combat.
-- Managing an element system in skills in order to strike enemies' weaknesses/resistances. 
+- Managing an element system in skills in order to strike enemies' weaknesses/resistances.
+- Uses a graphical interface so that commands are very rarely used 
 - Define a vast amount of custom data (items, enemies, skills, classes) in a simple JSON.
 
 Escordia stores static data such as enemies, items, and more on JSON files, while dynamic data such as players, inventories, and more is stored in a database using Peewee.
@@ -118,7 +119,7 @@ Your Escordia bot is now operative, however, there is a problem: **icons**. Esco
 4. Copy your message after sending it (see that now every entry has some numbers at the end? Those are the ID of your icons in your server).
 5. Paste the whole result in the `.\emojis.py` file, replacing the empty brackets in the `ICON_DICT = ...` definition.
 
-After that, you will finally have your own Escordia RPG instance in your machine. Have fun!
+After that, you will finally have your own Escordia RPG instance in your machine. You can begin your journey by typing `!start` Have fun!
 
 ## Contributing
 
