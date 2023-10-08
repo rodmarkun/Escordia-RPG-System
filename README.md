@@ -54,7 +54,7 @@ After all of these steps, you can configure the rest of your bot as your liking.
 ### Installation
 
 1. Download and install [Python](https://www.python.org/downloads/) >= 3.9 (Using latest available version is recommended). Make sure python.exe is added to PATH.
-2. Clone the repository `git clone https://github.com/rodmarkun/Escordia-RPG-System`
+2. Clone the repository (install [git](https://git-scm.com/) if you don't have it already) `git clone https://github.com/rodmarkun/Escordia-RPG-System`.
 3. Once in the project directory, open a terminal and install all necessary dependencies with the following command: `python -m pip install -r ".\requirements.txt"`. If it does not work, try using `python3` instead of `python`.
 4. Now, to link it to the bot we previously created you must create a new environment variable in your system with "DISCORD_TOKEN" as the name and the token we generated as the value.
 5. As we have updated a system environment variable, you will have to restart all terminals or IDEs you had open for the changes to take effect.
