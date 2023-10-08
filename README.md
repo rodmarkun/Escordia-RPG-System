@@ -67,7 +67,7 @@ Your Escordia bot is now operative, however, there is a problem: **icons**. Esco
 ![imagen](https://github.com/rodmarkun/Escordia-RPG-System/assets/75074498/e5e058d7-35ea-4f79-b183-6b92121a5415)
 
 1. Go to this [link](https://drive.google.com/drive/folders/18oyUzsanpRc2wnVHo3bQ-Y1o2SZZBP9S?usp=sharing) and download the "EscordiaIcons" folder.
-2. Add all the icons to your Discord server. Do it in batches, as Discord can limit your speed when uploading too many icons. You can use any random server you own, the bot will be able to use it on all servers he's a member of.
+2. Add all the icons to your Discord server. Do it in batches, as Discord can limit your speed when uploading too many icons. You can use any random server you own, the bot will be able to use them on all servers he's a member of.
 3. Copy and paste the following message in any text channel in the Discord server where you uploaded the icons. An eror may pop up, do not worry about it.
 
 ```python
@@ -118,8 +118,8 @@ Your Escordia bot is now operative, however, there is a problem: **icons**. Esco
 }
 ```
 
-4. Copy your message after sending it (see that now every entry has some numbers at the end? Those are the ID of your icons in your server).
-5. Paste the whole result in the `.\emojis.py` file, replacing the empty brackets in the `ICON_DICT = ...` definition.
+4. Copy your message after sending it (see that now every entry has some numbers at the end? Those are the ID of the icons in your server).
+5. Paste the whole result in the `.\emojis.py` file, replacing the empty brackets in the `ICON_DICT = {}` definition.
 
 After that, you will finally have your own Escordia RPG instance in your machine. You can begin your journey by typing `!start`. Have fun!
 
