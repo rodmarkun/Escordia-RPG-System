@@ -1,6 +1,7 @@
 # Escordia - Open RPG System
 
 Escordia is a free and open RPG system made from scratch and built with Python. The project was originally based on a Discord bot I programmed in 2021/2022 and aims to provide an open system to build RPG Discord Bots with Python.
+If you want to freely test Escordia, please message me at **rodmarprogrammer@gmail.com**. I will send you a Discord invite to a server in which Escordia is operational.
 
 ![rpg_icon](https://user-images.githubusercontent.com/75074498/233842763-3ad5c2fe-106e-41f0-b7a7-cf98d3abc7d1.png)
 
@@ -56,8 +57,8 @@ After all of these steps, you can configure the rest of your bot as your liking.
 1. Download and install [Python](https://www.python.org/downloads/) >= 3.9 (Using latest available version is recommended). Make sure python.exe is added to PATH.
 2. Clone the repository (install [git](https://git-scm.com/) if you don't have it already) `git clone https://github.com/rodmarkun/Escordia-RPG-System`.
 3. Once in the project directory, open a terminal and install all necessary dependencies with the following command: `python -m pip install -r ".\requirements.txt"`. If it does not work, try using `python3` instead of `python`.
-4. Now, to link it to the bot we previously created you must create a new environment variable in your system with "DISCORD_TOKEN" as the name and the token we generated as the value.
-5. As we have updated a system environment variable, you will have to restart all terminals or IDEs you had open for the changes to take effect.
+4. Now, to link it to the bot we previously created you must create a new environment variable in your system with "DISCORD_TOKEN" as the name and the token we generated as the value. The method for creating this environment variable depends on your OS. You can also assign the value directly to the variable `DISCORD_TOKEN` at the beggining of `discord_manager.py`.
+5. If you created the system environment variable, you will have to restart all terminals or IDEs you had open for the changes to take effect.
 6. Finally, to start Escordia just run the "discord_manager.py" file. You can do this in a terminal by running `python .\discord_manager.py`.
 
 Your Escordia bot is now operative, however, there is a problem: **icons**. Escordia RPG uses custom icons and Discord does not allow bots to use emojis from servers where they are not members. Here is an easy way to provide your bot with the necessary icons:
@@ -118,7 +119,7 @@ Your Escordia bot is now operative, however, there is a problem: **icons**. Esco
 }
 ```
 
-4. Copy your message after sending it (see that now every entry has some numbers at the end? Those are the ID of the icons in your server).
+4. Copy the message you just sent from the chat (see that now every entry has some numbers at the end? Those are the ID of the icons in your server).
 5. Paste the whole result in the `.\emojis.py` file, replacing the empty brackets in the `ICON_DICT = {}` definition.
 
 After that, you will finally have your own Escordia RPG instance in your machine. You can begin your journey by typing `!start`. Have fun!
